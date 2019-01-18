@@ -59,11 +59,12 @@ mac 默认就已经安装好了
 docker-machine  version
 ```
 
-Docker Machine 能干什么？
+Docker Machine 能干什么？(本地还是用 Vagrant+VirtualBox 快速搭建，原因是因为系统功能不是精简过的)
 
 ```sh
 vagrant halt // 停掉
 vagrant destroy // 删掉机器
+docker-machine --help // 习惯看帮助
 docker-machine create demo // 我本地是直接在 VirtualBox 创建一个已经安装好了的虚拟机
 /*
 * Creating CA: /Users/zoot/.docker/machine/certs/ca.pem
@@ -74,4 +75,61 @@ docker-machine create demo // 我本地是直接在 VirtualBox 创建一个已�
 * (demo) Latest release for github.com/boot2docker/boot2docker is v18.09.1
 * (demo) Downloading /Users/zoot/.docker/machine/cache/boot2docker.iso from https://github.com/boot2docker/boot2docker/releases/download/v18.09.1/boot2docker.iso...
 */
+docker-machine ls // 看看已经安装好了的机器
+docker-machine ssh demo // 进入到机器里面
+docker-machine create demo1 // 再创建一台
+docker-machine ls
+docker-machine stop demo1 // 停掉
+docker-machine ls // 再看一下输出
+docker-machine stop demo // 停掉
 ```
+
+### 做个试验，远程的管理 docker machine
+
+先退出本地 mac 启动 docker server
+
+```
+docker version // 看一下是不是连不上 server
+docker-machine start demo // 启动下 demo
+docker-machine env demo // 暴露出环境变量
+eval $(docker-machine env demo) // 输出到本地
+docker version // 发现连上了，这种方式可以远程管理 docker machine, 本地只要一个 client 就好了
+```
+
+详细文档 [Provision hosts in the cloud](https://docs.docker.com/machine/get-started-cloud/)
+
+### 阿里云上创建 Docker Machine
+
+[Drivers for cloud providers](https://docs.docker.com/machine/drivers/)
+
+[3rd-party driver plugins](https://github.com/docker/docker.github.io/blob/master/machine/AVAILABLE_DRIVER_PLUGINS.md)
+
+[Docker Machine Driver of Aliyun ECS](https://github.com/AliyunContainerService/docker-machine-driver-aliyunecs)
+
+下载对应的 Driver, Mac OSX 64 bit: [docker-machine-driver-aliyunecs_darwin-amd64](Mac OSX 64 bit: docker-machine-driver-aliyunecs_darwin-amd64)
+
+重命名 binary 档为 `docker-machine-driver-aliyunecs`，然后移动到 `/usr/local/bin`
+
+验证一下，Driver 是否安装成功
+
+```sh
+docker-machine create -d aliyunecs --help
+
+// 注意：要在控制台添加账号权限 和 充值100+
+docker-machine create -d aliyunecs --aliyunecs-io-optimized=optimized --aliyunecs-access-key-id=<your key> --aliyunecs-access-key-secret=<your secret> --aliyunecs-region=cn-qingdao devops
+
+docker-machine ssh devops // 进入 shell
+docker-machine env devops
+eval $(docker-machine env devops)
+docker version // 看一下有没有连上远端的 server
+docker-machine env --help // 查看下帮助
+docker-machine env --unset // 去掉刚设的环境变量
+eval $(docker-machine env --unset) 
+docker version
+```
+
+
+
+
+
+
