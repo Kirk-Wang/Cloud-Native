@@ -128,7 +128,87 @@ eval $(docker-machine env --unset)
 docker version
 ```
 
+### Docker 架构和底层技术简介
 
+```sh
+vagrant ssh
+sudo docker version
+ps -ef | grep docker // 看到有dockerd的进程
+
+sudo docker image ls // 列举出本地有的image
+```
+
+### DIY 个Base Image
+
+首先解决这个问题，避免每次加 sudo：
+
+[vagrant@bogon ~]$ docker image ls
+Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.39/images/json: dial unix /var/run/docker.sock: connect: permission denied
+
+```sh
+sudo groupadd docker // 实质上安装好 docker 后，它已经存在了
+sudo gpasswd -a vagrant docker // 将当前用户添加这个group里面
+sudo service docker restart // 注意之后要重启 docker 进程
+exit // 退出,重新登录
+vagrant ssh
+docker image ls // 现在就不用加 sudo 了
+
+docker pull hello-world // 这也是一个 base image，仅仅包含类似于一个可以执行的文件
+docker image ls // 发现这个Image只有1.85kb，非常非常小
+docker run hello-world // 这样就相当于创建了一个容器（执行一个Image)
+```
+
+开始制作 base image
+
+安装一些必要的包:
+```
+sudo yum install git
+sudo yum install vim
+```
+
+```
+mkdir hello-world
+cd hello-world/
+vi hello.c
+/*
+#include<stdio.h>
+int main()
+{
+    printf("hello docker\n");
+}
+*/
+
+history | grep yum // 看一下安装历史
+
+sudo yum install gcc // 要编译 C 文件
+sudo yum install glibc // 可以先不装
+sudo yum install locate // 可以先不装
+sudo yum install glibc-static 
+
+gcc -static hello.c -o hello
+ls // 发现多了一个可执行文件`hello`
+./hello //执行一次看一下
+```
+
+现在，就可以用 Dockerfile 把它弄成一个 Docker Image
+
+```sh
+vim Dockerfile
+/*
+FROM scratch //因为是base image,所以这里不能是其它
+ADD hello / // 将这个`hello`添加到根目录
+CMD ["/hello"] // 执行它
+*/
+docker build -t kirkwwang/hello-world . //构建 然后打 tag，在当前目录下找Dockerfile，因为有三步，所以这个Image有三层
+
+docker image ls // 看一下,发现这个Image只有857KB
+ls -lh // 看一下`hello`,只有837KB
+
+docker history b3a43698719c // 看一下这个image有几层，发现是两层，因为FROM scratch本身就没有FROM其它Image,可以不算作一层
+
+docker run kirkwwang/hello-world // 运行看一下，麻雀虽小，五脏俱全
+
+```
 
 
 
