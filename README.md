@@ -823,8 +823,43 @@ docker run -it kirkwwang/ubuntu-stress --vm 1 --verbose # 打印出所有的过
 
 ENTRYPOINT + CMD 比较典型利用 docker 在容器里面运行命令工具的方法
 
+### 容器的资源限制
 
+限制内存
 
+```sh
+docker run help ## --memory --memory-swap 不做限制就等于 memory
+
+docker run --memory=200M kirkwwang/ubuntu-stress --vm 1 --verbose 
+# 如果停不了，新开一个 vagrant ssh -->docker stop
+# --memory=200M，其实有400M,因为 memory-swap 没指定就等于 memory
+
+docker run --memory=200M kirkwwang/ubuntu-stress --vm 1 --verbose --vm-bytes 500M
+## 总共才400M，指定了500M，肯定就炸了
+
+```
+
+限制CPU(注意观察)
+
+shell 1
+
+```sh
+top
+```
+
+shell 2
+
+```sh
+docker run --cpu-shares=5 --name=test1 kirkwwang/ubuntu-stress --cpu 1
+```
+
+shell 3
+
+```sh
+docker run --cpu-shares=10 --name=test2 kirkwwang/ubuntu-stress --cpu 1
+```
+
+cpu-shares 去设置相对权重
 
 
 
