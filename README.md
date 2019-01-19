@@ -385,6 +385,129 @@ FROM centos # 使用base image
 FROM ubuntu:14.04
 ```
 
+FROM
+
+**为了安全，尽量使用官方的image作为base image！**
+
+#### LABEL
+
+```sh
+LABEL maintainer="kirk.w.wang@gmail.com"
+LABEL version="1.0"
+LABEL description="This is description"
+```
+
+LABEL //类似于注释
+
+**Metadata不可少**
+
+#### RUN
+
+```sh
+RUN yum update && yum install -y vim \
+    python-dev # 反斜线换行
+
+RUN apt-get update && apt-get install -y perl \
+    pwgen --no-install-recommends && rm -rf \
+    /var/lib/apt/lists/* # 注意清理cache
+
+RUN /bin/bash -c 'source $HOME/.bashrc;echo 
+$HOME'
+```
+
+RUN 
+
+**为了美观，复杂的RUN请用反斜线换行！避免无用分层，合并多条命令成一行！**
+
+#### WORKDIR 设定当前工作目录
+
+```sh
+WORKDIR /root
+
+WORKDIR /test # 如果没有会自动创建test目录
+WORKDIR demo
+RUN pwd # 输出结果应该是 /test/demo
+```
+
+WORKDIR
+
+**用WORKDIR，不要用 RUN cd！尽量使用绝对目录！**
+
+#### ADD and COPY
+
+```sh
+ADD hello /
+ADD test.tar.gz / #添加到根目录并解压
+
+WORKDIR /root
+ADD hello test/ # /root/test/hello
+
+WORKDIR /root
+COPY hello test/
+```
+
+ADD or COPY
+
+**大部分情况，COPY 优于 ADD! ADD 除了 COPY 还有额外功能（解压）！添加远程文件/目录请使用curl或者wget!**
+
+#### ENV
+
+ENV MYSQL_VERSION 5.6 # 设置常量
+RUN apt-get install -y mysql-server="${MYSQL_VERSION}" \
+    && rm -rf /var/lib/apt/lists/* # 引用常量
+
+ENV
+
+**尽量使用ENV增加可维护性**
+
+#### VOLUME and EXPOSE
+
+(存储和网络)后面详细介绍
+
+#### CMD and ENTRYPOINT
+
+后面详细介绍
+
+#### Demo Time & 学习方式
+
+[docker-library](https://github.com/docker-library)
+
+[Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
+
+
+### RUN vs CMD vs Entrypoint
+
+RUN:执行命令并创建新的Image Layer
+
+CMD:设置容器启动后默认执行的命令和参数
+
+ENTRYPOINT:设置容器启动时运行的命令
+
+#### Shell 和 Exec格式
+
+Shell格式
+
+```sh
+RUN apt-get install -y vim
+CMD echo "hello docker"
+ENTRYPOINT echo "hello docker"
+```
+
+Exec格式
+
+```sh
+RUN["apt-get", "install", "-y", "vim"]
+CMD["/bin/echo", "hello docker"]
+ENTRYPOINT["/bin/echo", "hello docker"]
+```
+
+
+
+
+
+
+
+
 
 
 
