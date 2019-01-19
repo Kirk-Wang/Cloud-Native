@@ -211,5 +211,93 @@ docker run kirkwwang/hello-world // 运行看一下，麻雀虽小，五脏俱�
 ```
 
 
+### 什么是Container
+
+```sh
+docker container ls // 查看当前正在运行的容器
+
+docker container ls -a // 查看所有的容器（正在运行的以及退出的）
+
+more hello-world/Dockerfile // 看CMD那一行，当我们 docker run 的时候，默认会去执行 CMD 里面的命令
+
+docker run centos // 默认会用latest版本
+
+docker container ls -a // 它默认执行的是/bin/bash，但也会退出，不是交互式运行，不常驻内存
+```
+
+交互式运行
+
+```sh
+docker run --help //注意看帮助 -i，-t
+
+docker run -it centos // 发现我们进入到了容器里面
+touch test.txt // 多了一个可读可写的 container layer,我们来创建一个文件
+ls
+yum install vim // 再执行一条安装命令
+
+```
+
+开个新的terminal
+
+```sh
+cd ~/Vagrant/CentOS7
+vagrant ssh
+docker container ls // 发现有正在运行容器 centos，COMMAND 是 /bin/bash
+```
+
+退出容器
+
+```sh
+exit // 退出这个容器
+docker container ls // 看不到正在运行的容器了
+docker container ls -a
+```
+
+Docker 的命令分为两大块：Management Commands & Commands
+
+Management Commands ：主要是对Docker里面的具体对象进行管理
+
+```sh
+docker image // 看一下image下又有那一些命令
+docker image ls
+docker container // 看一下container下又有那一些命令
+docker container ls -a
+docker container rm dfc145ac218f
+docker container rm 3e // id 无需写全
+```
+
+Commands：提供一些简便方法，不用命令写的太长
+
+```sh
+docker ps //  == docker container ls
+docker ps -a //  == docker container ls -a
+docker rm cf // == docker container rm cf
+docker images // == docker image ls
+docker rmi fce289e99eb9 // docker image rm fce289e99eb9
+```
+
+如何一次性清理掉所有的容器?
+
+```sh
+docker run kirkwwang/hello-world // 先创建5个container
+docker run kirkwwang/hello-world
+docker run kirkwwang/hello-world
+docker run kirkwwang/hello-world
+docker run kirkwwang/hello-world
+
+docker ps -a // 看一下全部
+
+docker container ls -aq // 列举出所有的id
+docker container ls -a | awk {'print$1'} // 打印出第一列
+docker rm $(docker container ls -aq) // 全部清理 == docker rm $(docker ps -aq)
+
+// 只清理已经退出的
+docker run kirkwwang/hello-world //先 run 5 个
+docker container ls -f "status=exited" // 列出退出的容器
+docker container ls -f "status=exited" -q // 列举出所有的id
+docker rm $(docker container ls -f "status=exited" -q) // 只清理已经退出的
+docker rm $(docker ps -f "status=exited" -q) // 同样的效果
+```
+
 
 
