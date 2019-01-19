@@ -702,6 +702,130 @@ docker rmi x.x.x.x:5000/hello-world # 删掉本地的
 docker pull x.x.x.x:5000/hello-world
 ```
 
+### Dockerfile 实战
+
+```sh
+mkdir flask-hello-world
+cd flask-hello-world/
+
+vim app.py
+# from flask import Flask
+# app = Flask(__name__)
+# @app.route('/')
+# def hello()
+#    return "hello docker"
+# if __name__== "__main__":
+#    app.run()
+
+vim Dockerfile
+# FROM python:2.7
+# LABEL maintainer="Kirk Wang<kirk.w.wang@gmail.com>"
+# RUN pip install flask
+# COPY app.py /app
+# WORKDIR /app
+# EXPOSE 5000
+# CMD ["python", "app.py"]
+
+docker build -t kirkwwang/flask-hello-world . # 构建
+
+# ....
+# Step 4/7 : COPY app.py /app
+# ---> 6e2811783304
+# Step 5/7 : WORKDIR /app
+# Cannot mkdir: /app is not a directory 尴尬，报错，进去这个中间状态的Image 6e2811783304 去看一眼
+
+docker run -it 6e2811783304 /bin/bash # 发现 app 是个文件
+
+vim Dockerfile # 修改 COPY app.py /app -> COPY app.py /app/
+
+docker build -t kirkwwang/flask-hello-world . # 构建
+
+docker images # 看到了 kirkwwang/flask-hello-world
+
+docker run kirkwwang/flask-hello-world # 创建一个容器，运行我们的 App
+
+docker run -d kirkwwang/flask-hello-world # -d 后台执行
+
+docker ps # 发现正在运行
+```
+
+### 容器的操作
+
+对运行中的容器进行操作
+
+```sh
+docker ps
+docker exec -it fdeee46afa69 /bin/bash # 对正在运行的容器执行/bin/bash，交互式的运行
+ps -ef | grep python # 发现有进程在后台运行
+
+exit # 退出
+docker exec -it fdeee46afa69 python # 发现我们直接进入到了一个python的shell里面了
+
+docker exec -it fdeee46afa69 ip a # 打印下容器的ip地址
+
+docker stop fdeee46afa69 # ==docker container stop fdeee46afa69 停掉容器
+
+docker rm $(docker ps -aq) # 清理所有的容器
+docker rm $(docker ps -f "status=exited" -q) # 清理所有退出的容器
+
+docker run -d --name=demo kirkwwang/flask-hello-world # 重新启动并且加个名字
+
+docker ps # 看到了那个名字，不指定就随机分配一个
+
+docker stop demo # 停掉
+
+docker start demo # 启动
+
+docker inspect demo # 查看下这个容器的详细信息
+
+docker logs demo # 容器运行产生的一些输出
+```
+
+### Dockerfile实战(2)
+
+stress 压力测试工具
+
+```sh
+mkdir ubuntu-stress
+cd ubuntu-stress
+docker run -it ubuntu # 运行并进入到容器里面
+apt-get update && apt-get install -y stress # 安装 stress
+
+which stress # 在/usr/bin/stress
+
+stress --help
+
+stress --vm 1 --verbose # 分配&释放
+
+stress --vm 1 --vm-bytes 5000000M --verbose # 炸了，超出了 docker host 内存的限制了
+
+top # 看下内存
+```
+
+打包 stress 为一个 Image
+
+```sh
+vim Dockerfile
+/*
+FROM ubuntu:16.04
+RUN apt-get update && apt-get install -y stress
+ENTRYPOINT ["/usr/bin/stress"]
+CMD []
+*/
+docker build -t kirkwwang/ubuntu-stress . # 构建
+
+docker run -it kirkwwang/ubuntu-stress # 发现打印出了帮助信息
+
+docker run -it kirkwwang/ubuntu-stress --vm 1 # stress 接受了vm等于1的参数
+
+docker run -it kirkwwang/ubuntu-stress --vm 1 --verbose # 打印出所有的过程
+```
+
+ENTRYPOINT + CMD 比较典型利用 docker 在容器里面运行命令工具的方法
+
+
+
+
 
 
 
