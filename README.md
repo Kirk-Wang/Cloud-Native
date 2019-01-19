@@ -572,8 +572,135 @@ docker run [image] #输出?-->hello World
 docker run -it [image] /bin/bash # 输出?-->CMD命令被忽略，因为指定了 `/bin/bash`
 ```
 
+#### ENTRYPOINT
 
+让容器以应用程序或者服务的形式运行
 
+不会被忽略，一定会执行
+
+最佳实践：写一个shell脚本作为entrypoint
+
+```sh
+COPY docker-entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint.sh"]
+
+EXPOSE 27017
+CMD ["mongod"]
+```
+
+实践(命令改成 shell)
+
+```sh
+docker rm $(docker ps -f "status=exited" -q) // 干掉已经退出的容器
+docker rmi e2fc56ae6db7 // 删掉那个 none Image
+
+vim Dockerfile # 修改ENTRYPOINT：CMD echo "hello $name"
+
+docker build -t kirkwwang/centos-cmd-shell . # 构建
+
+docker images # 查看一下
+#[vagrant@bogon cmd_vs_entrypoint]$ docker run kirkwwang/centos-cmd-shell
+#hello Docker
+
+#docker run -it kirkwwang/centos-cmd-shell /bin/bash # 发现直接进入容器里面了
+
+#[vagrant@bogon cmd_vs_entrypoint]$ docker run kirkwwang/centos-entrypoint-shell
+#hello Docker
+
+#[vagrant@bogon cmd_vs_entrypoint]$ docker run -it kirkwwang/centos-entrypoint-shell /bin/bash
+#hello Docker -->> 还是会运行 ENTRYPOINT
+```
+
+### 镜像的发布
+
+[Docker Hub](https://hub.docker.com)
+
+实践
+
+```sh
+docker login
+
+docker push kirkwwang/hello-world # kirkwwang 一定是你的 Docker Id
+
+docker rmi kirkwwang/hello-world # 删掉本地的，拉取线上的
+
+docker pull kirkwwang/hello-world
+```
+
+这样去发布一个 docker image 是不安全的，因为别人不知道你在系统是不是加了病毒
+
+推荐的方式是关联Github仓库等，里面提供Dockerfile, Docker Hub 自动帮我们根据 Dockerfile 构建
+
+[Create Repository](https://cloud.docker.com/repository/create)
+
+#### 搭建私有的 Registry
+
+[registry](https://hub.docker.com/_/registry)
+
+登录另一台机器：
+
+```sh
+docker run -d -p 5000:5000 --restart always --name registry registry:2 # 创建一个容器运行App
+```
+
+本地测试一下，是否能连得上我们的伺服器。
+
+```sh
+sudo yum install -y telnet
+telnet x.x.x.x 5000 # 本地测一下
+# Trying xx.xx.xx.xx...
+# Connected to xx.x.x.x.
+# Escape character is '^]'. 
+# 说明连接成功了
+```
+
+往私有的服务器去push
+
+```sh
+docker rmi kirkwwang/hello-world # 先干掉本地的Image
+docker build -t x.x.x.x:5000/hello-world . # x.x.x.x 你自己服务器的ip
+docker images
+```
+
+配置(因为默认我们的服务器是不可信任的)
+
+```sh
+sudo ls /etc/docker/ # 这个目录下，创建一个文件
+sudo vim /etc/docker/daemon.json
+
+# [vagrant@bogon hello-world]$ sudo more /etc/docker/daemon.json
+# {"insecure-registries":["x.x.x.x:5000"]} 让这个服务器可以信任的
+
+# sudo vim /lib/systemd/system/docker.service 编辑写docker的启动文件，加载刚刚的配置
+# EnvironmentFile=-/etc/docker/daemon.json 加这么一行
+
+sudo service docker restart
+#[vagrant@bogon hello-world]$ sudo service docker restart
+#Redirecting to /bin/systemctl restart docker.service
+#Warning: docker.service changed on disk. Run 'systemctl daemon-reload' to reload units.
+
+sudo systemctl daemon-reload
+
+docker push xx.xx.xx.xx:5000/hello-world ## 好，看到成功了
+```
+
+如何验证推送成功了呢？
+
+[Docker Registry HTTP API V2](https://docs.docker.com/registry/spec/api/)
+
+[listing-repositories](https://docs.docker.com/registry/spec/api/#listing-repositories)
+
+```sh
+[vagrant@bogon hello-world]$ curl x.x.x.x:5000/v2/_catalog
+{"repositories":["hello-world"]}
+```
+
+另外一种：
+
+```sh
+docker rmi x.x.x.x:5000/hello-world # 删掉本地的
+docker pull x.x.x.x:5000/hello-world
+```
 
 
 
