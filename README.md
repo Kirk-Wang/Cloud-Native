@@ -300,4 +300,93 @@ docker rm $(docker ps -f "status=exited" -q) // 同样的效果
 ```
 
 
+### 构建自己的Docker镜像
+
+两个命令：
+
+#### docker container commit // 可以简写成 docker commit
+
+Create a new image from a container's changes
+
+基于某个image创建一个container, 然后在这个container里面做一些变化， 如：安装了某个软件
+
+把这个已经改变了的 container commit成一个新的image
+
+#### docker image build // 可以简写成 docker build
+
+Build an image from a Dockerfile
+
+-----
+
+#### 实验
+
+```sh
+docker run -it centos // 进入到容器，做一些变化
+yum install -y vim // 安装一个vim
+vim // 瞄一眼
+exit // 退出
+docker container ls -a // 看到一个退出状态的 centos
+/*
+Usage:  docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
+*/
+docker commit // 看一眼这个命令接收哪些参数
+docker commit nostalgic_wiles kirkwwang/centos-vim // nostalgic_wiles 用的NAMES，kirkwwang/centos-vim 这个用的tag默认是latest
+// OK,我们弄了一个新的Image
+docker image ls // 看一眼images
+/*
+REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE
+kirkwwang/centos-vim    latest              5df29f39aeb1        3 minutes ago       328MB
+kirkwwang/hello-world   latest              b3a43698719c        9 hours ago         857kB
+centos                  latest              1e1148e4cc2c        6 weeks ago         202MB
+*/
+docker history 1e1148e4cc2c // 看一下他们的分层
+docker history 5df29f39aeb1 // OK, 发现有vim的多了一层，其它的都是共享原来的
+```
+
+**不提倡这种方式创建Image，发布出去，其实并不知道这个Image是如何产生的（鬼知道你里面安装啥软件），不安全**
+
+#### 通过Dockerfile去构建一个Image
+
+```sh
+docker image ls
+docker image rm 5df29f39aeb1 // 删掉刚创建的image
+mkdir docker-centos-vim
+cd docker-centos-vim
+vim Dockerfile
+/*
+FROM centos
+RUN yum install -y vim
+*/
+docker build -t kirkwwang/centos-vim-new . // -t 打 tag, `.`基本于当前目录的Dockerfile构建
+/*
+Step 1/2 : FROM centos
+ ---> 1e1148e4cc2c // 直接引用 centos 这一层
+Step 2/2 : RUN yum install -y vim
+ ---> Running in 080a3634317e // 在build的过程中，生成了一个新的，临时的 container layer(可读写)，然后在这里安装
+ ....
+ ....
+ Complete!
+Removing intermediate container 080a3634317e // 删掉那个临时的
+ ---> 11f4cb05df0f // 基于那个临时的container 去 commit 成一个新的Image
+Successfully built 11f4cb05df0f
+Successfully tagged kirkwwang/centos-vim-new:latest
+*/
+
+docker image ls // 看一眼新生成的 image
+```
+
+### Dockerfile语法梳理及最佳实践
+
+#### FROM
+
+```sh
+FROM scratch # 制作 base image
+FROM centos # 使用base image
+FROM ubuntu:14.04
+```
+
+
+
+
+
 
