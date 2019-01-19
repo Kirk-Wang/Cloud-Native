@@ -332,15 +332,15 @@ Usage:  docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
 docker commit // 看一眼这个命令接收哪些参数
 docker commit nostalgic_wiles kirkwwang/centos-vim // nostalgic_wiles 用的NAMES，kirkwwang/centos-vim 这个用的tag默认是latest
 // OK,我们弄了一个新的Image
-docker image ls // 看一眼images
+docker image ls # 看一眼images
 /*
 REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE
 kirkwwang/centos-vim    latest              5df29f39aeb1        3 minutes ago       328MB
 kirkwwang/hello-world   latest              b3a43698719c        9 hours ago         857kB
 centos                  latest              1e1148e4cc2c        6 weeks ago         202MB
 */
-docker history 1e1148e4cc2c // 看一下他们的分层
-docker history 5df29f39aeb1 // OK, 发现有vim的多了一层，其它的都是共享原来的
+docker history 1e1148e4cc2c # 看一下他们的分层
+docker history 5df29f39aeb1 # OK, 发现有vim的多了一层，其它的都是共享原来的
 ```
 
 **不提倡这种方式创建Image，发布出去，其实并不知道这个Image是如何产生的（鬼知道你里面安装啥软件），不安全**
@@ -501,6 +501,76 @@ CMD["/bin/echo", "hello docker"]
 ENTRYPOINT["/bin/echo", "hello docker"]
 ```
 
+Dockerfile1
+
+```sh
+FROM centos
+ENV name Docker
+ENTRYPOINT echo "hello $name"
+```
+
+Dockerfile2
+
+```sh
+FROM centos
+ENV name Docker
+ENTRYPOINT ["/bin/echo", "hello $name"]
+```
+
+Demo
+
+```sh
+mkdir cmd_vs_entrypoint
+cd cmd_vs_entrypoint
+vim Dockerfile # 放进去Dockerfile1
+docker build -t kirkwwang/centos-entrypoint-shell . # shell格式构建
+docker image ls
+docker run kirkwwang/centos-entrypoint-shell # 运行看一下
+
+
+vim Dockerfile # 放进去Dockerfile2
+docker build -t kirkwwang/centos-entrypoint-exec . # exec格式构建
+docker image ls
+docker run kirkwwang/centos-entrypoint-exec
+# [vagrant@bogon cmd_vs_entrypoint]$ docker run kirkwwang/centos-entrypoint-exec
+# hello $name // 发现并没有进行变量替换，因为我们不是在shell里面去执行 echo，只是单纯的执行echo, 怎么改？
+# ENTRYPOINT ["/bin/bash","-c","echo","hello $name"] 在 shell 里面执行 echo 命令
+
+vim Dockerfile # 修改一下
+docker build -t kirkwwang/centos-entrypoint-exec-new .
+docker image ls
+docker run kirkwwang/centos-entrypoint-exec-new # 发现打印出来的是空，Why？
+# [vagrant@bogon cmd_vs_entrypoint]$ docker run kirkwwang/centos-entrypoint-exec-new
+#
+
+vim Dockerfile # 修改一下
+# ENTRYPOINT ["/bin/bash","-c", "echo hello $name"] 把后面所有的命令作为一个去执行
+
+docker build -t kirkwwang/centos-entrypoint-exec-new .
+docker run kirkwwang/centos-entrypoint-exec-new # 现在就正常了
+
+```
+
+#### CMD
+
+容器启动时默认执行的命令
+
+如果docker run指定了其它命令，CMD命令被忽略
+
+如果定义了多个CMD，只有最后一个会执行
+
+Dockerfile:
+
+```sh
+FROM centos
+ENV name Docker
+CMD echo "hello $name"
+```
+
+```sh
+docker run [image] #输出?-->hello World
+docker run -it [image] /bin/bash # 输出?-->CMD命令被忽略，因为指定了 `/bin/bash`
+```
 
 
 
