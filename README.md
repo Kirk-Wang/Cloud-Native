@@ -1250,6 +1250,9 @@ docker version # 现在连上的是aliyun的主机
 docker run --name web -d -p 80:80 nginx # 提供一个服务
 
 x.x.x.x # 完美可以访问云
+
+docker-machine stop devops
+docker-machine rm devops # 避免扣钱
 ```
 
 配置 [Aliyun 镜像加速器](https://cr.console.aliyun.com/cn-qingdao/mirrors)
@@ -1259,4 +1262,41 @@ docker-machine ssh devops
 ```
 
 
+### 容器网络之host和none
+
+*none network*
+
+```sh
+docker run -d --name test1 --network none busybox /bin/sh -c "while true; do sleep 3600; done"
+
+docker network inspect none # 注意Containers部分
+# 发现ip地址，mac地址都没有
+docker exec -it test1 /bin/sh # 进去
+
+ip a
+#1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue qlen 1000
+#    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+#    inet 127.0.0.1/8 scope host lo
+#       valid_lft forever preferred_lft forever
+
+# 只有本地的一个回环口，它是一个孤立network namespace
+
+exit
+
+docker stop test1
+docker rm test1
+```
+
+*none network*
+
+```sh
+docker run -d --name test1 --network host busybox /bin/sh -c "while true; do sleep 3600; done"
+
+docker network inspect host # 注意Containers部分
+# 发现ip地址，mac地址都没有
+docker exec -it test1 /bin/sh # 进去
+
+ip a # 发现看到的接口和外面宿主机是共享的，没有自己的network namespace
+# 会存在端口冲突的问题
+```
 
