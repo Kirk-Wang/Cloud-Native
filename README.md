@@ -1061,5 +1061,81 @@ sudo ip netns exec test1 ping 192.168.1.2 # 在 test1 里面去 ping test2
 # PING 192.168.1.2 (192.168.1.2) 56(84) bytes of data.
 # 64 bytes from 192.168.1.2: icmp_seq=1 ttl=64 time=0.161 ms
 # 完美，通了
+
+sudo ip netns exec test2 ping 192.168.1.1 # 同理
 ```
+
+*和前面为什么 busybox 会互动的原理是一样的*
+
+### Docker bridge0详解
+
+```sh
+sudo docker exec -it test1 /bin/sh # 进入容器
+
+ping www.baidu.com # 是能 ping 通的， Why?
+```
+
+实验：
+
+```sh
+docker ps
+docker stop test2
+docker rm test2 # 删掉test2，只保留test1
+
+docker network ls # 列举出来当前机器docker 有哪些网络
+# NETWORK ID          NAME                DRIVER              SCOPE
+# a5a19bc16353        bridge              bridge              local
+# 70660570dd52        host                host                local
+# e92557f82b05        none                null                local
+
+docker ps
+#CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+#ee54bca437fc        busybox             "/bin/sh -c 'while t…"   4 hours ago         Up 4 hours                              test1
+#test1 是连接到 bridge 这个网络上面的
+
+docker network inspect a5a19bc16353 #查看bridge详细信息,发现test1是连接到了bridge这个网路上面的
+
+ip a 
+# 看到  docker0 和 vethc44fcf8@if5
+# 我们的 test1 container 要连接到 docker0 这个 bridge 上面
+# docker0这个network namespace 是本机，busybox 有自己的 network namespace, 这两个要连接在一起，就需要一个 veth 的 pair
+# vethc44fcf8@if5 就负责连到 docker0 上面
+
+docker exec test1 ip a # 发现
+#...
+#5: eth0@if6: <BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN> mtu 1500 qdisc noqueue
+#    link/ether 02:42:ac:11:00:02 brd ff:ff:ff:ff:ff:ff
+#    inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0
+#       valid_lft forever preferred_lft forever
+# 这个 eth0@if6 和外面的 vethc44fcf8@if5 是一对，这样我们busybox就连到了 docker0 上了
+
+# 如何验证是连到了 docker0 上的？
+
+sudo yum install bridge-utils
+
+brctl
+
+brctl show
+#bridge name	bridge id		STP enabled	interfaces
+#docker0		8000.024271ff8c33	no		vethc44fcf8
+#发现我们这台机器上只有一个 Linux Bridge docker0
+#它有一个接口 vethc44fcf8 ，正好就对标vethc44fcf8@if5，也就是说这个接口是连上了 linux bridge 上的
+
+#创建 test2 container
+sudo docker run -d --name test2 busybox /bin/sh -c "while true; do sleep 3600; done"
+
+docker network inspect bridge # 看到Containers部分多了一个
+
+ip a # 再看，发现多了一个veth，Why?因为我们多了个容器，它又需要一对（一根线）去连这个 docker0
+#6: vethc44fcf8@if5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP group default
+#12: veth2b064cc@if11: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP group default
+
+brctl show # 发现 docker0 连了两个接口了
+# bridge name	bridge id		STP enabled	interfaces
+#docker0		8000.024271ff8c33	no		veth2b064cc
+#							                      vethc44fcf8
+
+
+```
+
 
