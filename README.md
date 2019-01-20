@@ -981,6 +981,85 @@ sudo ip netns exec test1 ip a # 在 test1 这个network namespace里面执行 ip
 # 还可以在network namespace里面执行 ip link 命令
 ip link # 本机看一下
 
+sudo ip netns exec test1 ip link
+#1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+#    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+# 只有一条lo(本地回环口)
 
+sudo ip netns exec test1 ip link set dev lo up # 好，现在让 lo 这个端口 up 起来
+
+sudo ip netns exec test1 ip link #看一下
+#1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+#   link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+# 现在变成 UNKNOWN 了，Why
+# 这个端口要UP起来，要满足一个条件，需要两端是连起来的
+# 就像 eth0 和mac里面的一个虚拟化的端口连起来，就是说单个端口是没法 up 起来的，必须是一对
+```
+
+做实验
+
+本机有两个 network namespace , test1 & test2，它们分别有一个looback本地的回环口
+
+想让 test1 和 test2 连起来，显然，我们需要接口（类似于连两台机器需要网线, 必须插到每个计算机的网口上去)
+
+在 Linux Network Namesapce 技术里面,我们有 Veth, 我们可以创建 Veth pair
+
+有了这一对，然后分别放在 test1 与 test2，这样就连起来了，因为这两个端口分别是在两个network namespace 里面
+
+所以说，如果我们给这两个端口都配一个IP地址的话，那么他们两个就是通的了（就如先前创建busybox container，它们能ping通，原理一样）
+
+[vagrant@docker-node1 ~]
+```sh
+sudo ip link add veth-test1 type veth peer name veth-test2 # 本机添加一对link
+
+ip link # 看一下
+#9: veth-test2@veth-test1: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+#    link/ether 32:e1:cb:c9:e7:c1 brd ff:ff:ff:ff:ff:ff
+#10: veth-test1@veth-test2: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+#    link/ether ea:7e:66:4b:31:f4 brd ff:ff:ff:ff:ff:ff
+
+sudo ip link set veth-test1 netns test1 # 把 veth-test1 接口添加到 test1 network namespace 里面去
+
+sudo ip netns exec test1 ip link #看一下
+
+#1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+#    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+#10: veth-test1@if9: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+#    link/ether ea:7e:66:4b:31:f4 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+# 看一下添加进去了
+
+sudo ip link # 看眼本地，10 不见了
+
+sudo ip link set veth-test2 netns test2 # 同理 ,test2
+
+sudo ip link # 看眼本地，9 也不见了，好，完美
+
+sudo ip netns exec test2 ip link 
+#1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+#    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+#9: veth-test2@if10: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+#    link/ether 32:e1:cb:c9:e7:c1 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+
+sudo ip netns exec test1 ip addr add 192.168.1.1/24 dev veth-test1 # 为 dev veth-test1 分配一个IP地址，掩码是24
+sudo ip netns exec test2 ip addr add 192.168.1.2/24 dev veth-test2
+
+sudo ip netns exec test1 ip link set dev veth-test1 up # 把这个veth-test1端口up起来
+sudo ip netns exec test2 ip link set dev veth-test2 up # 把这个veth-test2端口up起来
+
+sudo ip netns exec test1 ip link
+#1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+#    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+# 10: veth-test1@if9: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+#    link/ether ea:7e:66:4b:31:f4 brd ff:ff:ff:ff:ff:ff link-netnsid 1
+# test1 已经up 了
+
+sudo ip netns exec test1 ip a # 看下test1 ip
+
+sudo ip netns exec test2 ip a # 看下test2 ip
+
+sudo ip netns exec test1 ping 192.168.1.2 # 在 test1 里面去 ping test2
+# PING 192.168.1.2 (192.168.1.2) 56(84) bytes of data.
+# 64 bytes from 192.168.1.2: icmp_seq=1 ttl=64 time=0.161 ms
+# 完美，通了
 ```
 
