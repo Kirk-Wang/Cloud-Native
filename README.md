@@ -861,11 +861,116 @@ docker run --cpu-shares=10 --name=test2 kirkwwang/ubuntu-stress --cpu 1
 
 cpu-shares 去设置相对权重
 
+### Docker Network (环境搭建)
+
+单机：Bridge Network  Host Network  None Network
+
+多机：Overlay Network
+
+**Vagrant was unable to mount VirtualBox shared folders.错误解决方式**
+
+[解决方案](https://github.com/scotch-io/scotch-box/issues/296)
+
+```sh
+vagrant plugin install vagrant-winnfsd
+vagrant plugin install vagrant-vbguest
+Vagrant up
+```
+
+实操：
+
+外面是可以ping的通的
+```sh
+ping 192.168.205.10
+pint 192.168.205.11
+```
+
+```sh
+vagrant status
+
+vagrant ssh docker-node1 # 进入第一台机器
+
+docker version
+
+ip a
+
+# [vagrant@docker-node1 ~]$ ping 192.168.205.11 是通的
+
+```
+
+如果实在装不了可以 docker machine
+
+### 网络基础回顾
+
+*基于数据包的通信方式*
+
+*网络的分层*
+
+*路由的概念*
+
+*IP地址和路由*
+
+*公有IP和私有IP*
+
+```sh
+A 10.0.0.0 -> 10.255.255.255 (10.0.0.0/8)
+B 172.16.0.0 -> 172.31.255.255 (172.16.0.0/12)
+C 192.168.0.0 -> 192.168.255.255 (192.168.0.0/16)
+```
+
+*网络地址转换NAT*
+
+*Ping和telnet*
+
+Ping(ICMP)：验证IP的可达性
+
+telnet:验证服务的可用性
+
+Wireshart 工具
+
+### Linux网络命名空间(Docker 底层技术)
+
+busybox 是一个非常小的 Linux Image
+
+```sh
+sudo docker run -d --name test1 busybox /bin/sh -c "while true; do sleep 3600; done" # 这个 container 会一直在后台运行
+# 创建了一个容器，同时也就创建了一个 Linux Network Namespace, 和宿主机或其它容器是完全隔离的
+sudo docker run -d --name test2 busybox /bin/sh -c "while true; do sleep 3600; done"
+sudo docker ps
+
+sudo docker exec -it ee54bca437fc /bin/sh # 进入Container
+
+ip a # 显示当前容器有的网络接口(命名空间) lo: 本地回环口, eth0:
+
+exit
+
+docker ps
+
+sudo docker exec ee54bca437fc ip a # 直接在外面看一下test1容器的ip命名空间
+
+sudo docker exec -it 79dcebd2cc69 /bin/sh # 进入test2
+
+ping 172.17.0.2 # ping test1 容器，是能够通的
+
+```
 
 
+*从底层看看---如何创建和删除Linux network namespace*
 
+[vagrant@docker-node1 ~]
 
+```sh
+sudo ip netns list # 本机有的network namespace
+sudo ip netns delete test1 # 删掉
+sudo ip netns add test1 # 添加
+sudo ip netns list
+sudo ip netns add test1
+sudo ip netns list
+```
 
+有两个 network namespace 了
+
+刚才用 docker run 创建了两个容器，每个都有自己独立的 network namespace, 可以通过 docker exec 去查看 network namespace 里面的端口和ip地址
 
 
 
