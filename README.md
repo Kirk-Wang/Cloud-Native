@@ -975,5 +975,12 @@ sudo ip netns list
 同理，我们如何去查看刚刚 linux 创建的 network namespace 它的 ip 呢 ？
 ```sh
 sudo ip netns exec test1 ip a # 在 test1 这个network namespace里面执行 ip a 命令
+#1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN group default qlen 1000
+#    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+# 看到现在有一个本地的回环口，特点：没有127.0.0.1地址，状态是 DOWN 的，没有运行起来
+# 还可以在network namespace里面执行 ip link 命令
+ip link # 本机看一下
+
+
 ```
 
