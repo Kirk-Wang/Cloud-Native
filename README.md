@@ -972,5 +972,8 @@ sudo ip netns list
 
 刚才用 docker run 创建了两个容器，每个都有自己独立的 network namespace, 可以通过 docker exec 去查看 network namespace 里面的端口和ip地址
 
-
+同理，我们如何去查看刚刚 linux 创建的 network namespace 它的 ip 呢 ？
+```sh
+sudo ip netns exec test1 ip a # 在 test1 这个network namespace里面执行 ip a 命令
+```
 
