@@ -1353,6 +1353,15 @@ docker run -d -p 5000:5000 --link redis --name flask-redis -e REDIS_HOST=redis k
 
 多机器通信
 
-```sh
+[VXLAN](https://www.evoila.de/de/blog/2015/11/06/what-is-vxlan-and-how-it-works/)
 
+192.168.205.10  -> 192.168.205.11   
+```sh
+vagrant ssh docker-node1
+ip a
+exit
+vagrant ssh docker-node2
+ip a
+
+# 两台主机之间是可以通信的(underlay)
 ```
