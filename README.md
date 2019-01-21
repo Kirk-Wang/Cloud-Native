@@ -1524,3 +1524,5 @@ sudo docker exec test1 ping test2 # 能通，成功
 ```
 
 可以做多机基于 overlay 网络，部署flask-redis
+
+深入了解，[Overlay Driver Network Architecture](https://github.com/docker/labs/blob/master/networking/concepts/06-overlay-networks.md)
