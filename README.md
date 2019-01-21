@@ -1522,3 +1522,5 @@ sudo docker exec test1 ping 10.0.0.3 # 能通，成功
 
 sudo docker exec test1 ping test2 # 能通，成功
 ```
+
+可以做多机基于 overlay 网络，部署flask-redis
