@@ -1717,6 +1717,28 @@ vim skeleton/client/templates/main/home.html
 
 *使用 Docker 作为本地开发环境，是 DevOps 的第一步。*
 
+### Docker Compose多容器部署
 
+部署WordPress
 
+[The server requested authentication method unknown to the client](https://github.com/laradock/laradock/issues/1392)
 
+```sh
+docker run -d --name mysql -v mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=wordpress mysql
+# 创建 mysql 容器并且持久化
+# 这里需要配置
+
+docker exec -it mysql /bin/bash
+
+mysql -u root -p
+root # login
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root';
+exit
+
+docker ps # mysql container 已经运行了
+
+docker run --name wordpress --link mysql -p 80:80 -d  wordpress # 构建容器，环境变量用默认值
+```
+
+直接就可以访问我本地的 vagrant 虚拟机 [192.168.205.10](http://192.168.205.10) 进行安装，如此方便。
