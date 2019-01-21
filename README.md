@@ -1648,4 +1648,75 @@ mysql -u root
 
 ```
 
+### 数据持久化：Bind Mounting
+
+```sh
+#[vagrant@docker-node1 docker-nginx]$ pwd
+#/home/vagrant/c5/labs/docker-nginx
+
+more Dockerfile
+
+docker build -t kirkwwang/my-nginx . # 构建
+
+docker images
+
+docker run -d -p 80:80 --name web kirkwwang/my-nginx
+
+dokcer ps
+
+curl 127.0.0.1
+
+docker rm -f web
+
+docker run -d -v $(pwd):/usr/share/nginx/html -p 80:80 --name web kirkwwang/my-nginx #创建一个新的容器
+
+docker exec -it web /bin/bash
+
+ls #有映射目录里面的文件
+
+touch test.txt
+
+exit
+
+#[vagrant@docker-node1 docker-nginx]$ ls
+#Dockerfile  index.html  test.txt
+#正常，是同步的
+
+vim test.txt
+
+#[vagrant@docker-node1 docker-nginx]$ docker exec -it web /bin/bash
+#root@350a4d996767:/usr/share/nginx/html# more test.txt
+#iiiii
+#进去了，发现是同步的
+
+```
+
+### 开发者利器-Docker+Bind Mount
+
+```sh
+# /home/vagrant/c5/labs/flask-skeleton
+# [vagrant@docker-node1 flask-skeleton]$
+
+docker build -t kirkwwang/flask-skeleton . #构建
+
+docker images
+
+docker run -d -p 80:5000 --name flask kirkwwang/flask-skeleton # 映射目录
+
+docker rm -f flask
+
+docker run -d -p 80:5000 -v $(pwd):/skeleton --name flask kirkwwang/flask-skeleton # 创建容器
+
+docker ps
+
+vim skeleton/client/templates/main/home.html
+
+# 刷新页面，更新了
+
+```
+
+*使用 Docker 作为本地开发环境，是 DevOps 的第一步。*
+
+
+
 
