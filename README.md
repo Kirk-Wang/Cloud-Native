@@ -1969,6 +1969,191 @@ docker-compose up --scale web=3 -d # 回到三台
 
 ### 部署一个复杂的投票应用
 
+[vagrant@docker-node1 example-voting-app]$
+
+```sh
+docker-compose up
+```
+
+*docker-compose build*，当我们 app 的 Dockerfile 发生了变化，它只是本地开发用的一个工具，不是部署生产的工具
+
+### 开发环境和生产环境完全是两个不同的概念
+
+### 容器编排：Swarm mode
+
+到处都使用容器=麻烦来了
+
+* 怎么去管理这么多容器？
+* 怎么能方便的横向扩展？
+* 如果容器down了，怎么能自动恢复？
+* 如何去更新容器而不影响业务？
+* 如何去监控追踪这些容器？
+* 怎么去调度容器的创建？
+* 保护隐私数据？
+
+*Swarm 内置于 Docker 的一个工具*
+
+*Docker Swarm Mode Architecture*
+
+Swarm 是一种集群的架构，集群就有节点，节点就有角色
+
+有两种角色：Manager，Worker
+
+Manager： 是整个集群的大脑，为了避免单点故障，至少要有两个，那么就会涉及到状态同步的问题
+
+一个Manager做的事情，如何同步到另外的 Manager 节点上，这里就会用到一个内置的分布式的存储数据库
+
+数据是通过Raft协议做的一个同步，它能确保Manager节点之间的信息是对称的，同步的
+
+Worker：干活的节点，Worker的节点信息同步，会通过 Gossip network 来通信
+
+*Service & Replicas*
+
+### 创建一个三节点的swarm集群
+
+```sh
+vagrant status
+# Current machine states:
+# swarm-manager             running (virtualbox)
+# swarm-worker1             running (virtualbox)
+# swarm-worker2             running (virtualbox)
+
+vagrant ssh swarm-manager
+
+docker swarm --help # 看下帮助
+# init        Initialize a swarm
+
+docker swarm init --help # 看下帮助
+# --advertise-addr string                  Advertised address (format: <ip|interface>[:port])
+# 要启一个 cluster，首先得宣告一个地址
+
+ip a #看下地址 192.168.205.13
+
+docker swarm init --advertise-addr=192.168.205.13 # 先运行的节点将会成为 master
+#Swarm initialized: current node (9wpz0pnb3bwlau9kvgm7vsbfk) is now a manager.
+#To add a worker to this swarm, run the following command:
+#   docker swarm join --token SWMTKN-1-0mzs1n1oik1aykjq1f3bj06ev6gowls8l4qhy19x4yr15moyot-9ipfy6r48lz8dv7ps0ws689kt 192.168.205.13:2377
+#To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+
+```
+
+[vagrant@swarm-worker1 ~]$
+
+```sh
+docker swarm join --token SWMTKN-1-0mzs1n1oik1aykjq1f3bj06ev6gowls8l4qhy19x4yr15moyot-9ipfy6r48lz8dv7ps0ws689kt 192.168.205.13:2377
+# This node joined a swarm as a worker.
+
+```
+
+[vagrant@swarm-manager ~]$
+
+```sh
+docker node
+# ls          List nodes in the swarm
+
+docker node ls
+#ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
+#9wpz0pnb3bwlau9kvgm7vsbfk *   swarm-manager       Ready               Active              Leader              18.09.1
+#j4ufrije1qijn38o7vckisxrt     swarm-worker1       Ready               Active                                  18.09.1
+```
+
+[vagrant@swarm-worker2 ~]$
+
+```sh
+docker swarm join --token SWMTKN-1-0mzs1n1oik1aykjq1f3bj06ev6gowls8l4qhy19x4yr15moyot-9ipfy6r48lz8dv7ps0ws689kt 192.168.205.13:2377
+# This node joined a swarm as a worker.
+
+```
+
+[vagrant@swarm-manager ~]$
+```sh
+docker node ls
+# 9wpz0pnb3bwlau9kvgm7vsbfk *   swarm-manager       Ready               Active              Leader              18.09.1
+# j4ufrije1qijn38o7vckisxrt     swarm-worker1       Ready               Active                                  18.09.1
+# exhtin48g55q98vzwapw7ebt3     swarm-worker2       Ready               Active                                  18.09.1
+
+# OK，具有三个节点的 swarm cluster 就创建完成了
+```
+
+*docker-machine create swarm-manager* 也是一样的
+
+### Service的创建维护和水平扩展
+
+vagrant@swarm-manager
+```sh
+docker service
+
+docker service create --help
+# docker run 是本地开发用的
+
+docker service create --name demo busybox sh -c "while true;do sleep 3600;done" # 创建一个 service 容器
+
+docker service ls
+
+docker service ps demo # 详细信息
+
+docker service ls
+#kr1lvphl1un4        demo                replicated          1/1                 busybox:latest
+# replicated 1/1 --> 表明可以水平扩展的
+
+docker service scale # 看下帮
+
+docker service scale demo=5
+
+docker service ls
+# ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+# kr1lvphl1un4        demo                replicated          5/5                 busybox:latest
+# 看到了没 REPLICAS 变成了 5 个 (5[5个都Ready了]/5[总共5个])
+
+docker service ps demo 
+# kxke0280pdfb        demo.1              busybox:latest      swarm-manager       Running             Running 12 minutes ago
+# wu60mazz91xf        demo.2              busybox:latest      swarm-worker2       Running             Running 3 minutes ago
+# jhcv9335qfn3        demo.3              busybox:latest      swarm-worker1       Running             Running 3 minutes ago
+# j6if990ns5m4        demo.4              busybox:latest      swarm-manager       Running             Running 3 minutes ago
+# 2zr6sh6stb1q        demo.5              busybox:latest      swarm-worker2       Running             Running 3 minutes ago
+# 平均分布到各个节点
+
+#[vagrant@swarm-worker1 ~]$ docker ps 
+#CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+#7cefefd13862        busybox:latest      "sh -c 'while true;d…"   6 minutes ago       Up 6 minutes       
+# worker1 看一下, 1 个，没问题
+
+#[vagrant@swarm-worker2 ~]$ docker ps
+#CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+#48485cefc502        busybox:latest      "sh -c 'while true;d…"   8 minutes ago       Up 8 minutes                            #demo.5.2zr6sh6stb1quxihmcqg5q0wx
+#9d74f97c7d2b        busybox:latest      "sh -c 'while true;d…"   8 minutes ago       Up 8 minutes                            #demo.2.wu60mazz91xfrw3aksq3u4gis
+# worker2 看一下, 2 个，没问题
+
+```
+
+vagrant@swarm-worker2 强删一个
+```sh
+docker rm -f 9d74f97c7d2b
+```
+
+vagrant@swarm-manager 看一下
+```sh
+docker service ls # 快速看一下 4/5
+
+docker service ls # 5/5 ，又有5个ready 了
+
+```
+
+*这个功能就非常有用了，它能确保我们的节点是有效存在的*
+
+删掉 service
+
+```sh
+docker service rm demo # 这个过程会去遍历各台机器，然后删掉各台机器上的 service, 过程会比较慢
+
+docker service ps demo
+# no such service: demo
+
+```
+
+
+
+
 
 
 
