@@ -1719,7 +1719,7 @@ vim skeleton/client/templates/main/home.html
 
 ### Docker Compose多容器部署
 
-部署WordPress
+利用先前的知识部署WordPress
 
 [The server requested authentication method unknown to the client](https://github.com/laradock/laradock/issues/1392)
 
@@ -1742,3 +1742,49 @@ docker run --name wordpress --link mysql -p 80:80 -d  wordpress # 构建容器�
 ```
 
 直接就可以访问我本地的 vagrant 虚拟机 [192.168.205.10](http://192.168.205.10) 进行安装，如此方便。
+
+
+### Docker Compose到底是什么
+
+*多容器的 App 太恶心*
+
+要从Dockerfile build image 或者 Dockerhub 拉取 image
+
+要创建多个 container
+
+要管理这些 container(启动停止删除)
+
+*Docker Compose "批处理"*
+
+Docker Compose 是一个工具
+
+这个工具可以通过一个yml文件定义多容器的docker应用
+
+通过一条命令就可以根据yml文件的定义去创建或者管理多个容器
+
+*docker-compose.yml*
+
+三大概念：Services Networks Volumes
+
+[Compose file versions and upgrading](https://docs.docker.com/compose/compose-file/compose-versioning/)
+
+version 2：单机
+
+version 3: 多机
+
+*Services*
+
+一个 service 代表一个 container，这个 container 可以从 dockerhub 的 image 来创建，或者从本地的Dockerfile build出来的image来创建
+
+Service 的启动类似于 docker run，我们可以给其指定 network 和 volume，所以可以给 service 指定 network 和 Volume 的引用
+
+实操 & 拷贝文件
+
+```sh
+vagrant scp ./projects docker-node1:/home/vagrant/labs
+```
+
+*Docker Compose的安装和基本使用*
+
+[Install Docker Compose](https://docs.docker.com/compose/install/)
+
