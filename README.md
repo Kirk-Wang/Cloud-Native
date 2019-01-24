@@ -2214,7 +2214,20 @@ exit
 
 docker service create --name wordpress -p 80:80 --env WORDPRESS_DB_PASSWORD=root --env WORDPRESS_DB_HOST=mysql --network demo wordpress
 
+# http://192.168.205.13 
+# http://192.168.205.14
+# http://192.168.205.15
+# 我们发现这个节点都能访问到 wordpress
+
+# overlay 网络，swarm 分配 service 节点的时候会自动创建
 ```
+
+### 集群服务间通信之RoutingMesh
+
+*DNS服务发现(overlay网络)*
+
+*VIP*
+
 
 
 
