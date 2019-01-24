@@ -2172,10 +2172,12 @@ docker network ls # 查看一下, 发现没有 demo 网络
 
 操作一下
 
-swarm-manager
+swarm-manager(失败)
 ```sh
 # 创建一个 mysql service
 docker service create --name mysql --env MYSQL_ROOT_PASSWORD=root --env MYSQL_DATABASE=wordpress --env MYSQL_USER=wordpress --env MYSQL_PASSWORD=wordpress --network demo --mount type=volume,source=mysql-data,destination=/var/lib/mysql mysql:5.7
+
+docker service create --name mysql --env MYSQL_ROOT_PASSWORD=root --env MYSQL_DATABASE=wordpress --env MYSQL_USER=wordpress --env MYSQL_PASSWORD=wordpress --network demo --mount type=volume,source=mysql-data,destination=/var/lib/mysql mysql
 
 #[vagrant@swarm-manager ~]$ docker service ps mysql
 #ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE            ERROR               PORTS
@@ -2193,6 +2195,26 @@ docker service create --name wordpress -p 80:80 --env WORDPRESS_DB_HOST=mysql --
 
 ```
 
+[docker-swarm-mysql-masterslave-failover](https://github.com/robinong79/docker-swarm-mysql-masterslave-failover)
+
+swarm-manager(成功)
+```sh
+docker network create -d overlay demo
+
+docker service create --name mysql --env MYSQL_ROOT_PASSWORD=root --env MYSQL_DATABASE=wordpress --network demo --mount type=volume,source=mysql-data,destination=/var/lib/mysql mysql
+
+# 这里要进行操作
+docker exec -it 77167e80b5d6 /bin/bash
+
+mysql -u root -p
+root # login
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root';
+exit
+
+docker service create --name wordpress -p 80:80 --env WORDPRESS_DB_PASSWORD=root --env WORDPRESS_DB_HOST=mysql --network demo wordpress
+
+```
 
 
 
