@@ -1,5 +1,9 @@
 # DevOps = 文化 + 过程 + 工具
 
+### 配置加速器！配置加速器！配置加速器！🤦‍♀️
+
+[一行命令，镜像万千](https://www.daocloud.io/mirror)
+
 ### CentOS 7测试环境准备
 1. 安装VirtualBox
 2. 安装Vagrant
