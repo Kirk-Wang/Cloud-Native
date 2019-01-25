@@ -2228,9 +2228,184 @@ docker service create --name wordpress -p 80:80 --env WORDPRESS_DB_PASSWORD=root
 
 *VIP*
 
+*实验*
+
+swarm-manager
+```sh
+docker network create -d overlay demo # 让多个节点容器连接到 overlay 网络
+
+docker service create --name whoami -p 8000:8000 --network demo -d jwilder/whoami
+
+docker service ps whoami # 看看运行在那个节点
+
+# [vagrant@swarm-manager ~]$ curl 192.168.205.14:8000
+# I'm 7389f68ec50e --> 完美
+
+docker service create --name client -d --network demo busybox sh -c "while true; do sleep 3600; done"
+
+docker service ps client # swarm-worker2
+```
+
+swarm-worker2(client)
+
+```sh
+docker ps
+docker exec -it 477bc60123e0 sh # 进去容器
+#/ # ping whoami
+#PING whoami (10.0.0.6): 56 data bytes
+#64 bytes from 10.0.0.6: seq=0 ttl=64 time=0.349 ms
+#64 bytes from 10.0.0.6: seq=1 ttl=64 time=0.226 ms
+#通的
+```
+
+swarm-manager，扩展 whoami
+```sh
+docker service scale whoami=2
+docker service ps whoami # 看下 whoami service 的部署节点 swarm-manager & swarm-worker1
+```
+
+swarm-worker2(client)
+
+```sh
+#/ # ping whoami
+#PING whoami (10.0.0.6): 56 data bytes
+#64 bytes from 10.0.0.6: seq=0 ttl=64 time=0.349 ms
+#64 bytes from 10.0.0.6: seq=1 ttl=64 time=0.226 ms
+#通的，还是 10.0.0.6
+# 这个地址不是 whoami 任何一个容器的地址，它是一个VIP
+
+```
+
+nslookup 命令，mac 演示
+
+```sh
+#nslookup www.tanwan.com
+#Server:		172.26.9.10
+#Address:	172.26.9.10#53
+
+#Non-authoritative answer:
+#www.tanwan.com	canonical name = www.tanwan.com.w.kunlunpi.com.
+#Name:	www.tanwan.com.w.kunlunpi.com
+#Address: 163.177.63.105
+#Name:	www.tanwan.com.w.kunlunpi.com
+#Address: 163.177.63.104
+#Name:	www.tanwan.com.w.kunlunpi.com
+#Address: 163.177.63.106
+#Name:	www.tanwan.com.w.kunlunpi.com
+#Address: 163.177.63.103
+#Name:	www.tanwan.com.w.kunlunpi.com
+#Address: 163.177.63.101
+#Name:	www.tanwan.com.w.kunlunpi.com
+#Address: 163.177.63.98
+#Name:	www.tanwan.com.w.kunlunpi.com
+#Address: 163.177.63.100
+#Name:	www.tanwan.com.w.kunlunpi.com
+#Address: 163.177.63.102
+```
+
+swarm-worker2(client)
+```sh
+docker exec -it 477bc60123e0 sh
+nslookup tasks.whoami
+```
+
+swarm-manager
+```sh
+docker service scale whoami=3
+docker service ps whoami
+```
+
+swarm-worker1
+```sh
+docker exec -it 7389f68ec50e /bin/sh
+
+ping whoami
+# PING whoami (10.0.0.6): 56 data bytes
+# 64 bytes from 10.0.0.6: seq=0 ttl=64 time=0.172 ms
+# 64 bytes from 10.0.0.6: seq=1 ttl=64 time=0.185 ms
+
+nslookup tasks.whoami
+#nslookup: can't resolve '(null)': Name does not resolve
+#Name:      tasks.whoami
+#Address 1: 10.0.0.7 7389f68ec50e
+#Address 2: 10.0.0.11 whoami.2.q1h49rlqd54r2zcinurn0n5m5.demo
+#Address 3: 10.0.0.12 whoami.3.5vqr7leyj4tvxh53q2twczyce.demo
+
+exit
+
+docker ps
+
+docker exec -it 7389f68ec50e ip a
+```
+
+swarm-worker2(client)
+
+```sh
+[vagrant@swarm-worker2 ~]$ docker exec -it 477bc60123e0 /bin/sh
+/ # wget whoami:8000
+Connecting to whoami:8000 (10.0.0.6:8000)
+index.html           100% |************|    17  0:00:00 ETA
+/ # more index.html
+I'm b1a25ee9e7ce 
+/ # rm -rf index.html
+/ # wget whoami:8000
+Connecting to whoami:8000 (10.0.0.6:8000)
+index.html           100% |************|    17  0:00:00 ETA
+/ # more index.html
+I'm 44f909aaf2ab # 不同的 container 响应请求了
+```
+
+*这些是怎么实现的了*
+
+*Routing Mesh的两种体现*
+
+*Internal--Container 和 Container之间的访问通过overlay网络（通过VIP虚拟IP)
+*Ingress--如果服务有绑定接口，则此服务可以通过任意swarm节点的相应接口访问
+
+*自动负载均衡*
+
+*Internal Load Balancing*
+
+*DNS+VIP+iptables+LVS*
 
 
+### Routing Mesh之Ingress负载均衡
 
+*外部访问的负载均衡
+*服务端口被暴露到各个swarm节点
+*内部通过IPVS进行负载均衡
+
+swarm-manager
+```sh
+docker service scale whoami=2
+
+docker service ps whoami
+# b8ky62namcj8        whoami.1            jwilder/whoami:latest   swarm-worker1
+# q1h49rlqd54r        whoami.2            jwilder/whoami:latest   swarm-manager
+
+# [vagrant@swarm-manager ~]$ curl 127.0.0.1:8000
+# I'm 44f909aaf2ab
+# [vagrant@swarm-manager ~]$ curl 127.0.0.1:8000
+# I'm 7389f68ec50e
+# [vagrant@swarm-manager ~]$ curl 127.0.0.1:8000
+# I'm 44f909aaf2ab
+# [vagrant@swarm-manager ~]$ curl 127.0.0.1:8000
+# I'm 7389f68ec50e
+# [vagrant@swarm-manager ~]$ curl 127.0.0.1:8000
+# I'm 44f909aaf2ab
+# 不断的去访问，swarm cluster 会自动负载均衡到不同节点的 container，Ingress 的作用
+```
+
+为啥本地没有 whoami service,但是我们又能访问呢，现在一步一步看一下：
+
+swarm-worker2
+```sh
+# 比较复杂，后面待续……🤣
+
+sudo iptables -nL -t nat # 主要看DOCKER-INGRESS
+```
+
+*Ingress Network的数据包走向详情*(后面补充)
 
 
 
