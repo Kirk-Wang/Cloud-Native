@@ -2706,5 +2706,85 @@ mysql -u root -p
 # admin123 发现成功进入mysql
 ```
 
+### Docker Secret在Stack中的使用
+
+主要是基于之前的 wordpress 来操作
+```sh
+```
+
+### Service更新(Swarm 生产环境)
+
+```sh
+docker network create -d overlay demo
+
+docker network ls
+
+docker service create --name web --publish 8080:5000 --network demo xiaopeng163/python-flask-demo:1.0
+
+docker service ps web # swarm-manager
+
+docker service scale web=2 # 首先至少有两个 service，一个一个更新，保证业务不受影响。
+
+docker service ps web # swarm-manager & swarm-worker2
+
+# [vagrant@swarm-manager test]$ curl 127.0.0.1:8080
+# hello docker, version 1.0
+```
+
+在更新的过程中，启一个 curl 不断的访问我们的业务(swarm-worker1)
+
+```sh
+sh -c "while true; do curl 127.0.0.1:8080&&sleep 1; done"
+```
+
+swarm-manager
+```sh
+docker service update --help
+# --image
+
+# 开始更新image
+docker service update --image xiaopeng163/python-flask-demo:2.0 web
+# 完美从1.0到2.0
+
+docker service ps web # 2.0 1.0 同时存在，是不允许的 ？
+
+# 更新端口
+docker service update --publish-rm 8080:5000 --publish-add 8088:5000 web # 端口更新，没办法保证业务不中断(因为 VIP+PORT 来做的)
+
+docker service ls
+```
+
+*stack.yml 更新，deploy 第二遍就好。*
+
+### Docker EE
+
+### Docker Cloud(Caas-Container-as-a-Service)
+
+*什么是Docker Could*
+*提供容器的管理，编排，部署的托管服务。
+
+*主要模块*
+*关联云服务商 AWS，Azure
+*添加节点作为 Docker Host
+*创建服务Service
+*创建Stack
+*Image管理
+
+*两种模式*
+Standard模式。一个Node就是一个Docker Host
+
+Swarm模式，多个Node组成的Swarm Cluster
+
+*Docker Cloud之自动build Docker image*
+
+### Docker Cloud之自动build Docker image
+
+### Docker Cloud之持续集成和持续部署(有官方教程，照着操作就好)
+
+### Docker企业版的在线免费体验
+
+
+
+
 
 
