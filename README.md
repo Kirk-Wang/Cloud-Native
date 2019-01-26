@@ -2497,8 +2497,145 @@ docker stack ps wordpress # 查看细节
 
 # 完美，4 个 service 运行在不同的节点
 
+# http://192.168.205.13:8080 开始验证
+
 docker stack rm wordpress # 清理环境
 ```
 
 
+
 ### 部署投票应用
+
+准备一下 stack.yml
+```sh
+version: "3"
+services:
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379"
+    networks:
+      - frontend
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+  db:
+    image: postgres:9.4
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+  vote:
+    image: dockersamples/examplevotingapp_vote:before
+    ports:
+      - 5000:80
+    networks:
+      - frontend
+    depends_on:
+      - redis
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+      restart_policy:
+        condition: on-failure
+
+  result:
+    image: dockersamples/examplevotingapp_result:before
+    ports:
+      - 5001:80
+    networks:
+      - backend
+    depends_on:
+      - db
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+  worker:
+    image: dockersamples/examplevotingapp_worker
+    networks:
+      - frontend
+      - backend
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels: [APP=VOTING]
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      placement:
+        constraints: [node.role == manager]
+
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8080:8080"
+    stop_grace_period: 1m30s
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  db-data:
+```
+
+```sh
+docker stack deploy -c stack.yml vote # docker-compose -f stack.yml up
+# Creating network vote_backend
+# Creating network vote_frontend
+# Creating network vote_default
+# Creating service vote_db
+# Creating service vote_vote
+# Creating service vote_result
+# Creating service vote_worker
+# Creating service vote_visualizer
+# Creating service vote_redis
+
+docker stack services vote # 看下这个 stack 的所有 service 准备情况
+
+```
+
+开始验证：
+*http://192.168.205.13:5000 投票端口
+*http://192.168.205.13:5001 投票结果端口
+*http://192.168.205.13:8080 可视化的工具
+
+扩展一下
+```sh
+docker service scale example_vote=3
+```
+
+清理环境
+```sh
+docker stack rm vote
+```
+
+### Docker Secret管理和使用(用户名和密码比较敏感)
+
+
+
+
+
