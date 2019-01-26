@@ -2635,7 +2635,76 @@ docker stack rm vote
 
 ### Docker Secret管理和使用(用户名和密码比较敏感)
 
+*什么是Secret*
+*用户名密码
+*SSH Key
+*TLS认证
+*任何不想让别人看到的数据
 
+### Secret Management
+*存在Swarm Manager节点Raft databse里
+*Secret可以assign给一个service,这个service就能看到这个secret
+*在container内部Secret看起来像文件，但是实际是在内存中
+
+secret 的创建
+```sh
+docker secret create # 看下帮助
+#Create a secret from a file or STDIN as content
+#两种方式，文件或者标准的输入
+
+vim password
+#admin123
+
+docker secret create my-pw password
+# u420r11iz58jzmsufq50ro5gt
+
+rm -rf password # 删掉这个文件
+
+docker secret ls # 查看已经创建的列表
+
+# 第二种方式创建
+echo "adminadmin" | docker secret create my-pw2 -
+
+docker secret ls
+
+docker secret rm my-pw2
+
+docker service create --help
+
+docker service create --name client --secret my-pw busybox sh -c "while true;do sleep 3600;done" # 创建一个 service 容器，暴露一个secret
+
+docker service ps client # 找到 service 的节点
+
+# 节点上操作
+docker ps # 得到CONTAINER ID
+docker exec -it cabd09e2a2f5 sh # 进入 shell
+#/ # cd /run/secrets/
+#/run/secrets # ls
+#my-pw
+#/run/secrets # cat my-pw
+#admin123
+```
+
+swarm-manager
+```sh
+docker service create --name db --secret my-pw -e MYSQL_ROOT_PASSWORD_FILE=/run/secrets/my-pw mysql
+
+docker service ps db # swarm-worker1
+```
+
+swarm-worker1
+```sh
+docker ps # 5d7a6bbc32d5
+
+docker exec -it 5d7a sh # 进入容器
+
+ls /run/secrets
+# my-pw
+cat /run/secrets/my-pw
+# admin123
+mysql -u root -p
+# admin123 发现成功进入mysql
+```
 
 
 
