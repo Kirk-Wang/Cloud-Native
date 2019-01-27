@@ -2791,9 +2791,10 @@ Swarm模式，多个Node组成的Swarm Cluster
 
 [Get Docker EE for CentOS](https://docs.docker.com/install/linux/docker-ee/centos/)
 
-https://storebits.docker.com/ee/centos/sub-063cfc9f-7844-4887-ab59-3235b604dd4a
-
 [Deploy Enterprise Edition on Linux servers](https://docs.docker.com/ee/end-to-end-install/)
+
+
+### Docker企业版本地安装之UCP
 
 C8
 
@@ -2830,17 +2831,60 @@ sudo yum -y install docker-ee
 
 sudo systemctl start docker
 
+sudo docker version
+
+# 安装 UCP
+sudo docker container run --rm -it --name ucp \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  docker/ucp:3.1.2 install \
+  --host-address 192.168.205.50 \
+  --interactive
+  --force-minimums # 我的内存弄小了，加个这个
+  --pod-cidr 10.0.0.0/16 # 有可能冲突了，Probably your host network has conflict with default pod cdr network. You can ommit this issue with specifying another pod-cdr range.
 ```
 
-### Docker企业版本地安装之UCP
+[error](https://askubuntu.com/questions/1064909/fata0005-unable-to-pass-cni-pod-cidr-range-check-cni-pod-cidr-192-168-0-0-16)
+
+进入 UCP（https://192.168.205.50:443）admin admin888
+
+docker-ee-worker
+```sh
+sudo docker swarm join --token SWMTKN-1-4jpi5mqbhizzr0j94mig9iepa4vjyssbmrlqzci1fw4jhewdq3-8dwu224wjghadyzhwaf1xoikf 192.168.205.50:2377
+```
 
 ### Docker企业版本地安装之DTR
+
+*Docker Trusted Registry*
+*DTR 外部 URL 192.168.205.60
+*UCP 节点 docker-ee-worker
+*对 UCP 禁用 TLS 验证(勾上)
+
+docker-ee-worker
+
+```sh
+sudo docker run -it --rm docker/dtr install \
+  --dtr-external-url 192.168.205.60 \
+  --ucp-node docker-ee-worker \
+  --ucp-username admin \
+  --ucp-url https://192.168.205.50 \
+  --ucp-insecure-tls
+```
+
 
 ### Docker企业版UCP的基本使用演示
 
 ### 体验阿里云的容器服务
 
+进入阿里云容器服务
+
 ### 在阿里云上安装Docker企业版
+
+*进入阿里云云市场，搜索 Docker 企业版，试用一个月。
+
+*购买ECS实例，一步一步安装（这种方式太原始）
+
+*资源编排ROS，开通，进入模板样例。选择对应的模板，下一步，下一步就好。（根据提示进入事件列表查看创建详情）
+
 
 ### Docker企业版DTR的基本使用演示
 
