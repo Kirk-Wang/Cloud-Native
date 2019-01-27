@@ -2783,11 +2783,11 @@ Swarm模式，多个Node组成的Swarm Cluster
 
 ### Docker企业版的在线免费体验
 
-### Docker企业版本地安装之UCP
-
 [1 Month Trial | Sat Jan 26 2019](https://hub.docker.com/u/kirkwwang/content/sub-063cfc9f-7844-4887-ab59-3235b604dd4a)
 
 [Docker Enterprise (CentOS)](https://hub.docker.com/editions/enterprise/docker-ee-server-centos)
+
+照着下面链接一步一步安装就好：
 
 [Get Docker EE for CentOS](https://docs.docker.com/install/linux/docker-ee/centos/)
 
@@ -2800,10 +2800,39 @@ C8
 ```sh
 vagrant up
 
+vagrant ssh docker-ee-manager
+sudo yum remove docker \
+                docker-client \
+                docker-client-latest \
+                docker-common \
+                docker-latest \
+                docker-latest-logrotate \
+                docker-logrotate \
+                docker-selinux \
+                docker-engine-selinux \
+                docker-engine
+
+sudo rm /etc/yum.repos.d/docker*.repo
+
+export DOCKERURL="https://storebits.docker.com/ee/centos/sub-063cfc9f-7844-4887-ab59-3235b604dd4a"
+
+sudo -E sh -c 'echo "$DOCKERURL/centos" > /etc/yum/vars/dockerurl'
+
+sudo yum install -y yum-utils \
+device-mapper-persistent-data \
+lvm2
+
+sudo -E yum-config-manager \
+    --add-repo \
+    "$DOCKERURL/centos/docker-ee.repo"
+
+sudo yum -y install docker-ee
+
+sudo systemctl start docker
 
 ```
 
-
+### Docker企业版本地安装之UCP
 
 ### Docker企业版本地安装之DTR
 
