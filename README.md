@@ -2783,6 +2783,38 @@ Swarm模式，多个Node组成的Swarm Cluster
 
 ### Docker企业版的在线免费体验
 
+### Docker企业版本地安装之UCP
+
+[1 Month Trial | Sat Jan 26 2019](https://hub.docker.com/u/kirkwwang/content/sub-063cfc9f-7844-4887-ab59-3235b604dd4a)
+
+[Docker Enterprise (CentOS)](https://hub.docker.com/editions/enterprise/docker-ee-server-centos)
+
+[Get Docker EE for CentOS](https://docs.docker.com/install/linux/docker-ee/centos/)
+
+https://storebits.docker.com/ee/centos/sub-063cfc9f-7844-4887-ab59-3235b604dd4a
+
+[Deploy Enterprise Edition on Linux servers](https://docs.docker.com/ee/end-to-end-install/)
+
+C8
+
+```sh
+vagrant up
+
+
+```
+
+
+
+### Docker企业版本地安装之DTR
+
+### Docker企业版UCP的基本使用演示
+
+### 体验阿里云的容器服务
+
+### 在阿里云上安装Docker企业版
+
+### Docker企业版DTR的基本使用演示
+
 
 
 
