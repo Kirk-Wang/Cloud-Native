@@ -3162,4 +3162,45 @@ Service主要有三种类型：一种叫ClusterIP,一种叫NodePort,一种叫外
 
 ```sh
 kubectl get svc
+
+kubectl expose pods nginx-pod
+
+kubectl get svc
+
+kubectl expose deployment service-test
 ```
+
+### NodePort类型Service以及Label的简单实用
+
+```sh
+kubectl create -f pod_nginx.yml
+
+kubectl get pods
+
+kubectl expose pods nginx-pod --type=NodePort
+
+kubectl get svc
+```
+
+### 使用kops在亚马逊AWS上搭建k8s集群 (要环境)
+
+### LoadBlancer类型Service以及AWS的DNS服务配置 (要环境)
+
+### 在亚马逊k8s集群上部署wordpress  (要环境)
+
+### 容器的基本监控
+
+```sh
+docker ps
+
+docker ps -a
+
+docker top xxx # 容器里面运行的一些进程
+
+docker stats
+```
+
+### DevOps
+
+
+
