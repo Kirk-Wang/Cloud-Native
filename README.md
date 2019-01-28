@@ -2888,8 +2888,169 @@ sudo docker run -it --rm docker/dtr install \
 
 ### Docker企业版DTR的基本使用演示
 
+```sh
+docker tag kirkwwang/demo 113.20.23.1/admin/demo
+
+docker login
+
+docker push 113.20.23.1/admin/demo # 报错，更改下配置
+```
+
+### Kubenetes
+
+*Kubenetes Master*
+
+API Server, Scheduler, Controller, etcd
+
+*Kubenetes Node*
+
+Pod:具有相同的 network namespace 容器的组合
+
+Pod,Docker,kubelet,kube-proxy,Fluentd
+
+*搭建*
+[kubernetes-the-hard-way](https://github.com/kelseyhightower/kubernetes-the-hard-way)
+
+[minikube](https://github.com/kubernetes/minikube)
+
+[kubeadm](https://github.com/kubernetes/kubeadm)
+
+[kops](https://github.com/kubernetes/kops)
 
 
+### Minikube
 
+Minikube runs a single-node Kubernetes cluster inside a VM 
+
+Mac
+```sh
+brew cask install minikube
+
+kubectl version
+
+minikube start
+
+```
+
+kubectl context
+```sh
+kubectl
+kubectl config
+kubectl config view
+kubectl config get-contexts
+
+kubectl cluster-info # 查看集群的状态
+```
+
+进入到虚机
+```sh
+minikube ssh
+```
+
+### K8S最小调度单位Pod
+
+操作
+
+```sh
+kubectl version # 确保可以连接的 k8s cluster
+
+kubectl delete -f pod_nginx.yml # 删除Pod
+kubectl create -f pod_nginx.yml # 创建Pod
+# pod "nginx" created
+
+kubectl get pods # 去查看
+# NAME      READY     STATUS    RESTARTS   AGE
+# nginx     1/1       Running   0          2m
+
+kubectl get pods -o wide # 去查看详细信息
+# NAME      READY     STATUS    RESTARTS   AGE       IP           NODE
+# nginx     1/1       Running   0          4m        172.17.0.4   minikube
+# 172.17.0.4-->容器的地址
+
+#进入这个节点的容器
+minikube ssh
+
+docker ps | grep nginx # 58ddfab6357f
+
+docker exec -it 58ddfab6357f sh
+
+#查看网路
+docker network ls
+docker network inspect bridge # 看到了 172.17.0.4
+
+#对一个 Pod 进行exec
+kubectl exec -it nginx sh
+
+#如果Pod里面有超过一个的容器？如何选择？
+kubectl exec -h # 看下帮助
+# -c, --container='': Container name. If omitted, the first container in the pod will be chosen
+
+kubectl describe
+
+kubectl describe pods nginx # 查看 pod 描述
+
+# 操作一下
+minikube ssh
+
+ping 172.17.0.4
+
+curl 172.17.0.4 #minikube内能访问，但要暴露出来
+
+ip a # 192.168.99.102，这个外界能ping通
+
+kubectl port-forward -h # 查看帮助信息
+
+kubectl port-forward nginx 8080:80 # ok，搞定
+```
+
+### ReplicaSet 和 ReplicationController
+
+ReplicationController
+```sh
+kubectl delete -f pod_nginx.yml # 先删掉
+
+kubectl create -f rc_nginx.yml
+
+kubectl get rc
+# NAME      DESIRED   CURRENT   READY     AGE
+# nginx     3         3         3         49s
+
+kubectl get pods
+# nginx-47k78   1/1       Running   0          2m
+# nginx-8hj25   1/1       Running   0          2m
+# nginx-flbtw   1/1       Running   0          2m
+
+kubectl delete pods nginx-47k78 # 删掉一个，看看会发生什么
+
+kubectl get pods # 迅速又恢复了
+
+kubectl scale rc nginx --replicas=2 # 扩展为两个
+
+kubectl get pods
+# NAME          READY     STATUS    RESTARTS   AGE
+# nginx-8hj25   1/1       Running   0          13m
+# nginx-flbtw   1/1       Running   0          13m
+# 发现只有两个了
+
+kubectl get rc
+# NAME      DESIRED   CURRENT   READY     AGE
+# nginx     2         2         2         13m
+
+kubectl scale rc nginx --replicas=4 # 扩展为4个
+
+kubectl get pods -o wide
+# NAME          READY     STATUS    RESTARTS   AGE       IP           NODE
+# nginx-8hj25   1/1       Running   0          16m       172.17.0.4   minikube
+# nginx-flbtw   1/1       Running   0          16m       172.17.0.6   minikube
+# nginx-rq977   1/1       Running   0          1m        172.17.0.5   minikube
+# nginx-tcrcd   1/1       Running   0          1m        172.17.0.7   minikube
+
+kubectl delete -f rc_nginx.yml # 先删掉
+```
+
+ReplicaSet
+```sh
+
+```
 
 
