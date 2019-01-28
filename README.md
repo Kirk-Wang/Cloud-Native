@@ -4,6 +4,12 @@
 
 [一行命令，镜像万千](https://www.daocloud.io/mirror)
 
+### 折腾备案(要误入“歧途”了🤦‍♀️)
+
+*[Go Microservices blog](http://callistaenterprise.se/blogg/teknik/2017/02/17/go-blog-series-part1/)
+*[microservices-demo/microservices-demo](https://github.com/microservices-demo/microservices-demo)
+*[GoogleCloudPlatform/microservices-demo](https://github.com/GoogleCloudPlatform/microservices-demo)
+
 ### CentOS 7测试环境准备
 1. 安装VirtualBox
 2. 安装Vagrant
@@ -3062,4 +3068,5 @@ kubectl scale rs nginx --replicas=2
 kubectl get rs
 ```
 
+### Deployments
 
