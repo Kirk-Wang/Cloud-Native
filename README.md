@@ -6,9 +6,9 @@
 
 ### 折腾备案(要误入“歧途”了🤦‍♀️)
 
-*[Go Microservices blog](http://callistaenterprise.se/blogg/teknik/2017/02/17/go-blog-series-part1/)
-*[microservices-demo/microservices-demo](https://github.com/microservices-demo/microservices-demo)
-*[GoogleCloudPlatform/microservices-demo](https://github.com/GoogleCloudPlatform/microservices-demo)
+* [Go Microservices blog](http://callistaenterprise.se/blogg/teknik/2017/02/17/go-blog-series-part1/)
+* [microservices-demo/microservices-demo](https://github.com/microservices-demo/microservices-demo)
+* [GoogleCloudPlatform/microservices-demo](https://github.com/GoogleCloudPlatform/microservices-demo)
 
 ### CentOS 7测试环境准备
 1. 安装VirtualBox
@@ -3119,4 +3119,47 @@ kubectl get svc
 # nginx-deployment   NodePort    10.97.60.79   <none>        80:30680/TCP   54s
 
 curl 192.168.99.102:30680 # mac 本地可以访问了
+```
+
+### 使用Tectonic在本地搭建多节点K8S集群
+
+[Installing Tectonic Sandbox](https://coreos.com/tectonic/docs/latest/tutorials/sandbox/install.html)，已经失效
+
+
+```sh
+# 改配置文件.kube
+kubectl config get-contexts
+
+kubectl config use-context tectonic
+```
+
+*命令补全*
+```sh
+kubectl completion zsh
+source <(kubectl completion zsh)
+```
+
+
+### k8s基础网络Cluster Network
+
+在 cluster 的任何一个节点都可以访问 pod 
+
+### Service简介和演示
+
+*不要直接使用和管理Pods，为什么？*
+
+当我们使用ReplicaSet或者ReplicationController做水平扩展scale的时候，Pods有可能会被terminated
+
+当我们使用Deployment的时候，我们去更新Docker Image Version, 旧的Pods会被terminated，然后新的Pods创建
+
+*Service*
+
+kubectl expose命令，会给我们的pod创建一个Service，供外部访问
+
+Service主要有三种类型：一种叫ClusterIP,一种叫NodePort,一种叫外部的LoadBalancer
+
+另外也可以使用DNS，但是需要DNS的add-on
+
+```sh
+kubectl get svc
 ```
