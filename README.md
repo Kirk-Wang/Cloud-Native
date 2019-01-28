@@ -3045,12 +3045,21 @@ kubectl get pods -o wide
 # nginx-rq977   1/1       Running   0          1m        172.17.0.5   minikube
 # nginx-tcrcd   1/1       Running   0          1m        172.17.0.7   minikube
 
-kubectl delete -f rc_nginx.yml # 先删掉
 ```
 
 ReplicaSet
 ```sh
+kubectl delete -f rc_nginx.yml # 先删掉
 
+kubectl create -f rs_nginx.yml # 创建
+
+kubectl get rs
+
+kubectl get pods
+
+kubectl scale rs nginx --replicas=2
+
+kubectl get rs
 ```
 
 
