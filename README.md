@@ -3069,4 +3069,54 @@ kubectl get rs
 ```
 
 ### Deployments
+```sh
+kubectl create -f deployment_nginx.yml
 
+kubectl get deployment # nginx-deployment
+
+kubectl get rs # nginx-deployment-67d4b848b4
+
+kubectl get pods # nginx-deployment-67d4b848b4-7k6rv ...
+
+kubectl get deployment -o wide
+# NAME               DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE       CONTAINERS   IMAGES         SELECTOR
+# nginx-deployment   3         3         3            3           9m        nginx        nginx:1.12.2   app=nginx
+
+# 升级
+kubectl set image # 看看帮助
+
+kubectl set image deployment nginx-deployment nginx=nginx:1.13
+
+kubectl get deployment -o wide
+# NAME               DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE       CONTAINERS   IMAGES       SELECTOR
+# nginx-deployment   3         4         1            3           18m       nginx        nginx:1.13   app=nginx
+# 看到 image 已经更新了
+
+kubectl get rs
+
+# NAME                          DESIRED   CURRENT   READY     AGE
+# nginx-deployment-567c66df9c   3         3         3         2m
+# nginx-deployment-67d4b848b4   0         0         0         19m
+
+kubectl get pods
+
+kubectl rollout history deployment nginx-deployment # 查看历史
+
+kubectl rollout undo deployment nginx-deployment # 回滚
+
+kubectl get node
+
+kubectl get node -o wide
+
+kubectl delete services nginx-deployment
+
+# 暴露
+kubectl expose deployment nginx-deployment --type=NodePort
+
+kubectl get svc
+# NAME               TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
+# kubernetes         ClusterIP   10.96.0.1     <none>        443/TCP        3h
+# nginx-deployment   NodePort    10.97.60.79   <none>        80:30680/TCP   54s
+
+curl 192.168.99.102:30680 # mac 本地可以访问了
+```
