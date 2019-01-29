@@ -4,6 +4,34 @@
 
 [一行命令，镜像万千](https://www.daocloud.io/mirror)
 
+阿里云镜像加速
+
+针对Docker客户端版本大于 1.10.0 的用户
+
+您可以通过修改daemon配置文件/etc/docker/daemon.json来使用加速器
+
+```sh
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://9cuwuh4a.mirror.aliyuncs.com"]
+}
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+
+### 利用 Docker 安装社区版 GitLab
+
+官方文档(step by step)：
+
+[Get Docker CE for Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+
+[Install Docker Compose](https://docs.docker.com/compose/install/)
+
+[Install GitLab using docker-compose](https://docs.gitlab.com/omnibus/docker/#install-gitlab-using-docker-compose)
+
+
 ### 折腾备案(要误入“歧途”了🤦‍♀️)
 
 * [Go Microservices blog](http://callistaenterprise.se/blogg/teknik/2017/02/17/go-blog-series-part1/)
