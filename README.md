@@ -21,7 +21,15 @@ sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```
 
+[阿里云文档中心](https://www.alibabacloud.com/help/zh)
+
+[oneinstack](https://github.com/oneinstack/oneinstack)没钱，我得一台机挂4，5个网站🤦‍♀️。用这个配好nginx后，反向代理到各个容器。
+
 ### 利用 Docker 安装社区版 GitLab
+
+可以利用 docker-machine 快速创建机器
+
+[Docker Machine Driver of Aliyun ECS](https://github.com/AliyunContainerService/docker-machine-driver-aliyunecs)
 
 官方文档(step by step)：
 
