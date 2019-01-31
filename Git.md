@@ -93,3 +93,25 @@ type -a git
 
 gitk
 ```
+
+#### 探秘 .git 目录
+
+```sh
+cd .git
+ls -al
+cat HEAD # 切换分支的时候，会变
+# ref: refs/heads/master
+
+cat config
+#[core]
+#        repositoryformatversion = 0
+#        filemode = true
+#....
+#[remote "origin"]
+#        url = git@github.com:Kirk-Wang/DevOps.git
+#        fetch = +refs/heads/*:refs/remotes/origin/*
+#[branch "master"]
+#        remote = origin
+#       merge = refs/heads/master
+
+```
