@@ -187,10 +187,26 @@ git branch -av # 突然要 hot fix bug，需 checkout master
 git checkout master # 注意看 git 提示(git branch <新分支名> 91eb539)
 # 不然你的灵感，会在不久就会被 git 扔掉🤣
 
+gitk --all
 ```
 
 重要的变更一定要和具体分支绑定在一起。
 
 #### 进一步理解 HEAD 和 branch
 
+```sh
+git checkout -b fix_readme master(或者某个commit) # 创建并切换分支
 
+gitk --all # 用 gitk 看一下
+cat .git/HEAD 
+
+git diff commitA commitB 
+
+git diff HEAD HEAD^ (最新的前两个比较)
+git diff HEAD HEAD~
+
+git diff HEAD HEAD^1^1
+git diff HEAD HEAD^^
+git diff HEAD HEAD~2
+
+```
