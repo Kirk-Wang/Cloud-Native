@@ -78,3 +78,18 @@ git checkout -b temp 73023f399627 # 基于某一次提交创建一个分支
 git commit -am'xxx' # 工作区的东西直接弄到版本历史里面
 git branch -av
 ```
+
+#### gitk
+
+Mac, homebrew 安装
+```sh
+git --version
+# git version 2.17.2 (Apple Git-113), Mac OS 自带的，是没有 gitk 的
+brew install git
+type -a git
+# git is a shell function from /Users/zoot/.zshrc
+# git is /usr/local/bin/git
+# git is /usr/bin/git
+
+gitk
+```
