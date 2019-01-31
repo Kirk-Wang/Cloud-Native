@@ -2,7 +2,7 @@
 
 ### 重修 Git(一切为了更好的 DevOps🤦‍♀️)
 
-#### 安装完后，配置 user 信息
+#### 安装完后，配置 user 信息
 ```sh
 git config --global user.name 'your_name'
 git config --global user.email 'your_email@domain.com'
@@ -39,6 +39,7 @@ git init your_project # 会在当前路径下创建和项目名称同名的文�
 cd your_project
 ```
 
+-----
 
 ### 配置加速器！配置加速器！配置加速器！🤦‍♀️
 
