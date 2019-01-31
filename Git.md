@@ -235,4 +235,13 @@ git log # 找到老的 commit
 
 git rebase -i ca7936381 # 找到要改的 commit 的 父亲节点，交互式操作，选择 reword 模式 step by step
 
+git push --force # 哈哈哈哈
 ```
+
+#### 把连续的多个 commit 整理成一个
+
+```sh
+git branch -av
+git log --graph
+```
+
