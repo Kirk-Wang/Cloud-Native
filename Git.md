@@ -216,6 +216,7 @@ git diff HEAD HEAD~2
 ```sh
 gitk -all # 仔细看一下项目中的分支
 
+<<<<<<< HEAD
 git branch -d oo # 删不掉用 -D
 git branch -D fafa
 
@@ -225,4 +226,7 @@ git branch -D fafa
 
 ```sh
 git commit --amend
+=======
+
+>>>>>>> c361698... git branch
 ```
