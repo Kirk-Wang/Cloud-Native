@@ -97,12 +97,11 @@ gitk
 #### 探秘 .git 目录
 
 ```sh
-cd .git
-ls -al
-cat HEAD # 切换分支的时候，会变
+ls -al .git
+cat .git/HEAD # 切换分支的时候，会变
 # ref: refs/heads/master
 
-cat config
+cat .git/config
 #[core]
 #        repositoryformatversion = 0
 #        filemode = true
@@ -113,5 +112,43 @@ cat config
 #[branch "master"]
 #        remote = origin
 #       merge = refs/heads/master
+
+ls -al .git/refs
+ls -al .git/refs/heads
+
+cat .git/refs/heads/master
+# 97d75d2d640dcf100b31c2a023a54f9b947cdc8e
+
+git cat-file -t 97d75d2d640 # 看文件内容类型
+# commit
+
+ls -al .git/refs/tags
+
+cat .git/refs/tags/0.0.1
+# 9c7f1904f74bde85f01a71101fcd170e31478eb3
+git cat-file -t 9c7f1904f74 # 看文件内容类型
+# tag
+git cat-file -p 9c7f1904f74 # 看 tag 内容
+# object eccdc97814db15f44d26d150589d400f5ecb4d48
+# type commit
+# tag 0.0.1
+# tagger Kirk.Wang <kirk.w.wang@gmail.com> 1548921162 +0800
+# 
+# test tag
+git cat-file -t eccdc97814db15f
+# commit
+
+ls -al .git/objects
+
+ls -al .git/objects/c5
+# drwxr-xr-x    3 zoot  staff    96  1 24 20:03 .
+# drwxr-xr-x  128 zoot  staff  4096  1 31 16:12 ..
+# -r--r--r--    1 zoot  staff   160  1 24 20:03 ee89f2588b2fbf443d888d1085e5e3bbd987b1
+git cat-file -t c5ee89f2588b2fbf443d888d1085e5e3bbd987b1(c5+ee89f2588b2fbf443d888d1085e5e3bbd987b1)
+# tree
+git cat-file -p c5ee89f2588b2fbf443d888d1085e5e3bbd987b1
+# 看内容 blob
+
+#commit & tree & blob
 
 ```
