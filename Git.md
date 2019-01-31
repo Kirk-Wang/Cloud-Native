@@ -177,4 +177,8 @@ git checkout xxxx(切到某个具体的 commit)
 # 坏处：没有 branch 做关联，做完变更厚，chekout 回去^_^,,,git可能会把变更的部分当做垃圾给干掉
 # 变更要与 brach 关联
 # 好处：只想做尝试性的变更
+
+git commit -am'xxx'
+
+git log
 ```
