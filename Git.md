@@ -152,3 +152,29 @@ git cat-file -p c5ee89f2588b2fbf443d888d1085e5e3bbd987b1
 #commit & tree & blob
 
 ```
+
+#### commit tree blob 对象之间的关系
+
+commit > tree > blob
+
+```sh
+git log (commit)
+git cat-file -p xxxx (tree)
+git cat-file -p xxxx (blob) 
+# 可以一层一层的看
+```
+
+#### 数一数 tree 的个数
+新建的 Git 仓库，有且仅有1个 commit, 仅仅包含 /doc/readme, 请问内含多少个 tree，多少个 blob? 
+
+
+### detached HEAD 分离头指针（工作在没有分支的状态下）
+
+```sh
+git log (一堆commit)
+git checkout xxxx(切到某个具体的 commit)
+# detached HEAD
+# 坏处：没有 branch 做关联，做完变更厚，chekout 回去^_^,,,git可能会把变更的部分当做垃圾给干掉
+# 变更要与 brach 关联
+# 好处：只想做尝试性的变更
+```
