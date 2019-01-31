@@ -168,7 +168,7 @@ git cat-file -p xxxx (blob)
 新建的 Git 仓库，有且仅有1个 commit, 仅仅包含 /doc/readme, 请问内含多少个 tree，多少个 blob? 
 
 
-### detached HEAD 分离头指针（工作在没有分支的状态下）
+#### detached HEAD 分离头指针（工作在没有分支的状态下）
 
 ```sh
 git log (一堆commit)
@@ -181,4 +181,16 @@ git checkout xxxx(切到某个具体的 commit)
 git commit -am'xxx'
 
 git log
+
+git branch -av # 突然要 hot fix bug，需 checkout master
+
+git checkout master # 注意看 git 提示(git branch <新分支名> 91eb539)
+# 不然你的灵感，会在不久就会被 git 扔掉🤣
+
 ```
+
+重要的变更一定要和具体分支绑定在一起。
+
+#### 进一步理解 HEAD 和 branch
+
+
