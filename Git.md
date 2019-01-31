@@ -216,5 +216,13 @@ git diff HEAD HEAD~2
 ```sh
 gitk -all # 仔细看一下项目中的分支
 
+git branch -d oo # 删不掉用 -D
+git branch -D fafa
 
+```
+
+#### 修改最新的 commit 的 message
+
+```sh
+git commit --amend
 ```
