@@ -210,3 +210,11 @@ git diff HEAD HEAD^^
 git diff HEAD HEAD~2
 
 ```
+
+#### 删掉不要的分支
+
+```sh
+gitk -all # 仔细看一下项目中的分支
+
+
+```
