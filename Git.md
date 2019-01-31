@@ -215,8 +215,6 @@ git diff HEAD HEAD~2
 
 ```sh
 gitk -all # 仔细看一下项目中的分支
-
-<<<<<<< HEAD
 git branch -d oo # 删不掉用 -D
 git branch -D fafa
 
@@ -226,7 +224,15 @@ git branch -D fafa
 
 ```sh
 git commit --amend
-=======
+```
 
->>>>>>> c361698... git branch
+#### 修改老旧 commit 的 message
+
+```sh
+git rebase # 变基，这里针对自己的分支，不要在团队的集成分支上瞎搞
+
+git log # 找到老的 commit
+
+git rebase -i ca7936381 # 找到要改的 commit 的 父亲节点，交互式操作，选择 reword 模式 step by step
+
 ```
