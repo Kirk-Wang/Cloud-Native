@@ -266,7 +266,7 @@ git status
 git diff --cached # 暂存区和HEAD的差异
 ```
 
-### 工作区与暂存区的差异
+#### 工作区与暂存区的差异
 ```sh
 git diff # 默认比较的是工作区与暂存区的区别
 
@@ -274,14 +274,14 @@ git diff -- readme.md # 只比较 readme.md 文件
 git diff -- readme.md style.css # 比较多个文件
 ```
 
-### 让暂存区恢复成HEAD
+#### 让暂存区恢复成HEAD
 ```sh
 git status
 git reset HEAD
 git status
 ```
 
-### 让工作区恢复为和暂存区一样
+#### 让工作区恢复为和暂存区一样
 ```sh
 vi index.html
 git add index.html
@@ -293,7 +293,7 @@ git diff index.html
 ls -al
 ```
 
-### 取消暂存区部分文件的更改
+#### 取消暂存区部分文件的更改
 ```sh
 
 git reset HEAD -- style.css # 一个文件
@@ -302,4 +302,33 @@ git status
 git reset HEAD -- style.css readme.md # 多个文件
 git status
 
+```
+
+#### 消除最近的几次提交
+```sh
+gitk --all
+
+git reset --hard 5bfcca1ca6 # 慎用，比较危险
+```
+
+#### 不同提交的指定文件的差异
+```sh
+git log -n8 --all --graph
+
+git diff temp master -- index.html # 比较两个分支当中某个文件的差异
+
+```
+
+#### 正确删除文件的方法
+```sh
+git rm readme # 直接放到暂存区
+```
+
+#### 开发中临时加塞了紧急任务(暂存区有东西，工作区有变更，现在要 hot fix)
+```sh
+git stash
+git stash list
+
+git stash pop # 丢掉 stash 里面的东西
+git stash apply # 不丢掉
 ```
