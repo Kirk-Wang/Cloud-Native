@@ -243,5 +243,18 @@ git push --force # 哈哈哈哈
 ```sh
 git branch -av
 git log --graph
+git rebase -i ca7936381 # 找到父亲节点，交互式操作，选择 s 模式 step by step
+#pick xxxx
+#s xxxx
+#s xxxx
+#s xxxx
+#pick xxxx
+```
+
+#### 把间隔的多个 commit 整理成一个
+
+```sh
+git log --graph
+git rebase -i ca7936381 # 可能会出现两颗孤独的树
 ```
 
