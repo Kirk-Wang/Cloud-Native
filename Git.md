@@ -338,3 +338,6 @@ git stash apply # 不丢掉
 .gitignore
 
 [gitignore](https://github.com/github/gitignore)
+
+#### Git 仓库备份到本地
+
