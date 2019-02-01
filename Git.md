@@ -280,3 +280,26 @@ git status
 git reset HEAD
 git status
 ```
+
+### 让工作区恢复为和暂存区一样
+```sh
+vi index.html
+git add index.html
+git diff --cached
+vi index.html
+
+git checkout -- index.html
+git diff index.html
+ls -al
+```
+
+### 取消暂存区部分文件的更改
+```sh
+
+git reset HEAD -- style.css # 一个文件
+git status
+
+git reset HEAD -- style.css readme.md # 多个文件
+git status
+
+```
