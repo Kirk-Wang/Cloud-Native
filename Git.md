@@ -268,5 +268,15 @@ git diff --cached # 暂存区和HEAD的差异
 
 ### 工作区与暂存区的差异
 ```sh
+git diff # 默认比较的是工作区与暂存区的区别
 
+git diff -- readme.md # 只比较 readme.md 文件
+git diff -- readme.md style.css # 比较多个文件
+```
+
+### 让暂存区恢复成HEAD
+```sh
+git status
+git reset HEAD
+git status
 ```
