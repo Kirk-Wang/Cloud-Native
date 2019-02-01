@@ -332,3 +332,9 @@ git stash list
 git stash pop # 丢掉 stash 里面的东西
 git stash apply # 不丢掉
 ```
+
+#### 指定不需要 Git 管理的文件
+
+.gitignore
+
+[gitignore](https://github.com/github/gitignore)
