@@ -258,3 +258,15 @@ git log --graph
 git rebase -i ca7936381 # 可能会出现两颗孤独的树
 ```
 
+#### 比较暂存区和HEAD所含文件的差异
+
+```sh
+git add index.html
+git status
+git diff --cached # 暂存区和HEAD的差异
+```
+
+### 工作区与暂存区的差异
+```sh
+
+```
