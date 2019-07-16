@@ -125,8 +125,56 @@ sudo yum install docker-ce
 
 sudo systemctl start docker
 
-sudo docker version
+sudo docker version # 查看版本信息
+
+sudo docker run hello-world # 验证一下
 ```
+
+在 Vagrantfile 中，我们直接可以配置机器启动时自动安装好Docker
+
+```sh
+config.vm.provision "shell", inline: <<-SHELL
+  sudo yum remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine
+  sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+  sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  sudo yum install docker-ce
+  sudo systemctl start docker
+SHELL
+```
+
+网络下载太慢，通过 `vagrant up` 我们可以直接拿到 box 的下载地址，然后迅雷下载
+
+离线安装 centos7 box
+
+```sh
+cd ~/Vagrant/CentOS7 // 找到一个目录，作为初始化目录
+vagrant box add centos/7 ~/Downloads/virtualbox.box // 建议采取离线安装，这样有利于放置虚拟机文件到指定路径
+vagrant init centos/7 // 初始化 Vagrantfile
+vagrant up // 启动
+vagrant ssh // 进入VM
+exit // 退出
+vagrant status //查看状态
+vagrant halt // 停掉
+vagrant status //查看状态
+vagrant destroy //删掉机器
+```
+
+查看boxes
+
+```sh
+cd ~/.vagrant.d/boxes
+```
+
+[Docker Machine Overview](https://docs.docker.com/machine/overview/)
+
+mac 默认就已经安装好了
+
+```sh
+docker-machine  version
+```
+
+Docker Machine 能干什么？(本地还是用 Vagrant+VirtualBox 快速搭建，原因是因为系统功能不是精简过的)
+
 
 
 
