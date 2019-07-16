@@ -65,4 +65,14 @@
 
 容器技术的一种实现
 
+### Mac 上 Docker 安装
+
+[Install Docker Desktop for Mac](https://docs.docker.com/docker-for-mac/install/)
+
+**What the install includes: The installation provides Docker Engine, Docker CLI client, Docker Compose, Docker Machine, and Kitematic.**
+
+```sh
+docker --version
+docker version
+```
 
