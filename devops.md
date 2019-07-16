@@ -17,5 +17,12 @@
 
 ![devops](./images/devops.png)
 
+### Long Long Time Ago
+
+* 部署非常慢
+* 成本非常高
+* 资源浪费
+* 难于迁移和扩展
+* 可能会被限定硬件厂商
 
 
