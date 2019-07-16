@@ -83,7 +83,12 @@ docker version
 
 接下看 Vagrant 入门指南->[Getting Started](https://www.vagrantup.com/intro/getting-started/index.html)
 
+[Vagrant Cloud](https://app.vagrantup.com/boxes/search)
+* [centos/7 Vagrant box](https://app.vagrantup.com/centos/boxes/7)
 
+```sh
+vagrant --help
+```
 
 
 
