@@ -173,7 +173,7 @@ mac 默认就已经安装好了
 docker-machine  version
 ```
 
-Docker Machine 能干什么？(本地还是用 Vagrant+VirtualBox 快速搭建，原因是因为系统功能不是精简过的)
+Docker Machine 能干什么？(本地快速在 VirtualBox 环境中创建一台具有 Docker 环境的虚拟机)
 
 
 
