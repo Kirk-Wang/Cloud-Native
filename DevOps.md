@@ -76,3 +76,15 @@ docker --version
 docker version
 ```
 
+### Vagrant
+**Development Environments Made Easy**
+
+先安装 [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+
+接下看 Vagrant 入门指南->[Getting Started](https://www.vagrantup.com/intro/getting-started/index.html)
+
+
+
+
+
+
