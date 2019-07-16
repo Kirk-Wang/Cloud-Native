@@ -88,7 +88,25 @@ docker version
 
 ```sh
 vagrant --help
+
+vagrant init centos/7 # 创建了一个 Vagrantfile
+
+more Vagrantfile # 描述了我们要创建的虚机
+
+vagrant up # 去找 base box(local or cloud)
+vagrant ssh # 进入虚机
+sudo yum update # 更新虚机
+exit # 退出虚机
+
+vagrant status # 查看虚机状态
+vagrant halt # 停掉虚机
+
+vagrant status # poweroff
+
+vagrant destroy # 删掉虚机
 ```
+
+可以搜索：`Vagrantfile Ubuntu`
 
 
 
