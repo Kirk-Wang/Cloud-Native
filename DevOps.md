@@ -106,7 +106,13 @@ vagrant status # poweroff
 vagrant destroy # 删掉虚机
 ```
 
-可以搜索：`Vagrantfile Ubuntu`
+创建一台虚机只需一个 `Vagrantfile` 文件即可
+
+可以 google 搜索 Vagrantfile 如：`Vagrantfile CentOS`
+
+创建一台虚机只需一个 `Vagrantfile` 文件即可
+
+[CentOS 中安装 Docker, 直接看官方文档](https://docs.docker.com/install/linux/docker-ce/centos/)
 
 
 
