@@ -170,10 +170,15 @@ cd ~/.vagrant.d/boxes
 mac 默认就已经安装好了
 
 ```sh
-docker-machine  version
+docker-machine version
 ```
 
-Docker Machine 能干什么？(本地快速在 VirtualBox 环境中创建一台具有 Docker 环境的虚拟机)
+Docker Machine 能干什么？(如：本地快速在 VirtualBox 环境中创建一台具有 Docker 环境的机器)
+
+```sh
+docker-machine --help # 习惯看帮助
+docker-machine create demo # 我本地是直接在 VirtualBox 创建一个已经安装好了的虚拟机
+```
 
 
 
