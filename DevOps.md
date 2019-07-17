@@ -2,6 +2,14 @@
 
 ![DevOps](https://docs.docker.com/get-started/images/laurel-docker-containers.png)
 
+### Docker Engine
+
+![Docker Engine](https://docs.docker.com/engine/images/engine-components-flow.png)
+
+### Docker architecture
+
+![Docker architecture](https://docs.docker.com/engine/images/architecture.svg)
+
 ### Docker 能干什么？
 
 * 简化配置
@@ -62,7 +70,7 @@
 * 容器是App层面的隔离
 * 虚拟化是物理资源层面的隔离
 
-<img alt="Containers" src="https://docs.docker.com/images/Container%402x.png" width="300" height="300"><img alt="virtual machines" src="https://docs.docker.com/images/VM%402x.png" width="300" height="300">
+<img alt="Containers" src="https://docs.docker.com/images/Container%402x.png" width="300" height="300">&nbsp;&nbsp;&nbsp;<img alt="virtual machines" src="https://docs.docker.com/images/VM%402x.png" width="300" height="300">
 
 ### 虚拟化 + 容器
 
