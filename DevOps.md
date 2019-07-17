@@ -246,7 +246,8 @@ eval $(docker-machine env devops)
 docker version # 看一下有没有连上远端的 server
 
 docker-machine env --help # 查看下帮助
-eval $(docker-machine env --unset) # 去掉刚设的环境变量
+docker-machine env --unset # 去掉刚设的环境变量
+eval $(docker-machine env --unset) 
 
 docker version
 ```
