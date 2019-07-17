@@ -324,6 +324,4 @@ Image 的获取
   sudo docker image ls
   ```
 
-### Docker Hub
-
 [Docker Hub](https://hub.docker.com/)
