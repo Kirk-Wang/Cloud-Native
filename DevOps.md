@@ -301,3 +301,10 @@ Registry
 * Namespaces：做隔离 pid, net, ipc, mnt, uts
 * Control groups: 做资源限制
 * Union file systems: Container 和 Image 分层
+
+### 什么是 Image
+
+* 文件和 meta data 的集合(root filesystem)
+* 分层的，并且每一层都可以添加改变，删除文件，成为一个新的 image
+* 不同的 image 可以共享相同的 layer
+* Image 本身是 read-only 的
