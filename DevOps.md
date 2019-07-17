@@ -3,6 +3,7 @@
 ![DevOps](https://docs.docker.com/get-started/images/laurel-docker-containers.png)
 
 ### Docker 能干什么？
+
 * 简化配置
 * 代码流水线管理
 * 提高开发效率
@@ -60,6 +61,9 @@
 
 * 容器是App层面的隔离
 * 虚拟化是物理资源层面的隔离
+
+![Containers](https://docs.docker.com/images/Container%402x.png)
+![virtual machines](https://docs.docker.com/images/VM%402x.png)
 
 ### 虚拟化 + 容器
 
