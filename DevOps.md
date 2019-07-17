@@ -325,3 +325,16 @@ Image 的获取
   ```
 
 [Docker Hub](https://hub.docker.com/)
+
+### 
+
+在Vagrant中，解决当前用户 `docker` 前加 `sudo`
+
+```sh
+sudo groupadd docker # 实质上安装好 docker 后，它已经存在了
+sudo gpasswd -a vagrant docker # 将当前用户添加这个group里面
+sudo service docker restart # 注意之后要重启 docker 进程
+exit # 退出,重新登录
+vagrant ssh
+docker image ls # 现在就不用加 sudo 了
+```
