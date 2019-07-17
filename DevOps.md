@@ -296,3 +296,8 @@ Registry
 * Redis
 * Niginx
 * ...images
+
+底层技术的支持
+* Namespaces：做隔离 pid, net, ipc, mnt, uts
+* Control groups: 做资源限制
+* Union file systems: Container 和 Image 分层
