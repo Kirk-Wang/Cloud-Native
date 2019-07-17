@@ -1,6 +1,17 @@
 # DevOps
 
+![DevOps](https://docs.docker.com/get-started/images/laurel-docker-containers.png)
+
+### Docker Engine
+
+![Docker Engine](https://docs.docker.com/engine/images/engine-components-flow.png)
+
+### Docker architecture
+
+![Docker architecture](https://docs.docker.com/engine/images/architecture.svg)
+
 ### Docker 能干什么？
+
 * 简化配置
 * 代码流水线管理
 * 提高开发效率
@@ -10,14 +21,14 @@
 * 多租户
 * 快速部署
 
-### 容器时代的“双城记”
+### 容器时代
 * docker & kubernetes(k8s)
 
 ### DevOps = 文化 + 过程 + 工具
 
 ![devops](./images/devops.png)
 
-### Long Long Time Ago
+### "石器时代"
 
 * 部署非常慢
 * 成本非常高
@@ -58,6 +69,8 @@
 
 * 容器是App层面的隔离
 * 虚拟化是物理资源层面的隔离
+
+<img alt="Containers" src="https://docs.docker.com/images/Container%402x.png" width="300" height="300">&nbsp;&nbsp;&nbsp;<img alt="virtual machines" src="https://docs.docker.com/images/VM%402x.png" width="300" height="300">
 
 ### 虚拟化 + 容器
 
