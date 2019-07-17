@@ -365,3 +365,35 @@ docker image ls # 发现这个Image只有1.85kb，非常非常小
 
 docker run hello-world # 这样就相当于创建了一个容器（执行一个Image)
 ```
+
+### 制作 `Hello-World` Base Image
+
+```sh
+# vagrant ssh
+# 安装一些必要的包
+sudo yum install git
+sudo yum install vim
+
+mkdir hello-world
+cd hello-world/
+vim hello.c
+#   #include<stdio.h>
+#   int main()
+#   {
+#      printf("hello docker\n");
+#   }
+
+:wq # 保存退出 Vim 神器
+
+history | grep yum # 看一下安装历史
+
+# 安装编译器和静态版本库
+sudo yum install gcc
+sudo yum install glibc-static
+
+gcc -static hello.c -o hello # 编译
+
+ls # 发现多了一个可执行文件`hello`
+./hello # 执行一次看一下
+
+```
