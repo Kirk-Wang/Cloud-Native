@@ -218,6 +218,8 @@ docker version #发现连上了，这种方式可以远程管理 docker machine,
 
 仓库地址：[Docker Machine Driver of Aliyun ECS](https://github.com/AliyunContainerService/docker-machine-driver-aliyunecs)
 
+`README.md` 有完整使用指南，👇简短说一下：
+
 下载对应的 Driver, Mac OSX 64 bit: [docker-machine-driver-aliyunecs_darwin-amd64](https://docker-machine-aliyunecs-drivers.oss-cn-beijing.aliyuncs.com/docker-machine-driver-aliyunecs_darwin-amd64.tgz)
 
 重命名 binary 档为 `docker-machine-driver-aliyunecs`，然后移动到 `/usr/local/bin`
@@ -232,5 +234,7 @@ docker-machine create -d aliyunecs --help
 好的方式还是直接根据提示按照 `使用子用户 AccessKey` 方式创建
 
 [aliyun-access-key](./images/aliyun-access-key.png)
+
+
 
 
