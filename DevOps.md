@@ -420,6 +420,7 @@ docker run kirkwwang/hello-docker # 运行看一下，麻雀虽小，五脏俱�
 ```
 
 ### 什么是 Container
+
 * 通过 Image 去创建(copy)
 * 在 Image Layer 之上建立一个 container layer(可读写)
 * 类比面向对象：类和实例
