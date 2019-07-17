@@ -76,7 +76,7 @@ docker --version
 docker version
 ```
 
-### Vagrant
+### Vagrant + VirtualBox搭建实验环境
 **Development Environments Made Easy**
 
 先安装 [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
