@@ -62,8 +62,8 @@
 * 容器是App层面的隔离
 * 虚拟化是物理资源层面的隔离
 
-![Containers](https://docs.docker.com/images/Container%402x.png)
-![virtual machines](https://docs.docker.com/images/VM%402x.png)
+<img alt="Containers" src="https://docs.docker.com/images/Container%402x.png" width="400" height="400">
+<img alt="virtual machines" src="https://docs.docker.com/images/VM%402x.png" width="400" height="400">
 
 ### 虚拟化 + 容器
 
