@@ -164,6 +164,7 @@ vagrant destroy //删掉机器
 ```sh
 cd ~/.vagrant.d/boxes
 ```
+### Docker Machine
 
 [Docker Machine Overview](https://docs.docker.com/machine/overview/)
 
@@ -177,8 +178,23 @@ Docker Machine 能干什么？(如：本地快速在 VirtualBox 环境中创建�
 
 ```sh
 docker-machine --help # 习惯看帮助
+
 docker-machine create demo # 我本地是直接在 VirtualBox 创建一个已经安装好了的虚拟机
+
+docker-machine ls # 看看已经安装好了的机器
+docker-machine ssh demo # 进入到机器里面
+docker version
+exit # 退出
+
+docker-machine help # 查看帮助命令
+
+docker-machine create demo1 # 再创建一台
+docker-machine ls # 看一下
+docker-machine stop demo1 # 停掉 demo1
+docker-machine ls # 再看一下输出
+docker-machine stop demo # 停掉 demo
 ```
+
 
 
 
