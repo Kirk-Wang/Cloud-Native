@@ -331,9 +331,9 @@ Image 的获取
 
 [hub.docker.com](https://hub.docker.com/)
 
-### 
+### Base Image
 
-在Vagrant中，解决当前用户 `docker` 前加 `sudo`
+在Vagrant中，解决当前用户 `docker` 前要加 `sudo` 的问题
 
 ```sh
 sudo groupadd docker # 实质上安装好 docker 后，它已经存在了
@@ -343,4 +343,14 @@ sudo service docker restart # 注意之后要重启 docker 进程
 exit # 退出,重新登录
 vagrant ssh
 docker image ls # 现在就不用加 sudo 了
+```
+
+首先看一看 `hello-world` 这个 Base Image
+
+```sh
+docker pull hello-world #  这也是一个 base image，仅仅包含类似于一个可以执行的文件
+
+docker image ls # 发现这个Image只有1.85kb，非常非常小
+
+docker run hello-world # 这样就相当于创建了一个容器（执行一个Image)
 ```
