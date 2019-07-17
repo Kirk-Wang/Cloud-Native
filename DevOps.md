@@ -308,3 +308,11 @@ Registry
 * 分层的，并且每一层都可以添加改变，删除文件，成为一个新的 image
 * 不同的 image 可以共享相同的 layer
 * Image 本身是 read-only 的
+
+```sh
+vagrant ssh
+sudo docker image ls #列举出本地有的image
+```
+
+Image 的获取
+* Build from Dockerfile
