@@ -366,7 +366,7 @@ docker image ls # 发现这个Image只有1.85kb，非常非常小
 docker run hello-world # 这样就相当于创建了一个容器（执行一个Image)
 ```
 
-### 制作 `Hello-World` Base Image
+### 制作 `Hello-Docker` Base Image
 
 ```sh
 # vagrant ssh
@@ -374,8 +374,8 @@ docker run hello-world # 这样就相当于创建了一个容器（执行一个I
 sudo yum install git
 sudo yum install vim
 
-mkdir hello-world
-cd hello-world/
+mkdir hello-docker
+cd hello-docker/
 vim hello.c
 #   #include<stdio.h>
 #   int main()
@@ -396,4 +396,25 @@ gcc -static hello.c -o hello # 编译
 ls # 发现多了一个可执行文件`hello`
 ./hello # 执行一次看一下
 
+```
+
+现在，就可以用 Dockerfile 把它弄成一个 Docker Image
+
+```yaml
+FROM scratch # 因为是base image,所以这里不能是其它
+ADD hello / # 将这个`hello`添加到根目录
+CMD ["/hello"] # 执行它
+```
+
+```sh
+# 构建 然后打 tag，在当前目录下找Dockerfile，因为有三步，所以这个Image有三层
+docker build -t kirkwwang/hello-docker .
+
+docker image ls # 看一下,发现这个Image只有857KB
+
+ls -lh # 看一下`hello`这个可执行文件,只有837KB
+
+docker history b3a43698719c # 看一下这个image有几层，发现是两层，因为FROM scratch本身就没有FROM其它Image,可以不算作一层
+
+docker run kirkwwang/hello-docker # 运行看一下，麻雀虽小，五脏俱全
 ```
