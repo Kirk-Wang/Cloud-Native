@@ -316,3 +316,4 @@ sudo docker image ls #列举出本地有的image
 
 Image 的获取
 * Build from Dockerfile
+* Pull from Registry
