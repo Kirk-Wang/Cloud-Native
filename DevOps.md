@@ -273,3 +273,26 @@ Docker Engine
 * REST API Server
 * CLI 接口(docker)
 
+```sh
+vagrant ssh
+sudo docker version
+ps -ef | grep docker # 看到有dockerd的进程
+```
+
+Docker Architecture
+
+Client
+* docker build
+* docker pull
+* docker run
+
+DOCKER_HOST
+* Docker daemon
+* Containers
+* Images
+
+Registry
+* Ubuntu
+* Redis
+* Niginx
+* ...images
