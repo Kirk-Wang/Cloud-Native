@@ -315,5 +315,15 @@ sudo docker image ls #列举出本地有的image
 ```
 
 Image 的获取
+
 * Build from Dockerfile
 * Pull from Registry
+  ```sh
+  sudo docker image ls
+  sudo docker pull ubuntu:14.04
+  sudo docker image ls
+  ```
+
+### Docker Hub
+
+[Docker Hub](https://hub.docker.com/)
