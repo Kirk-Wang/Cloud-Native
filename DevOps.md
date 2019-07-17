@@ -210,6 +210,14 @@ docker version #发现连上了，这种方式可以远程管理 docker machine,
 
 详细文档 [Provision hosts in the cloud](https://docs.docker.com/machine/get-started-cloud/)
 
+### 阿里云上创建一台 Docker Machine
+
+[Drivers for cloud providers](https://docs.docker.com/machine/drivers/)
+
+[3rd-party driver plugins](https://github.com/docker/docker.github.io/blob/master/machine/AVAILABLE_DRIVER_PLUGINS.md)
+
+[Docker Machine Driver of Aliyun ECS](https://github.com/AliyunContainerService/docker-machine-driver-aliyunecs)
+
 
 
 
