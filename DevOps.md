@@ -418,3 +418,9 @@ docker history b3a43698719c # 看一下这个image有几层，发现是两层，
 
 docker run kirkwwang/hello-docker # 运行看一下，麻雀虽小，五脏俱全
 ```
+
+### 什么是 Container
+* 通过 Image 去创建(copy)
+* 在 Image Layer 之上建立一个 container layer(可读写)
+* 类比面向对象：类和实例
+* Image 负责 app 存储和分发，Container 负责运行 app
