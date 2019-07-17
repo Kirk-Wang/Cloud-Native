@@ -233,7 +233,7 @@ docker-machine create -d aliyunecs --help
 
 好的方式还是直接根据提示按照 `使用子用户 AccessKey` 方式创建
 
-![aliyun-access-key](./images/aliyun-access-key.png)
+![aliyun-access-key](./images/aliyun-accesskey.png)
 
 **注意：要在控制台添加好子账号权限和充值100+**
 
