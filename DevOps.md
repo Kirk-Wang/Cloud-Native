@@ -147,16 +147,16 @@ SHELL
 离线安装 centos7 box
 
 ```sh
-cd ~/Vagrant/CentOS7 // 找到一个目录，作为初始化目录
-vagrant box add centos/7 ~/Downloads/virtualbox.box // 建议采取离线安装，这样有利于放置虚拟机文件到指定路径
-vagrant init centos/7 // 初始化 Vagrantfile
-vagrant up // 启动
-vagrant ssh // 进入VM
-exit // 退出
-vagrant status //查看状态
-vagrant halt // 停掉
-vagrant status //查看状态
-vagrant destroy //删掉机器
+cd ~/Vagrant/CentOS7 # 找到一个目录，作为初始化目录
+vagrant box add centos/7 ~/Downloads/virtualbox.box # 建议采取离线安装，这样有利于放置虚拟机文件到指定路径
+vagrant init centos/7 # 初始化 Vagrantfile
+vagrant up #启动
+vagrant ssh #进入VM
+exit #退出
+vagrant status #查看状态
+vagrant halt #停掉
+vagrant status #查看状态
+vagrant destroy #删掉机器
 ```
 
 查看boxes

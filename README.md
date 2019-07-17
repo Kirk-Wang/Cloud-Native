@@ -224,8 +224,8 @@ sudo systemctl restart docker
 vagrant --help
 mkdir centos7
 vagrant init centos/7 # 初始化Vagrantfile
-more Vagrantfile // more Vagrantfile
-vagrant up // 去找image(local or network) 
+more Vagrantfile # more Vagrantfile
+vagrant up # 去找image(local or network) 
 ```
 
 Vagrantfile, 可以配置机器启动时自动安装好docker
