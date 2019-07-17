@@ -204,7 +204,7 @@ docker version #看一下是不是连不上 server
 docker-machine start demo #启动下 demo
 docker-machine env demo #暴露出环境变量
 
-eval $(docker-machine env demo) #输出到本地
+eval $(docker-machine env demo)
 docker version #发现连上了，这种方式可以远程管理 docker machine, 本地只要一个 client 就好了
 ```
 
@@ -222,6 +222,14 @@ docker version #发现连上了，这种方式可以远程管理 docker machine,
 
 重命名 binary 档为 `docker-machine-driver-aliyunecs`，然后移动到 `/usr/local/bin`
 
+验证一下，Driver 是否安装成功
+```sh
+docker-machine create -d aliyunecs --help
+```
+
+进入阿里云后台，可以直接进入 `accesskeys` 进行创建用户 AccessKey ID
+
+好的方式还是直接根据提示按照 `使用子用户 AccessKey` 方式创建
 
 
 
