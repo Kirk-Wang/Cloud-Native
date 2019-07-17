@@ -1,5 +1,7 @@
 # DevOps
 
+![DevOps](https://docs.docker.com/get-started/images/laurel-docker-containers.png)
+
 ### Docker 能干什么？
 * 简化配置
 * 代码流水线管理
@@ -323,8 +325,11 @@ Image 的获取
   sudo docker pull ubuntu:14.04
   sudo docker image ls
   ```
+### Docker Hub
 
-[Docker Hub](https://hub.docker.com/)
+[Docker Hub Quickstart](https://docs.docker.com/docker-hub/)
+
+[hub.docker.com](https://hub.docker.com/)
 
 ### 
 
@@ -334,6 +339,7 @@ Image 的获取
 sudo groupadd docker # 实质上安装好 docker 后，它已经存在了
 sudo gpasswd -a vagrant docker # 将当前用户添加这个group里面
 sudo service docker restart # 注意之后要重启 docker 进程
+
 exit # 退出,重新登录
 vagrant ssh
 docker image ls # 现在就不用加 sudo 了
