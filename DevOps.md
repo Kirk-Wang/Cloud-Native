@@ -195,6 +195,19 @@ docker-machine ls # 再看一下输出
 docker-machine stop demo # 停掉 demo
 ```
 
+### 做个试验，远程的管理 docker machine
+
+先退出本地 mac 启动 docker server
+
+```
+docker version // 看一下是不是连不上 server
+docker-machine start demo // 启动下 demo
+docker-machine env demo // 暴露出环境变量
+eval $(docker-machine env demo) // 输出到本地
+docker version // 发现连上了，这种方式可以远程管理 docker machine, 本地只要一个 client 就好了
+```
+
+详细文档 [Provision hosts in the cloud](https://docs.docker.com/machine/get-started-cloud/)
 
 
 
