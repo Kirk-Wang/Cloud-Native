@@ -235,6 +235,21 @@ docker-machine create -d aliyunecs --help
 
 [aliyun-access-key](./images/aliyun-access-key.png)
 
+**注意：要在控制台添加好子账号权限和充值100+**
+
+```sh
+docker-machine create -d aliyunecs --aliyunecs-io-optimized=optimized --aliyunecs-access-key-id=<your key> --aliyunecs-access-key-secret=<your secret> --aliyunecs-region=cn-qingdao devops
+
+docker-machine ssh devops # 进入 shell
+docker-machine env devops
+eval $(docker-machine env devops)
+docker version # 看一下有没有连上远端的 server
+docker-machine env --help # 查看下帮助
+docker-machine env --unset # 去掉刚设的环境变量
+eval $(docker-machine env --unset) 
+docker version
+```
+
 
 
 
