@@ -259,3 +259,17 @@ docker version
 [Play with Docker](https://labs.play-with-docker.com/)
 
 ![Play with Docker](./images/play-with-docker.png)
+
+### Docker 架构和底层技术
+
+Docker Platform
+
+* Docker 提供了一个开发，打包，运行 app 的平台
+* 把 app 和底层 infrastructure 隔离开来
+
+Docker Engine
+
+* 后台进程(dockerd)
+* REST API Server
+* CLI 接口(docker)
+
