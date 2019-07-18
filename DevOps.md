@@ -652,4 +652,30 @@ ENV
 
 ### RUN vs CMD vs Entrypoint
 
+RUN:执行命令并创建新的Image Layer
+
+CMD:设置容器启动后默认执行的命令和参数
+
+ENTRYPOINT:设置容器启动时运行的命令
+
+Shell 和 Exec格式
+
+```sh
+RUN apt-get install -y vim
+CMD echo "hello docker"
+ENTRYPOINT echo "hello docker"
+```
+
+Exec格式
+
+```sh
+RUN["apt-get", "install", "-y", "vim"]
+CMD["/bin/echo", "hello docker"]
+ENTRYPOINT["/bin/echo", "hello docker"]
+```
+
+
+
+
+
 
