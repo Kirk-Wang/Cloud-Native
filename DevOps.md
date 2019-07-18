@@ -674,8 +674,136 @@ CMD["/bin/echo", "hello docker"]
 ENTRYPOINT["/bin/echo", "hello docker"]
 ```
 
+Dockerfile1
+
+```sh
+FROM centos
+ENV name Docker
+ENTRYPOINT echo "hello $name"
+```
+
+Dockerfile2
+
+```sh
+FROM centos
+ENV name Docker
+ENTRYPOINT ["/bin/echo", "hello $name"]
+```
+
+Demo
+
+```sh
+mkdir cmd_vs_entrypoint
+cd cmd_vs_entrypoint
+vim Dockerfile # 放进去Dockerfile1
+docker build -t kirkwwang/centos-entrypoint-shell . # shell格式构建
+docker image ls
+docker run kirkwwang/centos-entrypoint-shell # 运行看一下
 
 
+vim Dockerfile # 放进去Dockerfile2
+docker build -t kirkwwang/centos-entrypoint-exec . # exec格式构建
+docker image ls
+docker run kirkwwang/centos-entrypoint-exec
+# [vagrant@bogon cmd_vs_entrypoint]$ docker run kirkwwang/centos-entrypoint-exec
+# hello $name // 发现并没有进行变量替换，因为我们不是在shell里面去执行 echo，只是单纯的执行echo, 怎么改？
+# ENTRYPOINT ["/bin/bash","-c","echo","hello $name"] 在 shell 里面执行 echo 命令
+
+vim Dockerfile # 修改一下
+docker build -t kirkwwang/centos-entrypoint-exec-new .
+docker image ls
+docker run kirkwwang/centos-entrypoint-exec-new # 发现打印出来的是空，Why？
+# [vagrant@bogon cmd_vs_entrypoint]$ docker run kirkwwang/centos-entrypoint-exec-new
+#
+
+vim Dockerfile # 修改一下
+# ENTRYPOINT ["/bin/bash","-c", "echo hello $name"] 把后面所有的命令作为一个去执行
+
+docker build -t kirkwwang/centos-entrypoint-exec-new .
+docker run kirkwwang/centos-entrypoint-exec-new # 现在就正常了
+
+```
+
+### CMD
+
+容器启动时默认执行的命令
+
+如果docker run指定了其它命令，CMD命令被忽略
+
+如果定义了多个CMD，只有最后一个会执行
+
+Dockerfile:
+
+```yml
+FROM centos
+ENV name Docker
+CMD echo "hello $name"
+```
+
+```sh
+docker run [image] #输出?-->hello World
+docker run -it [image] /bin/bash # 输出?-->CMD命令被忽略，因为指定了 `/bin/bash`
+```
+
+### ENTRYPOINT
+
+让容器以应用程序或者服务的形式运行
+
+不会被忽略，一定会执行
+
+最佳实践：写一个shell脚本作为entrypoint
+
+```yml
+COPY docker-entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint.sh"] # 写一个 shell script
+
+EXPOSE 27017
+CMD ["mongod"]
+```
+
+实践(命令改成 shell)
+
+```sh
+docker rm $(docker ps -f "status=exited" -q) # 干掉已经退出的容器
+docker rmi e2fc56ae6db7 # 删掉那个 none Image
+
+vim Dockerfile # 修改ENTRYPOINT：CMD echo "hello $name"
+
+docker build -t kirkwwang/centos-cmd-shell . # 构建
+
+docker images # 查看一下
+docker run kirkwwang/centos-cmd-shell
+#hello Docker
+
+docker run -it kirkwwang/centos-cmd-shell /bin/bash # 发现直接进入容器里面了
+
+docker run kirkwwang/centos-entrypoint-shell #hello Docker
+
+docker run -it kirkwwang/centos-entrypoint-shell /bin/bash
+# hello Docker -->> 还是会运行 ENTRYPOINT
+```
+
+### 镜像的发布
+
+[Docker Hub](https://hub.docker.com)
+
+实践
+
+```sh
+docker login
+
+docker push kirkwwang/hello-docker # kirkwwang 一定是你的 Docker Id
+
+docker rmi kirkwwang/hello-docker # 删掉本地的，拉取线上的
+
+docker pull kirkwwang/hello-docker
+```
+
+这样去发布一个 docker image 是不安全的，因为别人不知道你在系统是不是加了病毒
+
+推荐的方式是关联 Github 仓库等，里面提供Dockerfile, Docker Hub 自动帮我们根据 Dockerfile 构建
+
+[Create Repository](https://cloud.docker.com/repository/create)
 
 
 
