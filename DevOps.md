@@ -562,7 +562,7 @@ docker image ls # 看一眼新生成的 image
 
 [Best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
 
-FROM
+**FROM**
 
 ```yml
 FROM scratch # 制作 Base Image
@@ -570,4 +570,32 @@ FROM centos # 使用 Base Image
 FROM ubuntu:14.04
 ```
 
-**为了安全，尽量使用官方的 Image 作为 Base Image！**
+`为了安全，尽量使用官方的 Image 作为 Base Image！`
+
+**LABEL**
+
+```yml
+LABEL maintainer="kirk.w.wang@gmail.com"
+LABEL version="1.0"
+LABEL description="This is description"
+```
+
+LABEL 类似于注释
+
+`Metadata不可少`
+
+**RUN**
+
+```yml
+RUN yum update && yum install -y vim \
+    python-dev # 反斜线换行
+
+RUN apt-get update && apt-get install -y perl \
+    pwgen --no-install-recommends && rm -rf \
+    /var/lib/apt/lists/* # 注意清理cache
+
+RUN /bin/bash -c 'source $HOME/.bashrc;echo 
+$HOME'
+```
+`为了美观，复杂的RUN请用反斜线换行！避免无用分层，合并多条命令成一行！`
+
