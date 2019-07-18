@@ -644,10 +644,12 @@ ENV
 
 **CMD and ENTRYPOINT**
 
-### 学习方式
+### Dockerfile 学习方式
 
 [docker-library](https://github.com/docker-library)
 
 [Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
+
+### RUN vs CMD vs Entrypoint
 
 
