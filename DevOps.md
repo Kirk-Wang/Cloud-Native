@@ -558,4 +558,16 @@ docker build -t kirkwwang/centos-vim-new . # -t 打 tag, `.`基本于当前目�
 docker image ls # 看一眼新生成的 image
 ```
 
-### Dockerfile 语法梳理及最佳实践
+### Dockerfile 最佳实践
+
+[Best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
+
+FROM
+
+```yml
+FROM scratch # 制作 Base Image
+FROM centos # 使用 Base Image
+FROM ubuntu:14.04
+```
+
+**为了安全，尽量使用官方的 Image 作为 Base Image！**
