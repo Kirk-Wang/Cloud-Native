@@ -531,3 +531,9 @@ docker history kirkwwang/centos-vim # OK, 发现有vim的多了一层，其它�
 ```
 
 **不提倡这种方式创建 Image。发布出去，其实并不知道这个 Image 是如何产生的（鬼知道你里面安装啥软件[病毒]），不安全**
+
+### 通过 Dockerfile 去构建一个 Image
+
+```sh
+docker image ls
+```
