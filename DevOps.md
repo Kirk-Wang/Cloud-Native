@@ -557,3 +557,5 @@ docker build -t kirkwwang/centos-vim-new . # -t 打 tag, `.`基本于当前目�
 
 docker image ls # 看一眼新生成的 image
 ```
+
+### Dockerfile 语法梳理及最佳实践
