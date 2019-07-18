@@ -536,4 +536,10 @@ docker history kirkwwang/centos-vim # OK, 发现有vim的多了一层，其它�
 
 ```sh
 docker image ls
+docker image rm kirkwwang/centos-vim # 删掉刚创建的image
+
+mkdir docker-centos-vim
+cd docker-centos-vim
+vim Dockerfile
+
 ```
