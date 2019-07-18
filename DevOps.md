@@ -599,3 +599,47 @@ $HOME'
 ```
 `为了美观，复杂的RUN请用反斜线换行！避免无用分层，合并多条命令成一行！`
 
+**WORKDIR 设定当前工作目录**
+
+```yml
+WORKDIR /root
+
+WORKDIR /test # 如果没有会自动创建test目录
+WORKDIR demo
+RUN pwd # 输出结果应该是 /test/demo
+```
+
+`用WORKDIR，不要用 RUN cd！尽量使用绝对目录！`
+
+**ADD and COPY**
+
+```yml
+ADD hello /
+ADD test.tar.gz / #添加到根目录并解压
+
+WORKDIR /root
+ADD hello test/ # /root/test/hello
+
+WORKDIR /root
+COPY hello test/
+```
+
+`大部分情况，COPY 优于 ADD! ADD 除了 COPY 还有额外功能（解压）！添加远程文件/目录请使用curl或者wget!`
+
+**ENV**
+
+```yml
+ENV MYSQL_VERSION 5.6 # 设置常量
+RUN apt-get install -y mysql-server="${MYSQL_VERSION}" \
+    && rm -rf /var/lib/apt/lists/* # 引用常量
+
+ENV
+```
+
+`尽量使用ENV增加可维护性`
+
+**VOLUME and EXPOSE**
+
+(存储和网络)后面详细介绍
+
+
