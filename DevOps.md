@@ -541,5 +541,19 @@ docker image rm kirkwwang/centos-vim # 删掉刚创建的image
 mkdir docker-centos-vim
 cd docker-centos-vim
 vim Dockerfile
+```
 
+`Dockerfile` 文件内容
+
+```yml
+FROM centos
+RUN yum install -y vim
+# 会创建一个临时的 Container 运行命令，然后去 Commit 成一个新的 Image
+# 最后删掉那个临时的 Container
+```
+
+```sh
+docker build -t kirkwwang/centos-vim-new . # -t 打 tag, `.`基本于当前目录的Dockerfile构建
+
+docker image ls # 看一眼新生成的 image
 ```
