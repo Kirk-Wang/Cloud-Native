@@ -640,6 +640,14 @@ ENV
 
 **VOLUME and EXPOSE**
 
-(存储和网络)后面详细介绍
+存储和网络
+
+**CMD and ENTRYPOINT**
+
+### 学习方式
+
+[docker-library](https://github.com/docker-library)
+
+[Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
 
 
