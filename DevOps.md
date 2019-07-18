@@ -874,5 +874,70 @@ docker rmi x.x.x.x:5000/hello-world # 删掉本地的
 docker pull x.x.x.x:5000/hello-world
 ```
 
+### Dockerfile 实战
 
+```sh
+mkdir flask-hello-world
+cd flask-hello-world/
+
+vim app.py
+```
+
+```py
+from flask import Flask
+app = Flask(__name__)
+@app.route('/')
+def hello()
+   return "hello docker"
+if __name__== "__main__":
+   app.run()
+```
+
+```sh
+vim Dockerfile
+```
+
+```yml
+FROM python:2.7
+LABEL maintainer="Kirk Wang<kirk.w.wang@gmail.com>"
+RUN pip install flask
+COPY app.py /app
+WORKDIR /app
+EXPOSE 5000
+CMD ["python", "app.py"]
+```
+
+### Debug Dockerfile
+```sh
+docker build -t kirkwwang/flask-hello-world .
+
+# 构建
+# ....
+# Step 4/7 : COPY app.py /app
+# ---> 6e2811783304
+# Step 5/7 : WORKDIR /app
+# Cannot mkdir: /app is not a directory 尴尬，报错，进去这个中间状态的Image 6e2811783304 去看一眼
+
+docker run -it 6e2811783304 /bin/bash # 发现 app 是个文件
+
+vim Dockerfile # 修改 COPY app.py /app -> COPY app.py /app/
+```
+
+```yml
+FROM python:2.7
+LABEL maintainer="Kirk Wang<kirk.w.wang@gmail.com>"
+RUN pip install flask
+COPY app.py /app/
+WORKDIR /app
+EXPOSE 5000
+CMD ["python", "app.py"]
+```
+
+```sh
+docker build -t kirkwwang/flask-hello-world . # 构建
+docker images # 看到了 kirkwwang/flask-hello-world
+docker run kirkwwang/flask-hello-world # 创建一个容器，运行我们的 App
+docker run -d kirkwwang/flask-hello-world # -d 后台执行
+docker ps # 发现正在运行
+```
 
