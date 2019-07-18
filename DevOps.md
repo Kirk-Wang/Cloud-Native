@@ -790,6 +790,7 @@ docker run -it kirkwwang/centos-entrypoint-shell /bin/bash
 实践
 
 ```sh
+# vagrant ssh
 docker login
 
 docker push kirkwwang/hello-docker # kirkwwang 一定是你的 Docker Id
