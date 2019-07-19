@@ -1005,4 +1005,10 @@ CMD [] # 接收参数
 ```sh
 docker build -t kirkwwang/ubuntu-stress . # 构建
 docker run -it kirkwwang/ubuntu-stress # 发现打印出了帮助信息
+docker run -it kirkwwang/ubuntu-stress --vm 1 # stress 接受了vm等于1的参数
+docker run -it kirkwwang/ubuntu-stress --vm 1 --verbose # 打印出所有的过程
 ```
+
+ENTRYPOINT + CMD 比较典型利用 docker 在容器里面运行命令工具的方法
+
+### 容器的资源限制
