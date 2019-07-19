@@ -973,4 +973,36 @@ docker inspect demo # 查看下这个容器的详细信息
 docker logs demo # 容器运行产生的一些输出
 ```
 
+### 打包 Stress 压力测试工具
 
+使用一下 Stress
+
+```sh
+mkdir ubuntu-stress
+cd ubuntu-stress
+docker run -it ubuntu # 运行并进入到容器里面
+apt-get update && apt-get install -y stress # 安装 stress
+
+which stress # 在/usr/bin/stress
+stress --help
+stress --vm 1 --verbose # 分配&释放
+stress --vm 1 --vm-bytes 5000000M --verbose # 炸了，超出了 docker host 内存的限制了
+top # 看下内存
+```
+
+打包
+```sh
+vim Dockerfile
+```
+
+```yml
+FROM ubuntu
+RUN apt-get update && apt-get install -y stress
+ENTRYPOINT ["/usr/bin/stress"]
+CMD []
+```
+
+```sh
+docker build -t kirkwwang/ubuntu-stress . # 构建
+docker run -it kirkwwang/ubuntu-stress # 发现打印出了帮助信息
+```
