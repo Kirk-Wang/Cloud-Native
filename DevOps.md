@@ -941,3 +941,36 @@ docker run -d kirkwwang/flask-hello-world # -d 后台执行
 docker ps # 发现正在运行
 ```
 
+### 容器的操作
+
+对运行中的容器进行操作
+
+```sh
+docker ps
+docker exec -it fdeee46afa69 /bin/bash # 对正在运行的容器执行/bin/bash，交互式的运行
+ps -ef | grep python # 发现有进程在后台运行
+
+exit # 退出
+docker exec -it fdeee46afa69 python # 发现我们直接进入到了一个python的shell里面了
+
+docker exec -it fdeee46afa69 ip a # 打印下容器的ip地址
+
+docker stop fdeee46afa69 # ==docker container stop fdeee46afa69 停掉容器
+
+docker rm $(docker ps -aq) # 清理所有的容器
+docker rm $(docker ps -f "status=exited" -q) # 清理所有退出的容器
+
+docker run -d --name=demo kirkwwang/flask-hello-world # 重新启动并且加个名字
+
+docker ps # 看到了那个名字，不指定就随机分配一个
+
+docker stop demo # 停掉
+
+docker start demo # 启动
+
+docker inspect demo # 查看下这个容器的详细信息
+
+docker logs demo # 容器运行产生的一些输出
+```
+
+
