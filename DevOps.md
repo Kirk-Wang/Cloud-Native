@@ -1048,3 +1048,29 @@ cpu-shares 去设置相对权重
 单机：Bridge Network  Host Network  None Network
 
 多机：Overlay Network
+
+**Vagrant was unable to mount VirtualBox shared folders.错误解决方式**
+
+[解决方案](https://github.com/scotch-io/scotch-box/issues/296)
+
+```sh
+vagrant plugin install vagrant-winnfsd
+vagrant plugin install vagrant-vbguest
+Vagrant up
+```
+
+实操：
+
+外面是可以ping的通的
+```sh
+ping 192.168.205.10
+ping 192.168.205.11
+
+vagrant status
+vagrant ssh docker-node1 # 进入第一台机器
+docker version
+ip a
+ping 192.168.205.11 #是通的
+```
+
+如果实在装不了可以 `docker machine`
