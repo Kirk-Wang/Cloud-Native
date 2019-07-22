@@ -1162,3 +1162,10 @@ sudo ip netns list
 ```sh
 sudo ip netns exec test1 ip a # 在 test1 这个
 ```
+```
+1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+```
+看到现在有一个本地的回环口，特点：没有127.0.0.1地址，状态是 `DOWN` 的，没有运行起来
+
+还可以在`NetWork NameSpace`里面执行 `ip link` 命令
