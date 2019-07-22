@@ -1339,5 +1339,16 @@ docker exec test1 ip a
 
 这个 eth0@if8 和外面的 vetha023cb1@if7 是一对，这样我们 test1容器就连到了 docker0 上了。
 
-如何验证是连到了 docker0 上的？
+如何验证是连到了 docker0 上的？安装一个工具 `brctl`
+```sh
+sudo yum install bridge-utils
+brctl # 看下帮助
+brctl show # 看下 interface
+```
+```
+bridge name	   bridge id		      STP enabled	   interfaces
+docker0		   8000.0242262aafcc	   no		         vetha023cb1
+```
+注意 `vetha023cb1` 与前面的 `vetha023cb1@if7`，也就是说这个接口是连上了 Linux Bridge 上的
+
 
