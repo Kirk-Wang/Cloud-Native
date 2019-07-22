@@ -1105,3 +1105,29 @@ Wireshart 工具
 
 ### Linux网络命名空间(Docker 底层技术)
 
+```sh
+# vagrant ssh docker-node1
+
+sudo docker run -d --name test1 busybox /bin/sh -c "while true; do sleep 3600; done" # 这个 container 会一直在后台运行
+```
+创建了一个容器，同时也就创建了一个 Linux Network Namespace, 和宿主机或其它容器是完全隔离的
+
+显示当前容器有的网络接口(命名空间)
+
+```sh
+sudo docker exec -it test1 /bin/sh # 进入Container
+ip a
+```
+
+显示当前容器有的网络接口(命名空间) lo: 本地回环口, eth0:
+
+```
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+5: eth0@if6: <BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN> mtu 1500 qdisc noqueue
+    link/ether 02:42:ac:11:00:02 brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+```
