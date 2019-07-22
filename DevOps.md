@@ -1351,4 +1351,26 @@ docker0		   8000.0242262aafcc	   no		         vetha023cb1
 ```
 注意 `vetha023cb1` 与前面的 `vetha023cb1@if7`，也就是说这个接口是连上了 Linux Bridge 上的
 
-
+接下来创建 test2 container
+```sh
+sudo docker run -d --name test2 busybox /bin/sh -c "while true; do sleep 3600; done"
+docker network inspect bridge # 看到Containers部分多了一个
+```
+```sh
+"Containers": {
+   "25337f3ec9bce578d970aee205b81d6b1d88415e003708884cef2df040f99160": {
+         "Name": "test1",
+         "EndpointID": "94452199f6ed1de0c7af747546f8559cdb0f08ed13a16f35fa7dca4d2c2f5602",
+         "MacAddress": "02:42:ac:11:00:02",
+         "IPv4Address": "172.17.0.2/16",
+         "IPv6Address": ""
+   },
+   "efd1c8e17791b1fa2334a71f0bb81784bf936ef12f0386e3d7927e0a14925d7d": {
+         "Name": "test2",
+         "EndpointID": "978e256e484f4dcddaee26955a18707f74d676b9d5e7c26fe42c28ac6c0fce1a",
+         "MacAddress": "02:42:ac:11:00:03",
+         "IPv4Address": "172.17.0.3/16",
+         "IPv6Address": ""
+   }
+},
+```
