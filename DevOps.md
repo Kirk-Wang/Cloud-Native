@@ -1339,5 +1339,5 @@ docker exec test1 ip a
 
 这个 eth0@if8 和外面的 vetha023cb1@if7 是一对，这样我们 test1容器就连到了 docker0 上了。
 
-
+如何验证是连到了 docker0 上的？
 
