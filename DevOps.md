@@ -1145,3 +1145,20 @@ ping 172.17.0.2 # ping test1 容器，是能够通的
 ```
 
 ### 创建和删除 Linux NetWork NameSpace
+
+```sh
+sudo ip netns list # 本机有的network namespace
+sudo ip netns delete test1 # 删掉
+sudo ip netns add test1 # 添加
+sudo ip netns list
+sudo ip netns add test1
+sudo ip netns list
+```
+有两个 network namespace 了
+
+刚才用 docker run 创建了两个容器，每个都有自己独立的 network namespace, 可以通过 docker exec 去查看 network namespace 里面的端口和ip地址
+
+同理，我们如何去查看刚刚 linux 创建的 network namespace 它的 ip 呢 ？
+```sh
+sudo ip netns exec test1 ip a # 在 test1 这个
+```
