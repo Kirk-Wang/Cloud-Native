@@ -1179,3 +1179,10 @@ sudo ip netns exec test1 ip link # 在 test NS 里面执行
 1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN mode DEFAULT group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
 ```
+
+只有一条lo(本地回环口)
+
+好，现在让 lo 这个端口 up 起来
+```sh
+sudo ip netns exec test1 ip link set dev lo up
+```
