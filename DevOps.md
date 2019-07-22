@@ -1258,3 +1258,22 @@ sudo ip netns exec test2 ping 192.168.1.1 # 同理
 **以上就是上面两个 busybox 容器能通的原理**
 
 ### Docker bridge0 详解
+
+```sh
+sudo docker exec -it test1 /bin/sh # 进入容器
+ping www.baidu.com # 是能 ping 通的， Why?
+```
+
+实验：
+
+```sh
+docker ps
+docker stop test2
+docker rm test2 # 删掉test2，只保留test1
+
+docker network ls 
+```
+列举出来当前机器 docker 有哪些网络
+```
+
+```
