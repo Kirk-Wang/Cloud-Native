@@ -1143,3 +1143,5 @@ ip a # 看一下自己的ip
 ping 172.17.0.2 # ping test1 容器，是能够通的
 
 ```
+
+### 创建和删除 Linux NetWork NameSpace
