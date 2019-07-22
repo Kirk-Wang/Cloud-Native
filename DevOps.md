@@ -1194,3 +1194,15 @@ sudo ip netns exec test1 ip link #看一下
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
 ```
+
+### 让两个 NetWork NameSpace(test1 & test2) 互通
+
+本机有两个 network namespace , test1 & test2，它们分别有一个looback本地的回环口
+
+想让 test1 和 test2 连起来，显然，我们需要接口（类似于连两台机器需要网线, 必须插到每个计算机的网口上去)
+
+在 Linux Network Namesapce 技术里面,我们有 Veth, 我们可以创建 Veth pair
+
+有了这一对，然后分别放在 test1 与 test2，这样就连起来了，因为这两个端口分别是在两个network namespace 里面
+
+所以说，如果我们给这两个端口都配一个IP地址的话，那么他们两个就是通的了（就如先前创建busybox container，它们能ping通，原理一样）
