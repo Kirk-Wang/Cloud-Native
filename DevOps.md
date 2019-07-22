@@ -1247,7 +1247,12 @@ sudo ip netns exec test1 ip link
 sudo ip netns exec test2 ip link
 ```
 
-5.Ping
+6.Ping
 ```sh
-
+sudo ip netns exec test1 ip a # 看下test1 ip
+sudo ip netns exec test2 ip a # 看下test2 ip
+sudo ip netns exec test1 ping 192.168.1.2 # 在 test1 里面去 ping test2-->完美，通了
+sudo ip netns exec test2 ping 192.168.1.1 # 同理
 ```
+
+**以上就是上面两个 busybox 容器能通的原理**
