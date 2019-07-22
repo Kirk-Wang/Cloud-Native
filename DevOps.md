@@ -1275,5 +1275,26 @@ docker network ls
 ```
 列举出来当前机器 docker 有哪些网络
 ```
+NETWORK ID          NAME                DRIVER              SCOPE
+858d0eaf1962        bridge              bridge              local
+f770f4ae06ce        host                host                local
+9f95ebeb5691        none                null                local
+```
 
+看一下 test1 容器是不是连接到 `bridge` 这个 DRIVER 上面
+```sh
+docker network inspect test1 #查看bridge详细信息,发现test1是连接到了bridge这个网路上面的
+docker network inspect bridge
+```
+注意 Container 字段
+```
+"Containers": {
+   "25337f3ec9bce578d970aee205b81d6b1d88415e003708884cef2df040f99160": {
+         "Name": "test1",
+         "EndpointID": "94452199f6ed1de0c7af747546f8559cdb0f08ed13a16f35fa7dca4d2c2f5602",
+         "MacAddress": "02:42:ac:11:00:02",
+         "IPv4Address": "172.17.0.2/16",
+         "IPv6Address": ""
+   }
+}
 ```
