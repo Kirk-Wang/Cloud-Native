@@ -1300,3 +1300,44 @@ docker network inspect bridge
    }
 }
 ```
+
+看下本机的 `ip a`
+
+```
+.....
+.....
+6: docker0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:26:2a:af:cc brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:26ff:fe2a:afcc/64 scope link
+       valid_lft forever preferred_lft forever
+8: vetha023cb1@if7: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP group default
+    link/ether 7e:b6:31:7d:34:c1 brd ff:ff:ff:ff:ff:ff link-netnsid 2
+    inet6 fe80::7cb6:31ff:fe7d:34c1/64 scope link
+       valid_lft forever preferred_lft forever
+```
+OK, 我们看到了 `docker0` 和 `vetha023cb1@if7`。我们的 test1 container 要连接到 docker0 这个 bridge 上面。 docker0这个network namespace 是本机，busybox 有自己的 network namespace, 这两个要连接在一起，就需要一个 veth 的 pair。
+
+`vetha023cb1@if7` 就负责连到 docker0 上面的。
+
+接下来，我看一下 test1 容器的`ip a`
+```sh
+docker exec test1 ip a
+```
+
+```
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+7: eth0@if8: <BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN> mtu 1500 qdisc noqueue
+    link/ether 02:42:ac:11:00:02 brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+```
+
+这个 eth0@if8 和外面的 vetha023cb1@if7 是一对，这样我们 test1容器就连到了 docker0 上了。
+
+
+
