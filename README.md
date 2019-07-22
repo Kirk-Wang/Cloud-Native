@@ -1515,7 +1515,7 @@ docker stop test1
 docker rm test1
 ```
 
-*none network*
+*host network*
 
 ```sh
 docker run -d --name test1 --network host busybox /bin/sh -c "while true; do sleep 3600; done"
