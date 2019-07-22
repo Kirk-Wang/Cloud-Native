@@ -1286,7 +1286,9 @@ f770f4ae06ce        host                host                local
 docker network inspect test1 #查看bridge详细信息,发现test1是连接到了bridge这个网路上面的
 docker network inspect bridge
 ```
+
 注意 Container 字段
+
 ```
 "Containers": {
    "25337f3ec9bce578d970aee205b81d6b1d88415e003708884cef2df040f99160": {
