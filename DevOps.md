@@ -1352,11 +1352,13 @@ docker0		   8000.0242262aafcc	   no		         vetha023cb1
 注意 `vetha023cb1` 与前面的 `vetha023cb1@if7`，也就是说这个接口是连上了 Linux Bridge 上的
 
 接下来创建 test2 container
+
 ```sh
 sudo docker run -d --name test2 busybox /bin/sh -c "while true; do sleep 3600; done"
 docker network inspect bridge # 看到Containers部分多了一个
 ```
-```sh
+
+```
 "Containers": {
    "25337f3ec9bce578d970aee205b81d6b1d88415e003708884cef2df040f99160": {
          "Name": "test1",
@@ -1373,4 +1375,12 @@ docker network inspect bridge # 看到Containers部分多了一个
          "IPv6Address": ""
    }
 },
+```
+`ip a`，再看，发现多了一个veth，Why?因为我们多了个容器，它又需要一对（一根线）去连这个 docker0
+
+`brctl show` 发现 docker0 连了两个接口了
+```sh
+bridge name	bridge id		   STP enabled	interfaces
+docker0		8000.0242262aafcc	no		      vetha023cb1
+							                     vethb15f768
 ```
