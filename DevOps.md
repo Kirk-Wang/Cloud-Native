@@ -1392,3 +1392,76 @@ docker0		8000.0242262aafcc	no		      vetha023cb1
 Internet
 
 * Contianer Test1 -> docker 0 -> NAT -> eth0 -> Internet
+
+### 容器之间的link(docker 之间的关系)
+
+IP 是会变的，但名字不会变
+
+```sh
+# vagrant
+docker ps
+docker stop test2
+docker rm test2
+
+docker run -d --name test2 --link test1 busybox /bin/sh -c "while true; do sleep 3600; done" # 加上link参数
+docker exec -it test2 /bin/sh #进入容器
+
+ping 172.17.0.2 # 通
+ping test1 # 通，相当于本地添加了一条DNS记录，只有 test2 能连 test1
+exit
+```
+
+`link` 一般真正部署的时候，很少用。
+
+恢复
+```sh
+docker stop test2
+docker rm test2
+docker run -d --name test2 busybox /bin/sh -c "while true; do sleep 3600; done"
+```
+
+在创建容器的时候可以指定network
+
+```sh
+docker ps
+docker network ls
+# 自己创建一个 bridge
+docker network create
+# -d：指定 driver
+docker network create -d bridge my-bridge
+# 看到了my-bridge
+docker network ls 
+
+brctl show # 也能看到
+# --network 连接到 my-bridge
+docker run -d --name test3 --network my-bridge busybox /bin/sh -c "while true; do sleep 3600; done"
+# 看到my-bridge 有接口了
+brctl show 
+# Containers部分也能看得到
+docker network inspect my-bridge
+
+# 对于已经存在的容器，也可以连接到 my-bridge
+docker network connect my-bridge test2
+docker network inspect my-bridge # 有 test2 容器
+docker network inspect bridge # 有 test2 容器
+
+# test2 连到了两个 bridge 上面了
+
+docker exec -it test3 /bin/sh # 进入 test3 容器
+ping 172.18.0.3 # test2 能通
+ping test2 # 也能通，并没有指定link,原因是因为test2和test3连的网络是用户自己创建的bridge(它们相互都可以通过名字ping 通)
+exit
+
+docker exec -it test2 /bin/sh 
+ping test3 # 也能通
+ping test1 # 不能通，它没有连接到my-bridge上面
+exit
+
+docker network connect my-bridge test1 # 把 test1 加进去
+docker exec -it test2 /bin/sh
+ping test1 # 通了
+```
+
+*这就是自定义bridge与docker0的区别。不用 link，也能直接用名字互通*
+
+### 容器的端口映射(对外提供服务)
