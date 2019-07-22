@@ -1256,3 +1256,5 @@ sudo ip netns exec test2 ping 192.168.1.1 # 同理
 ```
 
 **以上就是上面两个 busybox 容器能通的原理**
+
+### Docker bridge0 详解
