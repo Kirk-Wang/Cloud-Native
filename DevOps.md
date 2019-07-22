@@ -1190,7 +1190,7 @@ sudo ip netns exec test1 ip link #看一下
 现在变成 UNKNOWN 了，Why?
 这个端口要UP起来，要满足一个条件，需要两端是连起来的。
 就像 eth0 和 mac 里面的一个虚拟化的端口连起来，就是说单个端口是没法 up 起来的，必须是一对。
-```sh
+```
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
 ```
