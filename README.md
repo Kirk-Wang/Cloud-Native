@@ -1364,7 +1364,7 @@ brctl show # 发现 docker0 连了两个接口了
 #							                      vethc44fcf8
 
 容器之间互访
-Contianer Test1 <-> docker 0 <-> Contianer Test1 
+Contianer Test1 <-> docker 0 <-> Contianer Test2
 
 Internet
 Contianer Test1 -> docker 0 -> NAT -> eth0 -> Internet
