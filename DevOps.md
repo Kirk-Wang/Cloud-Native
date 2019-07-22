@@ -1222,9 +1222,32 @@ sudo ip link add veth-test1 type veth peer name veth-test2 # 本机添加一对l
 ip link # 看一下
 ```
 
-3.操作 test1 & test2
+3.添加 veth pair 到 test1 & test2
 ```sh
 sudo ip link set veth-test1 netns test1 # 把 veth-test1 接口添加到 test1 network namespace 里面去
 sudo ip netns exec test1 ip link # 看一下
 sudo ip link # 看眼本地，10 不见了
+sudo ip link set veth-test2 netns test2 # 同理 ,test2
+sudo ip link # 看眼本地，9 也不见了，好，完美
+sudo ip netns exec test2 ip link 
+```
+
+4.为 test1 & test2 分配 ip
+```sh
+sudo ip netns exec test1 ip addr add 192.168.1.1/24 dev veth-test1 # 为 dev veth-test1 分配一个IP地址，掩码是24
+sudo ip netns exec test2 ip addr add 192.168.1.2/24 dev veth-test2
+```
+
+5.Up test1 & test2 Network Namespace
+```sh
+sudo ip netns exec test1 ip link set dev veth-test1 up # 把这个veth-test1端口up起来
+sudo ip netns exec test2 ip link set dev veth-test2 up # 把这个veth-test2端口up起来
+
+sudo ip netns exec test1 ip link
+sudo ip netns exec test2 ip link
+```
+
+5.Ping
+```sh
+
 ```
