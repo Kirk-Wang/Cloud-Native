@@ -1465,3 +1465,35 @@ ping test1 # 通了
 *这就是自定义bridge与docker0的区别。不用 link，也能直接用名字互通*
 
 ### 容器的端口映射(对外提供服务)
+```sh
+docker run --name web -d -p 80:80 nginx # -p 80:80-->>容器里面的80映射到本地的80
+curl 127.0.0.1 # 有数据，绑定成功
+```
+Mac 打开 http://192.168.205.10/ --> 有数据
+
+*Aliyun 实操一下*
+
+我的本地 Mac 
+```sh
+docker-machine create -d aliyunecs --aliyunecs-io-optimized=optimized --aliyunecs-access-key-id=<your key> --aliyunecs-access-key-secret=<your secret> --aliyunecs-region=cn-qingdao devops
+
+docker-machine ls
+NAME     ACTIVE   DRIVER      STATE     URL                         SWARM   DOCKER     ERRORS
+devops   -        aliyunecs   Running   tcp://xx.xx.xx.xx:2376           v18.09.1
+
+docker-machine env devops
+eval $(docker-machine env devops)
+
+docker version # 现在连上的是aliyun的主机
+#docker login # 注意这里配置一下Aliyun 镜像加速器，不然unauthorized: incorrect username or password.
+
+docker run --name web -d -p 80:80 nginx # 提供一个服务
+x.x.x.x # 完美可以访问云
+docker-machine stop devops
+docker-machine rm devops # 避免扣钱
+```
+配置 [Aliyun 镜像加速器](https://cr.console.aliyun.com/cn-qingdao/mirrors)
+```sh
+docker-machine ssh devops
+```
+
