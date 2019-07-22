@@ -1174,3 +1174,8 @@ ip link # 本机看一下
 
 sudo ip netns exec test1 ip link # 在 test NS 里面执行
 ```
+
+```
+1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+```
