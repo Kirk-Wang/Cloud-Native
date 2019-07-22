@@ -1206,3 +1206,25 @@ sudo ip netns exec test1 ip link #看一下
 有了这一对，然后分别放在 test1 与 test2，这样就连起来了，因为这两个端口分别是在两个network namespace 里面
 
 所以说，如果我们给这两个端口都配一个IP地址的话，那么他们两个就是通的了（就如先前创建busybox container，它们能ping通，原理一样）
+
+1.创建 Network Namespace
+```sh
+# vagrant
+
+sudo ip netns list
+sudo ip netns add test1
+sudo ip netns add test2
+```
+
+2.创建 Veth pair
+```sh
+sudo ip link add veth-test1 type veth peer name veth-test2 # 本机添加一对link
+ip link # 看一下
+```
+
+3.操作 test1 & test2
+```sh
+sudo ip link set veth-test1 netns test1 # 把 veth-test1 接口添加到 test1 network namespace 里面去
+sudo ip netns exec test1 ip link # 看一下
+sudo ip link # 看眼本地，10 不见了
+```
