@@ -2318,3 +2318,77 @@ docker node ls
 ```
 
 *docker-machine create swarm-manager* 也是一样的
+
+### Service的创建维护和水平扩展
+
+vagrant@swarm-manager
+```sh
+docker service
+
+docker service create --help
+# docker run 是本地开发用的
+
+docker service create --name demo busybox sh -c "while true;do sleep 3600;done" # 创建一个 service 容器
+
+docker service ls
+
+docker service ps demo # 详细信息
+
+docker service ls
+#kr1lvphl1un4        demo                replicated          1/1                 busybox:latest
+# replicated 1/1 --> 表明可以水平扩展的
+
+docker service scale # 看下帮
+
+docker service scale demo=5
+
+docker service ls
+# ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+# kr1lvphl1un4        demo                replicated          5/5                 busybox:latest
+# 看到了没 REPLICAS 变成了 5 个 (5[5个都Ready了]/5[总共5个])
+
+docker service ps demo 
+# kxke0280pdfb        demo.1              busybox:latest      swarm-manager       Running             Running 12 minutes ago
+# wu60mazz91xf        demo.2              busybox:latest      swarm-worker2       Running             Running 3 minutes ago
+# jhcv9335qfn3        demo.3              busybox:latest      swarm-worker1       Running             Running 3 minutes ago
+# j6if990ns5m4        demo.4              busybox:latest      swarm-manager       Running             Running 3 minutes ago
+# 2zr6sh6stb1q        demo.5              busybox:latest      swarm-worker2       Running             Running 3 minutes ago
+# 平均分布到各个节点
+
+#[vagrant@swarm-worker1 ~]$ docker ps 
+#CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+#7cefefd13862        busybox:latest      "sh -c 'while true;d…"   6 minutes ago       Up 6 minutes       
+# worker1 看一下, 1 个，没问题
+
+#[vagrant@swarm-worker2 ~]$ docker ps
+#CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+#48485cefc502        busybox:latest      "sh -c 'while true;d…"   8 minutes ago       Up 8 minutes                            #demo.5.2zr6sh6stb1quxihmcqg5q0wx
+#9d74f97c7d2b        busybox:latest      "sh -c 'while true;d…"   8 minutes ago       Up 8 minutes                            #demo.2.wu60mazz91xfrw3aksq3u4gis
+# worker2 看一下, 2 个，没问题
+
+```
+
+vagrant@swarm-worker2 强删一个
+```sh
+docker rm -f 9d74f97c7d2b
+```
+
+vagrant@swarm-manager 看一下
+```sh
+docker service ls # 快速看一下 4/5
+
+docker service ls # 5/5 ，又有5个ready 了
+
+```
+
+*这个功能就非常有用了，它能确保我们的节点是有效存在的*
+
+删掉 service
+
+```sh
+docker service rm demo # 这个过程会去遍历各台机器，然后删掉各台机器上的 service, 过程会比较慢
+
+docker service ps demo
+# no such service: demo
+
+```
