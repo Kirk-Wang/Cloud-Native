@@ -1051,6 +1051,8 @@ cpu-shares 去设置相对权重
 
 多机：Overlay Network
 
+![Packet Flow for an Overlay Network](https://github.com/docker/labs/raw/master/networking/concepts/img/packetwalk.png)
+
 **Vagrant was unable to mount VirtualBox shared folders.错误解决方式**
 
 [解决方案](https://github.com/scotch-io/scotch-box/issues/296)
