@@ -2210,3 +2210,7 @@ docker-compose up
 ```
 
 *docker-compose build*，当我们 app 的 Dockerfile 发生了变化，它只是本地开发用的一个工具，不是部署生产的工具
+
+### 容器编排：Swarm mode
+
+*开发环境和生产环境完全是两个不同的概念*
