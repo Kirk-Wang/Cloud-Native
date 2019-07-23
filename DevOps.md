@@ -1595,4 +1595,164 @@ ip a
 # 两台主机之间是可以通信的(underlay)
 ```
 
+
 ### Docker Overlay网络和etcd实现多机容器通信
+
+docker-node1
+
+```sh
+wget https://github.com/etcd-io/etcd/releases/download/v3.3.11/etcd-v3.3.11-linux-amd64.tar.gz
+tar zxvf etcd-v3.3.11-linux-amd64.tar.gz
+cd etcd-v3.3.11-linux-amd64
+
+nohup ./etcd --name docker-node1 --initial-advertise-peer-urls http://192.168.205.10:2380 \
+--listen-peer-urls http://192.168.205.10:2380 \
+--listen-client-urls http://192.168.205.10:2379,http://127.0.0.1:2379 \
+--advertise-client-urls http://192.168.205.10:2379 \
+--initial-cluster-token etcd-cluster \
+--initial-cluster docker-node1=http://192.168.205.10:2380,docker-node2=http://192.168.205.11:2380 \
+--initial-cluster-state new&
+```
+
+docker-node2
+
+```sh
+wget https://github.com/etcd-io/etcd/releases/download/v3.3.11/etcd-v3.3.11-linux-amd64.tar.gz
+tar zxvf etcd-v3.3.11-linux-amd64.tar.gz
+cd etcd-v3.3.11-linux-amd64
+
+nohup ./etcd --name docker-node2 --initial-advertise-peer-urls http://192.168.205.11:2380 \
+--listen-peer-urls http://192.168.205.11:2380 \
+--listen-client-urls http://192.168.205.11:2379,http://127.0.0.1:2379 \
+--advertise-client-urls http://192.168.205.11:2379 \
+--initial-cluster-token etcd-cluster \
+--initial-cluster docker-node1=http://192.168.205.10:2380,docker-node2=http://192.168.205.11:2380 \
+--initial-cluster-state new&
+```
+
+检查cluster状态(etcd)
+
+```sh
+[vagrant@docker-node1 etcd-v3.3.11-linux-amd64]$ ./etcdctl cluster-health
+
+[vagrant@docker-node2 etcd-v3.3.11-linux-amd64]$ ./etcdctl cluster-health
+```
+
+重启docker服务
+
+在docker-node1上
+```sh
+sudo service docker stop
+
+sudo /usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock --cluster-store=etcd://192.168.205.10:2379 --cluster-advertise=192.168.205.10:2375&
+
+docker version
+
+exit # 防止有日志产生，退出重进
+
+vagrant ssh docker-node1
+```
+
+在docker-node2上
+
+```
+sudo service docker stop
+sudo /usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock --cluster-store=etcd://192.168.205.11:2379 --cluster-advertise=192.168.205.11:2375&
+
+docker version
+
+exit # 防止有日志产生，退出重进
+
+vagrant ssh docker-node2
+
+```
+
+*创建overlay网络*
+
+在docker-node1上
+
+```sh
+sudo docker network ls
+
+sudo docker network create -d overlay demo
+
+sudo docker network ls // 有了 overlay demo
+```
+
+在docker-node2上
+
+```sh
+sudo docker network ls // 发现也有 overlay demo，说明etcd是正常的
+#NETWORK ID          NAME                DRIVER              SCOPE
+#8f8fcbe3f24d        bridge              bridge              local
+#8884b80afd97        demo                overlay             global
+#7c2c351e01fc        host                host                local
+#6099ffea8ebd        none                null                local
+
+# 看一下
+#[vagrant@docker-node2 etcd-v3.3.11-linux-amd64]$ ./etcdctl ls /docker/nodes
+#/docker/nodes/192.168.205.10:2375
+#/docker/nodes/192.168.205.11:2375
+
+#[vagrant@docker-node2 etcd-v3.3.11-linux-amd64]$ ./etcdctl ls /docker/network/v1.0/network
+#/docker/network/v1.0/network/8884b80afd973e915b2cabc6d633901d819a850944b6607145349584f3e3f8dd #对标8884b80afd97
+
+```
+
+接下来在这个 overlay demo 之上创建 Container
+
+docker-node1
+```sh
+sudo docker network inspect demo # 看下这个 overlay 网络的基本信息
+
+sudo docker run -d --name test1 --net demo busybox /bin/sh -c "while true; do sleep 3600; done"
+
+sudo docker ps # 正常
+```
+
+docker-node2
+```sh
+sudo docker run -d --name test1 --net demo busybox /bin/sh -c "while true; do sleep 3600; done"
+
+#[vagrant@docker-node2 etcd-v3.3.11-linux-amd64]$ sudo docker run -d --name test1 --net demo busybox /bin/sh -c "while true; do sleep 3600; done"
+#docker: Error response from daemon: Conflict. The container name "/test1" is already in use by container #"11d477dc33ca572c8e97a475c8e9e656c686b0fcceb404e116d34fac98613586". You have to remove (or rename) that container to be able to reuse that name.
+# 正常，因为 node1 创建 test1 已经存在 etcd 的 cluster 里面了
+
+sudo docker run -d --name test2 --net demo busybox /bin/sh -c "while true; do sleep 3600; done" # 这样就没问题了
+
+sudo docker ps
+
+sudo docker exec test2 ip a # 看下它的ip 10.0.0.3
+```
+
+docker-node1
+
+```sh
+sudo docker exec test1 ip a # 看下它的ip 10.0.0.2
+
+sudo docker network inspect demo
+#"Containers": {
+#    "ae1d753219ae27f1e9a2b249a0d0a7478f23cc7a760bac97a48342b77c65c738": {
+#        "Name": "test1",
+#        "EndpointID": "f489e1e5499d690a64cd786d125a01d5ca76e13828d5f68d2fa1882393f9d2a4",
+#        "MacAddress": "02:42:0a:00:00:02",
+#        "IPv4Address": "10.0.0.2/24",
+#        "IPv6Address": ""
+#    },
+#    "ep-35b7ca2ad98a6f9ae88fd66ac8b28dfb9949eb1f0f6436da46af11b88369482a": {
+#        "Name": "test2",
+#        "EndpointID": "35b7ca2ad98a6f9ae88fd66ac8b28dfb9949eb1f0f6436da46af11b88369482a",
+#        "MacAddress": "02:42:0a:00:00:03",
+#        "IPv4Address": "10.0.0.3/24",
+#        "IPv6Address": ""
+#    }
+#}, 完美
+
+sudo docker exec test1 ping 10.0.0.3 # 能通，成功
+
+sudo docker exec test1 ping test2 # 能通，成功
+```
+
+可以做多机基于 overlay 网络，部署flask-redis
+
+深入了解，[Overlay Driver Network Architecture](https://github.com/docker/labs/blob/master/networking/concepts/06-overlay-networks.md)
