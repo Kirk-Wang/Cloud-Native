@@ -1758,3 +1758,195 @@ sudo docker exec test1 ping test2 # 能通，成功
 可以做多机基于 overlay 网络，部署flask-redis
 
 深入了解，[Overlay Driver Network Architecture](https://github.com/docker/labs/blob/master/networking/concepts/06-overlay-networks.md)
+
+
+### Docker的持久化存储和数据共享
+
+Thin R/W layer ----> Container Layer
+
+Data Volume
+
+*Docker持久化数据的方案*
+
+*基于本地文件系统的Volume。可以在执行Docker create或Docker run 时, 通过-v参数将主机的目录作为容器的数据卷。这部分功能便是基于本地文件系统的volume管理。
+
+*基于plugin的Volume,支持第三方的存储方案，比如NAS,aws
+
+*Volume的类型*
+
+受管理的 data Volume，由docker后台自动创建
+
+绑定挂载的Volume,具体挂载位置可以由用户指定
+
+*vagrant scp* 拷贝本地文件到虚拟主机
+
+```sh
+vagrant plugin list
+
+vagrant plugin install vagrant-scp
+
+vagrant scp ./projects docker-node1:/home/vagrant/labs
+```
+
+文件拷贝到了 /home/vagrant/c5/labs
+
+### 数据持久化：Data Volume
+
+```sh
+sudo docker run -d --name mysql1 -e MYSQL_ALLOW_EMPTY_PASSWORD mysql # 创建一个container
+
+sudo docker ps # 没有，不正常
+
+sudo docker logs mysql1 # 排错，看日志
+# error: database is uninitialized and password option is not specified
+#  You need to specify one of MYSQL_ROOT_PASSWORD, MYSQL_ALLOW_EMPTY_PASSWORD and MYSQL_RANDOM_ROOT_PASSWORD
+
+sudo docker rm mysql1 # 干掉容器
+
+sudo docker volume ls # 没事，我们先看一下volume
+
+sudo docker volume rm xx # 删掉
+
+sudo docker run -d --name mysql1 -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql # 重新创建
+
+sudo docker ps # 有了
+
+sudo docker volume ls
+# DRIVER              VOLUME NAME
+# local               63c5ba3cbdf42473487f687b7da9ad70f0d7248d61026d4118c961a450019415
+# 也多了个 volume
+
+sudo docker volume inspect 63c5ba3cbdf42473487f687b7da9ad70f0d7248d61026d4118c961a450019415 # 看详细
+
+sudo docker run -d --name mysql2 -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql # 加一个
+
+sudo docker volume ls
+#DRIVER              VOLUME NAME
+#local               63c5ba3cbdf42473487f687b7da9ad70f0d7248d61026d4118c961a450019415
+#local               c993a819fc22665408568951a2894f80bfad2c1f92fc443fd0a97c5ab1b50e18
+
+sudo docker volume inspect c993a819fc22665408568951a2894f80bfad2c1f92fc443fd0a97c5ab1b50e18
+
+sudo docker stop mysql1 mysql2
+
+sudo docker rm mysql1 mysql2 # 删掉
+
+sudo docker volume ls # volume还在，数据不会丢，但 data volume 名字不友好
+
+sudo docker volume rm xx # 删掉
+
+sudo docker run -d -v mysql:/var/lib/mysql --name mysql1 -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql # 重新创建
+
+sudo docker volume ls
+# DRIVER              VOLUME NAME
+# local               mysql
+
+```
+
+验证是否生效
+
+```sh
+sudo docker exec -it mysql1 /bin/bash
+
+mysql -u root
+show databases;
+create database docker;
+
+exit
+exit
+
+sudo docker ps
+
+sudo docker rm -f mysql1 # 强删
+
+docker ps -a
+sudo docker volume ls # volume 还在
+
+sudo docker run -d -v mysql:/var/lib/mysql --name mysql2 -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql # 重新创建
+
+sudo docker exec -it mysql2 /bin/bash
+
+mysql -u root
+# mysql> show databases;
+# +--------------------+
+# | Database           |
+# +--------------------+
+# | docker             |
+# | information_schema |
+# | mysql              |
+# | performance_schema |
+# | sys                |
+# +--------------------+
+# docker database 存在
+
+```
+
+### 数据持久化：Bind Mounting
+
+```sh
+#[vagrant@docker-node1 docker-nginx]$ pwd
+#/home/vagrant/c5/labs/docker-nginx
+
+more Dockerfile
+
+docker build -t kirkwwang/my-nginx . # 构建
+
+docker images
+
+docker run -d -p 80:80 --name web kirkwwang/my-nginx
+
+dokcer ps
+
+curl 127.0.0.1
+
+docker rm -f web
+
+docker run -d -v $(pwd):/usr/share/nginx/html -p 80:80 --name web kirkwwang/my-nginx #创建一个新的容器
+
+docker exec -it web /bin/bash
+
+ls #有映射目录里面的文件
+
+touch test.txt
+
+exit
+
+#[vagrant@docker-node1 docker-nginx]$ ls
+#Dockerfile  index.html  test.txt
+#正常，是同步的
+
+vim test.txt
+
+#[vagrant@docker-node1 docker-nginx]$ docker exec -it web /bin/bash
+#root@350a4d996767:/usr/share/nginx/html# more test.txt
+#iiiii
+#进去了，发现是同步的
+
+```
+
+### 开发者利器-Docker+Bind Mount
+
+```sh
+# /home/vagrant/c5/labs/flask-skeleton
+# [vagrant@docker-node1 flask-skeleton]$
+
+docker build -t kirkwwang/flask-skeleton . #构建
+
+docker images
+
+docker run -d -p 80:5000 --name flask kirkwwang/flask-skeleton # 映射目录
+
+docker rm -f flask
+
+docker run -d -p 80:5000 -v $(pwd):/skeleton --name flask kirkwwang/flask-skeleton # 创建容器
+
+docker ps
+
+vim skeleton/client/templates/main/home.html
+
+# 刷新页面，更新了
+
+```
+
+*使用 Docker 作为本地开发环境，是 DevOps 的第一步。*
+
