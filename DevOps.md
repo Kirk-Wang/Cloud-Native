@@ -2233,8 +2233,6 @@ Swarm 内置于 Docker 的一个工具*
 
 ![Swarm Topology](https://github.com/pacroy/wikijs/raw/8286c520afe5bdf11f1fad088fd5b59b5a18a670/uploads/swarm/swarm-topology.png "Swarm Topology")
 
-![Nginx On Swarm](https://github.com/pacroy/wikijs/raw/8286c520afe5bdf11f1fad088fd5b59b5a18a670/uploads/swarm/nginx-on-swarm.png "Nginx On Swarm")
-
 ![Swarm Architecture](https://github.com/pacroy/wikijs/raw/8286c520afe5bdf11f1fad088fd5b59b5a18a670/uploads/swarm/swarm-architecture.png "Swarm Architecture")
 
 Swarm 是一种集群的架构，集群就有节点，节点就有角色
@@ -2250,3 +2248,5 @@ Manager： 是整个集群的大脑，为了避免单点故障，至少要有两
 Worker：干活的节点，Worker的节点信息同步，会通过 Gossip network 来通信
 
 *Service & Replicas*
+
+![Nginx On Swarm](https://github.com/pacroy/wikijs/raw/8286c520afe5bdf11f1fad088fd5b59b5a18a670/uploads/swarm/nginx-on-swarm.png "Nginx On Swarm")
