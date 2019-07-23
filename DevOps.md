@@ -1047,6 +1047,8 @@ cpu-shares 去设置相对权重
 
 单机：Bridge Network  Host Network  None Network
 
+![Default Docker Bridge Network](https://github.com/docker/labs/blob/master/networking/concepts/img/bridge1.png)
+
 多机：Overlay Network
 
 **Vagrant was unable to mount VirtualBox shared folders.错误解决方式**
@@ -1580,9 +1582,7 @@ docker run -d -p 5000:5000 --link redis --name flask-redis -e REDIS_HOST=redis k
 
 [VXLAN](https://www.evoila.de/de/blog/2015/11/06/what-is-vxlan-and-how-it-works/)
 
-[docker overlay-networks](https://www.jianshu.com/p/83d1671e2acc)
 
-![docker overlay-networks](https://upload-images.jianshu.io/upload_images/6000429-326256e845285034.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720/format/webp)
 
 192.168.205.10  -> 192.168.205.11   
 ```sh
