@@ -2229,6 +2229,8 @@ Swarm 内置于 Docker 的一个工具*
 
 *Docker Swarm Mode Architecture*
 
+![Swarm Mode](https://docs.docker.com/engine/swarm/images/ingress-routing-mesh.png)
+
 Swarm 是一种集群的架构，集群就有节点，节点就有角色
 
 有两种角色：Manager，Worker
