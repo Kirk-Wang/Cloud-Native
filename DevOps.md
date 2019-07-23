@@ -1950,3 +1950,263 @@ vim skeleton/client/templates/main/home.html
 
 *使用 Docker 作为本地开发环境，是 DevOps 的第一步。*
 
+
+### Docker Compose多容器部署
+
+利用先前的知识部署WordPress
+
+[The server requested authentication method unknown to the client](https://github.com/laradock/laradock/issues/1392)
+
+```sh
+docker run -d --name mysql -v mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=wordpress mysql
+# 创建 mysql 容器并且持久化
+# 这里需要配置
+
+docker exec -it mysql /bin/bash
+
+mysql -u root -p
+root # login
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root';
+exit
+
+docker ps # mysql container 已经运行了
+
+docker run --name wordpress --link mysql -p 80:80 -d  wordpress # 构建容器，环境变量用默认值
+```
+
+直接就可以访问我本地的 vagrant 虚拟机 [192.168.205.10](http://192.168.205.10) 进行安装，如此方便。
+
+
+### Docker Compose到底是什么
+
+*多容器的 App 太恶心*
+
+要从Dockerfile build image 或者 Dockerhub 拉取 image
+
+要创建多个 container
+
+要管理这些 container(启动停止删除)
+
+*Docker Compose "批处理"*
+
+Docker Compose 是一个工具
+
+这个工具可以通过一个yml文件定义多容器的docker应用
+
+通过一条命令就可以根据yml文件的定义去创建或者管理多个容器
+
+*docker-compose.yml*
+
+三大概念：Services Networks Volumes
+
+[Compose file versions and upgrading](https://docs.docker.com/compose/compose-file/compose-versioning/)
+
+version 2：单机
+
+version 3: 多机
+
+*Services*
+
+一个 service 代表一个 container，这个 container 可以从 dockerhub 的 image 来创建，或者从本地的Dockerfile build出来的image来创建
+
+Service 的启动类似于 docker run，我们可以给其指定 network 和 volume，所以可以给 service 指定 network 和 Volume 的引用
+
+实操 & 拷贝文件
+
+```sh
+vagrant scp ./projects docker-node1:/home/vagrant/labs
+```
+
+*Docker Compose的安装和基本使用*
+
+[Install Docker Compose](https://docs.docker.com/compose/install/)
+
+```sh
+docker rm $(docker ps -aq) # 清理掉所有容器
+docker volume ls -qf dangling=true
+docker volume rm $(docker volume ls -qf dangling=true) # 干掉所有volume
+
+docker-compose
+
+docker-compose --version
+
+#[vagrant@docker-node1 wordpress]$ ls
+#docker-compose.yml
+
+docker-compose up # dokcer-compose -f docker-compose.yml up 本地 debug
+
+docker-compose up -d # 后台运行
+
+docker-compose ps
+
+docker-comopse stop
+
+docker-comopse start
+
+docker-compose ps
+
+docker-compose down
+
+docker-compose images
+```
+
+[Quickstart: Compose and WordPress](https://docs.docker.com/compose/wordpress/), 工具一直在迭代，主意看官方文档
+
+docker-compose 会给我们加前缀
+
+```sh
+docker-compose up -d
+
+docker-compose exec db bash # 进入 mysql 容器里面去
+
+exit
+
+docker-compose exec wordpress bash
+
+exit 
+
+docker-compose down
+```
+
+实验2 
+
+[vagrant@docker-node1 flask-redis]
+
+```sh
+docker-compose up
+
+docker-compose down
+```
+
+### 水平扩展和负载均衡 
+
+[vagrant@docker-node1 flask-redis]
+
+```sh
+docker-compose up -d
+
+docker-compose ps
+
+docker-compose
+# scale              Set number of containers for a service
+
+docker-compose up --help
+# --scale SERVICE=NUM        Scale SERVICE to NUM instances. Overrides the
+#                               `scale` setting in the Compose file if present.
+
+# [vagrant@docker-node1 flask-redis]$ docker-compose up --scale web=3 -d
+# Creating network "flask-redis_default" with the default driver
+# WARNING: The "web" service specifies a port on the host. If multiple containers for this service are created on a single host, the # # port will clash.
+# Creating flask-redis_web_1   ... error
+# Creating flask-redis_web_2   ... done
+# Creating flask-redis_web_3   ... error
+# Creating flask-redis_redis_1 ...
+
+# 我们删掉一行配置
+# ports:
+#      - 8080:5000
+
+docker-compose down
+
+docker-compose up --scale web=3 -d
+
+#[vagrant@docker-node1 flask-redis]$ docker-compose ps
+#       Name                      Command               State    Ports
+#-----------------------------------------------------------------------
+#flask-redis_redis_1   docker-entrypoint.sh redis ...   Up      6379/tcp
+#flask-redis_web_1     python app.py                    Up      5000/tcp
+#flask-redis_web_2     python app.py                    Up      5000/tcp
+#flask-redis_web_3     python app.py                    Up      5000/tcp
+
+docker-compose up --scale web=10 -d # 瞬间弄10台
+
+docker-compose down
+
+```
+
+HAPROXY
+
+```sh
+[vagrant@docker-node1 lb-scale]$
+docker-compose up -d
+```
+
+我的 Mac 机
+
+```sh
+curl 192.168.205.10:8080
+# Hello Container World! I have been seen 1 times and my hostname is 714b7f810b58.
+curl 192.168.205.10:8080
+# Hello Container World! I have been seen 2 times and my hostname is 714b7f810b58. 
+# 没负载，相同的容器
+```
+
+[vagrant@docker-node1 lb-scale]$
+
+```sh
+docker-compose up --scale web=3 -d # scale 到三台
+```
+
+我的 Mac 机
+```sh
+curl 192.168.205.10:8080
+# Hello Container World! I have been seen 4 times and my hostname is 714b7f810b58.
+
+curl 192.168.205.10:8080
+# Hello Container World! I have been seen 5 times and my hostname is 5bc0cc1bca02.
+
+curl 192.168.205.10:8080
+# Hello Container World! I have been seen 6 times and my hostname is e212f997c701.
+
+curl 192.168.205.10:8080
+# Hello Container World! I have been seen 7 times and my hostname is 714b7f810b58.
+
+# 一直轮询，cool
+```
+
+[vagrant@docker-node1 lb-scale]$
+
+```sh
+docker-compose up --scale web=5 -d # scale 到5台
+```
+
+MAC
+
+```sh
+for i in `seq 10`; do curl 192.168.205.10:8080; done
+#Hello Container World! I have been seen 18 times and my hostname is 714b7f810b58.
+#Hello Container World! I have been seen 19 times and my hostname is 5bc0cc1bca02.
+#Hello Container World! I have been seen 20 times and my hostname is e212f997c701.
+#Hello Container World! I have been seen 21 times and my hostname is 68345533f0f2.
+#Hello Container World! I have been seen 22 times and my hostname is 210a67502b17.
+#Hello Container World! I have been seen 23 times and my hostname is 714b7f810b58. ##
+#Hello Container World! I have been seen 24 times and my hostname is 5bc0cc1bca02.
+#Hello Container World! I have been seen 25 times and my hostname is e212f997c701.
+#Hello Container World! I have been seen 26 times and my hostname is 68345533f0f2.
+#Hello Container World! I have been seen 27 times and my hostname is 210a67502b17.
+```
+
+过了高峰期，缩小：
+
+```sh
+docker-compose up --scale web=3 -d # 回到三台
+#lb-scale_redis_1 is up-to-date
+#Stopping and removing lb-scale_web_4 ... done
+#Stopping and removing lb-scale_web_5 ... done
+#Starting lb-scale_web_1              ... done
+#Starting lb-scale_web_2              ... done
+#Starting lb-scale_web_3              ... done
+```
+
+*但是，这只是单机，一台机器的资源始终是有限的*
+
+### 部署一个复杂的投票应用
+
+[vagrant@docker-node1 example-voting-app]$
+
+```sh
+docker-compose up
+```
+
+*docker-compose build*，当我们 app 的 Dockerfile 发生了变化，它只是本地开发用的一个工具，不是部署生产的工具
