@@ -1576,7 +1576,7 @@ docker run -d -p 5000:5000 --link redis --name flask-redis -e REDIS_HOST=redis k
 
 ### overlay和underlay的通俗解释
 
-多机器通信
+多机容器间通信
 
 [VXLAN](https://www.evoila.de/de/blog/2015/11/06/what-is-vxlan-and-how-it-works/)
 
