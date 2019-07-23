@@ -2250,3 +2250,71 @@ Worker：干活的节点，Worker的节点信息同步，会通过 Gossip networ
 *Service & Replicas*
 
 ![Nginx On Swarm](https://github.com/pacroy/wikijs/raw/8286c520afe5bdf11f1fad088fd5b59b5a18a670/uploads/swarm/nginx-on-swarm.png "Nginx On Swarm")
+
+### 创建一个三节点的swarm集群
+
+```sh
+vagrant status
+# Current machine states:
+# swarm-manager             running (virtualbox)
+# swarm-worker1             running (virtualbox)
+# swarm-worker2             running (virtualbox)
+
+vagrant ssh swarm-manager
+
+docker swarm --help # 看下帮助
+# init        Initialize a swarm
+
+docker swarm init --help # 看下帮助
+# --advertise-addr string                  Advertised address (format: <ip|interface>[:port])
+# 要启一个 cluster，首先得宣告一个地址
+
+ip a #看下地址 192.168.205.13
+
+docker swarm init --advertise-addr=192.168.205.13 # 先运行的节点将会成为 master
+#Swarm initialized: current node (9wpz0pnb3bwlau9kvgm7vsbfk) is now a manager.
+#To add a worker to this swarm, run the following command:
+#   docker swarm join --token SWMTKN-1-0mzs1n1oik1aykjq1f3bj06ev6gowls8l4qhy19x4yr15moyot-9ipfy6r48lz8dv7ps0ws689kt 192.168.205.13:2377
+#To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+
+```
+
+[vagrant@swarm-worker1 ~]$
+
+```sh
+docker swarm join --token SWMTKN-1-0mzs1n1oik1aykjq1f3bj06ev6gowls8l4qhy19x4yr15moyot-9ipfy6r48lz8dv7ps0ws689kt 192.168.205.13:2377
+# This node joined a swarm as a worker.
+
+```
+
+[vagrant@swarm-manager ~]$
+
+```sh
+docker node
+# ls          List nodes in the swarm
+
+docker node ls
+#ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
+#9wpz0pnb3bwlau9kvgm7vsbfk *   swarm-manager       Ready               Active              Leader              18.09.1
+#j4ufrije1qijn38o7vckisxrt     swarm-worker1       Ready               Active                                  18.09.1
+```
+
+[vagrant@swarm-worker2 ~]$
+
+```sh
+docker swarm join --token SWMTKN-1-0mzs1n1oik1aykjq1f3bj06ev6gowls8l4qhy19x4yr15moyot-9ipfy6r48lz8dv7ps0ws689kt 192.168.205.13:2377
+# This node joined a swarm as a worker.
+
+```
+
+[vagrant@swarm-manager ~]$
+```sh
+docker node ls
+# 9wpz0pnb3bwlau9kvgm7vsbfk *   swarm-manager       Ready               Active              Leader              18.09.1
+# j4ufrije1qijn38o7vckisxrt     swarm-worker1       Ready               Active                                  18.09.1
+# exhtin48g55q98vzwapw7ebt3     swarm-worker2       Ready               Active                                  18.09.1
+
+# OK，具有三个节点的 swarm cluster 就创建完成了
+```
+
+*docker-machine create swarm-manager* 也是一样的
