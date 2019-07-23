@@ -1537,3 +1537,50 @@ ip a # 发现看到的接口和外面宿主机是共享的，没有自己的netw
 
 ### 多容器复杂应用的部署
 
+```sh
+# [vagrant@docker-node1 flask-redis]$ pwd
+# /home/vagrant/labs/flask-redis
+# 实操
+
+docker run -d --name redis redis 
+# 部署一个redis容器, 没有加 -p 6379:6379，为了安全
+# 它不是给外面人访问的，只是给 app 内部访问来着
+# 要解决 redis:6379 可访问
+
+docker ps
+
+docker build -t kirkwwang/flask-redis . # 构建应用 image
+
+docker images # 瞄一眼镜像
+
+docker run -d --link redis --name flask-redis -e REDIS_HOST=redis kirkwwang/flask-redis
+
+docker exec -it flask-redis /bin/sh # 进入容器
+
+env
+#看到了 REDIS_HOST=redis
+
+ping redis # 也是没有问题的
+
+curl 127.0.0.1:5000 # 没有问题
+curl 127.0.0.1:5000 # 没有问题
+
+exit
+
+# flask-redis 端口没暴露，重新弄一下
+
+docker stop flask-redis
+docker rm flask-redis
+docker run -d -p 5000:5000 --link redis --name flask-redis -e REDIS_HOST=redis kirkwwang/flask-redis
+
+# [vagrant@docker-node1 flask-redis]$ curl 127.0.0.1:5000
+# Hello Container World! I have been seen 3 times and my hostname is b267774005fa.
+# [vagrant@docker-node1 flask-redis]$ curl 127.0.0.1:5000
+# Hello Container World! I have been seen 4 times and my hostname is b267774005fa.
+# 没有问题
+
+# 启动容器时可以设置环境变量 -e 这个参数
+# 程序会去对环境变量，传递配置的一种方式
+
+```
+
