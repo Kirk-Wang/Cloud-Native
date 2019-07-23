@@ -2224,3 +2224,21 @@ docker-compose up
 * 如何去监控追踪这些容器？
 * 怎么去调度容器的创建？
 * 保护隐私数据？
+
+Swarm 内置于 Docker 的一个工具*
+
+*Docker Swarm Mode Architecture*
+
+Swarm 是一种集群的架构，集群就有节点，节点就有角色
+
+有两种角色：Manager，Worker
+
+Manager： 是整个集群的大脑，为了避免单点故障，至少要有两个，那么就会涉及到状态同步的问题
+
+一个Manager做的事情，如何同步到另外的 Manager 节点上，这里就会用到一个内置的分布式的存储数据库
+
+数据是通过Raft协议做的一个同步，它能确保Manager节点之间的信息是对称的，同步的
+
+Worker：干活的节点，Worker的节点信息同步，会通过 Gossip network 来通信
+
+*Service & Replicas*
