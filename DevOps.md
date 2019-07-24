@@ -3043,3 +3043,142 @@ docker service ls
 ```
 
 **stack.yml 更新，deploy 第二遍就好。**
+
+### Docker EE
+
+### Docker Cloud(Caas-Container-as-a-Service)
+
+*什么是Docker Could*
+*提供容器的管理，编排，部署的托管服务。
+
+*主要模块*
+*关联云服务商 AWS，Azure
+*添加节点作为 Docker Host
+*创建服务Service
+*创建Stack
+*Image管理
+
+*两种模式*
+Standard模式。一个Node就是一个Docker Host
+
+Swarm模式，多个Node组成的Swarm Cluster
+
+*Docker Cloud之自动build Docker image*
+
+### Docker Cloud之自动build Docker image
+
+### Docker Cloud之持续集成和持续部署(有官方教程，照着操作就好)
+
+### Docker企业版的在线免费体验
+
+[1 Month Trial | Sat Jan 26 2019](https://hub.docker.com/u/kirkwwang/content/sub-063cfc9f-7844-4887-ab59-3235b604dd4a)
+
+[Docker Enterprise (CentOS)](https://hub.docker.com/editions/enterprise/docker-ee-server-centos)
+
+照着下面链接一步一步安装就好：
+
+[Get Docker EE for CentOS](https://docs.docker.com/install/linux/docker-ee/centos/)
+
+[Deploy Enterprise Edition on Linux servers](https://docs.docker.com/ee/end-to-end-install/)
+
+
+### Docker企业版本地安装之UCP
+
+C8
+
+```sh
+vagrant up
+
+vagrant ssh docker-ee-manager
+sudo yum remove docker \
+                docker-client \
+                docker-client-latest \
+                docker-common \
+                docker-latest \
+                docker-latest-logrotate \
+                docker-logrotate \
+                docker-selinux \
+                docker-engine-selinux \
+                docker-engine
+
+sudo rm /etc/yum.repos.d/docker*.repo
+
+export DOCKERURL="https://storebits.docker.com/ee/centos/sub-063cfc9f-7844-4887-ab59-3235b604dd4a"
+
+sudo -E sh -c 'echo "$DOCKERURL/centos" > /etc/yum/vars/dockerurl'
+
+sudo yum install -y yum-utils \
+device-mapper-persistent-data \
+lvm2
+
+sudo -E yum-config-manager \
+    --add-repo \
+    "$DOCKERURL/centos/docker-ee.repo"
+
+sudo yum -y install docker-ee
+
+sudo systemctl start docker
+
+sudo docker version
+
+# 安装 UCP
+sudo docker container run --rm -it --name ucp \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  docker/ucp:3.1.2 install \
+  --host-address 192.168.205.50 \
+  --interactive
+  --force-minimums # 我的内存弄小了，加个这个
+  --pod-cidr 10.0.0.0/16 # 有可能冲突了，Probably your host network has conflict with default pod cdr network. You can ommit this issue with specifying another pod-cdr range.
+```
+
+[error](https://askubuntu.com/questions/1064909/fata0005-unable-to-pass-cni-pod-cidr-range-check-cni-pod-cidr-192-168-0-0-16)
+
+进入 UCP（https://192.168.205.50:443）admin admin888
+
+docker-ee-worker
+```sh
+sudo docker swarm join --token SWMTKN-1-4jpi5mqbhizzr0j94mig9iepa4vjyssbmrlqzci1fw4jhewdq3-8dwu224wjghadyzhwaf1xoikf 192.168.205.50:2377
+```
+
+### Docker企业版本地安装之DTR
+
+*Docker Trusted Registry*
+*DTR 外部 URL 192.168.205.60
+*UCP 节点 docker-ee-worker
+*对 UCP 禁用 TLS 验证(勾上)
+
+docker-ee-worker
+
+```sh
+sudo docker run -it --rm docker/dtr install \
+  --dtr-external-url 192.168.205.60 \
+  --ucp-node docker-ee-worker \
+  --ucp-username admin \
+  --ucp-url https://192.168.205.50 \
+  --ucp-insecure-tls
+```
+
+
+### Docker企业版UCP的基本使用演示
+
+### 体验阿里云的容器服务
+
+进入阿里云容器服务
+
+### 在阿里云上安装Docker企业版
+
+*进入阿里云云市场，搜索 Docker 企业版，试用一个月。
+
+*购买ECS实例，一步一步安装（这种方式太原始）
+
+*资源编排ROS，开通，进入模板样例。选择对应的模板，下一步，下一步就好。（根据提示进入事件列表查看创建详情）
+
+### Docker企业版DTR的基本使用演示
+
+```sh
+docker tag kirkwwang/demo 113.20.23.1/admin/demo
+
+docker login
+
+docker push 113.20.23.1/admin/demo # 报错，更改下配置
+```
