@@ -2608,3 +2608,46 @@ I'm 44f909aaf2ab # 不同的 container 响应请求了
 ![Internal Load Balancing](https://github.com/docker/labs/blob/8024c320cf2f32e4b4ed77ef04e66d515b564276/networking/concepts/img/ipvs.png)
 
 **DNS+VIP+iptables+LVS**
+
+### Routing Mesh之Ingress负载均衡
+
+*外部访问的负载均衡
+*服务端口被暴露到各个swarm节点
+*内部通过IPVS进行负载均衡
+
+swarm-manager
+```sh
+docker service scale whoami=2
+
+docker service ps whoami
+# b8ky62namcj8        whoami.1            jwilder/whoami:latest   swarm-worker1
+# q1h49rlqd54r        whoami.2            jwilder/whoami:latest   swarm-manager
+
+# [vagrant@swarm-manager ~]$ curl 127.0.0.1:8000
+# I'm 44f909aaf2ab
+# [vagrant@swarm-manager ~]$ curl 127.0.0.1:8000
+# I'm 7389f68ec50e
+# [vagrant@swarm-manager ~]$ curl 127.0.0.1:8000
+# I'm 44f909aaf2ab
+# [vagrant@swarm-manager ~]$ curl 127.0.0.1:8000
+# I'm 7389f68ec50e
+# 不断的去访问，会自动负载均衡到不同节点的 container
+#[vagrant@swarm-worker1 ~]$ curl 127.0.0.1:8000
+#I'm c00c3ae3366b
+#[vagrant@swarm-worker2 ~]$ curl 127.0.0.1:8000
+#I'm a716c54e239a
+# 这个节点没有部署 whomai，也能访问
+```
+为啥没有 whoami service,但是我们又能访问呢，现在一步一步看一下：
+
+swarm-worker2
+```sh
+sudo iptables -nL -t nat # 主要看DOCKER-INGRESS
+#Chain DOCKER-INGRESS (2 references)
+#target     prot opt source               destination
+#DNAT       tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:8000 to:172.18.0.2:8000
+#RETURN     all  --  0.0.0.0/0            0.0.0.0/0
+# 被转发到了 172.18.0.2:8000
+```
+
+**Ingress Network的数据包走向详情**
