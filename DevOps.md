@@ -2680,5 +2680,5 @@ iptables -nL -t mangle # 看下数据包怎么走的
 
 exit # 退出这个命名空间
 
-sudo yum install ipvsadm # 安装一个管理工具
+sudo yum install ipvsadm # 安装一个管理工具，看下这个端口是如何 loadblance 的
 ```
