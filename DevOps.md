@@ -2611,6 +2611,8 @@ I'm 44f909aaf2ab # 不同的 container 响应请求了
 
 ### Routing Mesh之Ingress负载均衡
 
+![Routing Mesh](https://github.com/docker/labs/raw/8024c320cf2f32e4b4ed77ef04e66d515b564276/networking/concepts/img/routing-mesh.png)
+
 *外部访问的负载均衡
 *服务端口被暴露到各个swarm节点
 *内部通过IPVS进行负载均衡
