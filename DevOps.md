@@ -2680,5 +2680,15 @@ iptables -nL -t mangle # 看下数据包怎么走的
 
 exit # 退出这个命名空间
 
-sudo yum install ipvsadm # 安装一个管理工具，看下这个端口是如何 loadblance 的
+sudo yum install ipvsadm # 安装一个管理工具，看下这个端口是如何 Load Balancing 的
+
+sudo nsenter --net=/var/run/docker/netns/ingress_sbox
+iptables -nL -t mangle # 再看一下
+ipvsadm -l # 用上工具
+IP Virtual Server version 1.2.1 (size=4096)
+#Prot LocalAddress:Port Scheduler Flags
+#  -> RemoteAddress:Port           Forward Weight ActiveConn InActConn
+#FWM  256 rr
+#  -> 10.255.0.6:0                 Masq    1      0          0
+#  -> 10.255.0.7:0                 Masq    1      0          0
 ```
