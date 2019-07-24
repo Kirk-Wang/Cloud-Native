@@ -2604,6 +2604,7 @@ I'm 44f909aaf2ab # 不同的 container 响应请求了
 **自动负载均衡**
 
 **Internal Load Balancing**
-[Internal Load Balancing](https://github.com/docker/labs/blob/8024c320cf2f32e4b4ed77ef04e66d515b564276/networking/concepts/img/ipvs.png)
+
+![Internal Load Balancing](https://github.com/docker/labs/blob/8024c320cf2f32e4b4ed77ef04e66d515b564276/networking/concepts/img/ipvs.png)
 
 **DNS+VIP+iptables+LVS**
