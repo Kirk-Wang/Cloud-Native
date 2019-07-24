@@ -2323,9 +2323,6 @@ docker node ls
 
 vagrant@swarm-manager
 ```sh
-# 首先得有个 overlay 网络
-docker network create -d overlay demo
-
 docker service
 
 docker service create --help
