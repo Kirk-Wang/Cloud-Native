@@ -2648,6 +2648,29 @@ sudo iptables -nL -t nat # 主要看DOCKER-INGRESS
 #DNAT       tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:8000 to:172.18.0.2:8000
 #RETURN     all  --  0.0.0.0/0            0.0.0.0/0
 # 被转发到了 172.18.0.2:8000
+
+brctl show
+
+docker network inspect docker_gwbridge
+#"Containers": {
+#   "a4db773bb276acccdbfd44572b5a43fe9869bbca06b4d37d4f52f3afb8578eff": {
+#         "Name": "gateway_89ed0f577066",
+#         "EndpointID": "0a852e4f524007c40166c44340f19a658dbf9b10eac2cec69cadbe08233211a4",
+#         "MacAddress": "02:42:ac:12:00:03",
+#         "IPv4Address": "172.18.0.3/16",
+#         "IPv6Address": ""
+#   },
+#   "ingress-sbox": {
+#         "Name": "gateway_ingress-sbox",
+#         "EndpointID": "a13b443a7a3b544bda5b3f345cb2353fe4692b6294bc91a965a1f1c37b71f4b2",
+#         "MacAddress": "02:42:ac:12:00:02",
+#         "IPv4Address": "172.18.0.2/16",
+#         "IPv6Address": ""
+#   }
+#},
+# 看下本地 docker 已经创建了的 network namespace
+sudo ls /var/run/docker/netns
+# 1-m7nivwhjo7  1-qswvvdkmrk  5fdb079dbc76  ingress_sbox	lb_qswvvdkmr
 ```
 
 **Ingress Network的数据包走向详情**
