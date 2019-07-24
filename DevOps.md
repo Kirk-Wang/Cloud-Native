@@ -2696,3 +2696,98 @@ IP Virtual Server version 1.2.1 (size=4096)
 
 # 这两个地址就是我们 whoami Container 的地址
 ```
+
+### DockerStack部署wordpress
+
+[Compose file](https://docs.docker.com/compose/compose-file/)
+*version 3
+*`deploy` 
+*`endpoint_mode` vip | dnsrr ,默认是 vip
+
+```sh
+docker node ls
+
+docker stack # 看一下帮助信息
+```
+
+[Wordpress](https://hub.docker.com/_/wordpress)
+
+准备一下 stack.yml
+```sh
+version: '3.1'
+
+services:
+
+  web:
+    image: wordpress
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: exampleuser
+      WORDPRESS_DB_PASSWORD: examplepass
+      WORDPRESS_DB_NAME: exampledb
+    networks:
+      - my-network
+    depends_on:
+      - db
+    deploy:
+      mode: replicated
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      update_config:
+        parallelism: 1
+        delay: 10s
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: exampledb
+      MYSQL_USER: exampleuser
+      MYSQL_PASSWORD: examplepass
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - my-network
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.role == manager
+volumes:
+  mysql-data:
+
+networks:
+  my-network:
+    driver: overlay
+```
+
+```sh
+docker stack deploy -c stack.yml wordpress # docker-compose -f stack.yml up
+# Creating network wordpress_my-network
+# Creating service wordpress_db
+# Creating service wordpress_web
+# 会自动加上 wordpress 的前缀
+
+docker stack ls
+#NAME                SERVICES            ORCHESTRATOR
+#wordpress           2                   Swarm
+
+docker stack ps
+
+docker stack ps wordpress # 查看细节
+#qiz6uv3qrm4s        wordpress_db.9wpz0pnb3bwlau9kvgm7vsbfk   mysql:5.7           swarm-manager       Running             Running 4 #minutes ago
+#k6a09c80xll8        wordpress_web.1                          wordpress:latest    swarm-manager       Running             Running 4 #minutes ago
+#p5f5vzpnqee5        wordpress_web.2                          wordpress:latest    swarm-worker2       Running             Running 2 #minutes ago
+#reerieqjc9xr        wordpress_web.3                          wordpress:latest    swarm-worker1       Running             Running 4 #minutes ago
+
+# 完美，4 个 service 运行在不同的节点
+
+# http://192.168.205.13:8080 开始验证
+
+docker stack rm wordpress # 清理环境
+```
