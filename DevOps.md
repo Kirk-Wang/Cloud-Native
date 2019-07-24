@@ -2673,7 +2673,13 @@ sudo ls /var/run/docker/netns
 # 1-m7nivwhjo7  1-qswvvdkmrk  5fdb079dbc76  ingress_sbox	lb_qswvvdkmr
 
 sudo nsenter --net=/var/run/docker/netns/ingress_sbox # 进去这个命名空间里去
-
+iptables -nL -t mangle # 看下数据包怎么走的
+#target     prot opt source               destination
+#MARK       tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:8000 MARK set 0x100
+# tcp dpt:8000 MARK set 0x100 -》 去往 8000 的数据包做一个负载均衡
 ```
 
 **Ingress Network的数据包走向详情**
+```sh
+
+```
