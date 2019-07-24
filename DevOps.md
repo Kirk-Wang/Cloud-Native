@@ -2677,9 +2677,8 @@ iptables -nL -t mangle # 看下数据包怎么走的
 #target     prot opt source               destination
 #MARK       tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:8000 MARK set 0x100
 # tcp dpt:8000 MARK set 0x100 -》 去往 8000 的数据包做一个负载均衡
-```
 
-**Ingress Network的数据包走向详情**
-```sh
+exit # 退出这个命名空间
 
+sudo yum install ipvsadm # 安装一个管理工具
 ```
