@@ -2999,8 +2999,6 @@ mysql -u root -p
 ### Docker Secret在Stack中的使用
 
 主要是基于之前的 wordpress 来操作
-```sh
-```
 
 ### Service更新(Swarm 生产环境)
 
