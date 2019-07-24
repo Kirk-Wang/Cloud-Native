@@ -2464,6 +2464,7 @@ docker service create --name wordpress -p 80:80 --env WORDPRESS_DB_PASSWORD=root
 ### 集群服务间通信之RoutingMesh
 
 *DNS服务发现(overlay网络)*
+![Service Discovery](https://github.com/docker/labs/raw/8024c320cf2f32e4b4ed77ef04e66d515b564276/networking/concepts/img/DNS.png)
 
 *VIP*
 
