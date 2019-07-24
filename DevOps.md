@@ -2597,13 +2597,12 @@ I'm 44f909aaf2ab # 不同的 container 响应请求了
 
 *这些是怎么实现的了*
 
-*Routing Mesh的两种体现*
+**Routing Mesh的两种体现**
+* Internal--Container 和 Container之间的访问通过overlay网络（通过VIP虚拟IP)
+* Ingress--如果服务有绑定接口，则此服务可以通过任意swarm节点的相应接口访问
 
-*Internal--Container 和 Container之间的访问通过overlay网络（通过VIP虚拟IP)
-*Ingress--如果服务有绑定接口，则此服务可以通过任意swarm节点的相应接口访问
+**自动负载均衡**
 
-*自动负载均衡*
+**Internal Load Balancing**
 
-*Internal Load Balancing*
-
-*DNS+VIP+iptables+LVS*
+**DNS+VIP+iptables+LVS**
