@@ -2691,4 +2691,6 @@ IP Virtual Server version 1.2.1 (size=4096)
 #FWM  256 rr
 #  -> 10.255.0.6:0                 Masq    1      0          0
 #  -> 10.255.0.7:0                 Masq    1      0          0
+
+# 这两个地址就是我们 whoami Container 的地址
 ```
