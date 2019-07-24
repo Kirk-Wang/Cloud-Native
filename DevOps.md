@@ -2671,6 +2671,9 @@ docker network inspect docker_gwbridge
 # 看下本地 docker 已经创建了的 network namespace
 sudo ls /var/run/docker/netns
 # 1-m7nivwhjo7  1-qswvvdkmrk  5fdb079dbc76  ingress_sbox	lb_qswvvdkmr
+
+sudo nsenter --net=/var/run/docker/netns/ingress_sbox # 进去这个命名空间里去
+
 ```
 
 **Ingress Network的数据包走向详情**
