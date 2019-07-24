@@ -2392,3 +2392,72 @@ docker service ps demo
 # no such service: demo
 
 ```
+
+### 在swarm集群里通过serivce部署wordpress
+
+swarm-manager
+```sh
+docker network create -d overlay demo # 让多个节点容器连接到 overlay 网络
+
+docker network ls # 查看一下
+
+```
+
+swarm-worker1
+```sh
+docker network ls # 查看一下, 发现没有 demo 网络
+```
+
+操作一下
+
+swarm-manager(失败)
+```sh
+# 创建一个 mysql service
+docker service create --name mysql --env MYSQL_ROOT_PASSWORD=root --env MYSQL_DATABASE=wordpress --env MYSQL_USER=wordpress --env MYSQL_PASSWORD=wordpress --network demo --mount type=volume,source=mysql-data,destination=/var/lib/mysql mysql:5.7
+
+docker service create --name mysql --env MYSQL_ROOT_PASSWORD=root --env MYSQL_DATABASE=wordpress --env MYSQL_USER=wordpress --env MYSQL_PASSWORD=wordpress --network demo --mount type=volume,source=mysql-data,destination=/var/lib/mysql mysql
+
+#[vagrant@swarm-manager ~]$ docker service ps mysql
+#ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE            ERROR               PORTS
+#om17xfbaahhe        mysql.1             mysql:latest        swarm-worker1       Running             Running 40 seconds ago
+
+# 发现这个 service 运行在了 swarm-worker1
+
+#[vagrant@swarm-worker1 ~]$ docker ps
+#CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                 NAMES
+#7804582448f1        mysql:latest        "docker-entrypoint.s…"   2 minutes ago       Up 2 minutes        3306/tcp, 33060/tcp   #mysql.1.om17xfbaahhe6bjan205fnhuq
+# 的确有
+
+# 创建一个 wordpress service
+docker service create --name wordpress -p 80:80 --env WORDPRESS_DB_HOST=mysql --env WORDPRESS_DB_USER=wordpress --env WORDPRESS_DB_PASSWORD=wordpress --network demo wordpress
+
+```
+
+[docker-swarm-mysql-masterslave-failover](https://github.com/robinong79/docker-swarm-mysql-masterslave-failover)
+
+swarm-manager(成功)
+```sh
+docker network create -d overlay demo
+
+docker service create --name mysql --env MYSQL_ROOT_PASSWORD=root --env MYSQL_DATABASE=wordpress --network demo --mount type=volume,source=mysql-data,destination=/var/lib/mysql mysql
+
+# 这里要进行操作
+docker exec -it 77167e80b5d6 /bin/bash
+
+mysql -u root -p
+root # login
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root';
+exit
+
+docker service create --name wordpress -p 80:80 --env WORDPRESS_DB_PASSWORD=root --env WORDPRESS_DB_HOST=mysql --network demo wordpress
+
+# http://192.168.205.13 
+# http://192.168.205.14
+# http://192.168.205.15
+# 我们发现这个节点都能访问到 wordpress
+
+# overlay 网络，swarm 分配 service 节点的时候会自动创建
+```
+
+
