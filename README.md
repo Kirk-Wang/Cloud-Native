@@ -250,3 +250,6 @@ docker-compose exec -u root
   * pass signals to sub-processes
 * Zombie not a big Node issue
 * Focus on proper Node shutdown
+
+### Proper CMD for Healthy Shutdown
+* Docker uses Linux signals to stop app (SIGINT/SIGTERM/SIGKILL)
