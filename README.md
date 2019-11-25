@@ -200,7 +200,16 @@ RUN groupadd --gid 1000 node \
   && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
 ```
 
+build
 ```sh
 docker build -t centos-node .
+docker run centos-node node --version
 ```
 
+### Least Privilege: Using node User
+* Official node images have a node user
+* But it's not used by default
+* Do this after `apt/apk` and `npm i -g`
+* Do this before `npm i`
+* May cause permissions issues with write access
+* May require `chown node:node`
