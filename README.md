@@ -27,3 +27,8 @@ docker-compose version
 
 **OOPS!~I meant to say "I reccomend you use Docker Compose locally"**
 
+### Compose File Format
+* Docker standard (not yet industry std)
+* Defines multiple containers, networks, volumes, etc.
+* Can layer sets of YAML files, use templates, variables, and more
+* docker-compose.yml default
