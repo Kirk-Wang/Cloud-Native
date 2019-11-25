@@ -162,6 +162,12 @@ docker-compose down
   * Unless you need chown
 
 ### FROM Base Image Guidelines
+
+[Alpine Linux](https://www.alpinelinux.org/)|
+[Node.js Release Schedule](https://github.com/nodejs/Release#release-schedule)|
+[GitHub: ONBUILD deprecation](https://github.com/docker-library/official-images/issues/2076)|
+[Node Official Image on Docker Hub](https://hub.docker.com/_/node)
+
 * Stick to even numbered major releases
 * Don't use :latest tag
 * Start with Debian if migrating
