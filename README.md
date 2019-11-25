@@ -106,3 +106,9 @@ docker-compose exec web sh
 curl localhost
 exit
 ```
+
+### Cleanup
+* Inside sample-02 directory
+```sh
+docker-compose down
+```
