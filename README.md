@@ -230,6 +230,9 @@ docker-compose exec -u root
 * Pick proper FROM
 * Line order matters
 * COPY twice: package.json* then . .
+  1. copy only the package and lock files
+  2. run npm install
+  3. copy everything else
 * One apt-get per Dockerfile
   * apt-get update cache prob
 
