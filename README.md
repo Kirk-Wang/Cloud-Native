@@ -35,5 +35,14 @@ docker-compose version
 
 ### YAML
 **YAML: "YAML Ain't Markup Language"**
+* Common configuration file format
+* Used by Docker, Kubernetes, Amazon, and others
+* : used for key/value pairs
+* Only spaces, no tabs
+* - used for lists
 
-
+### Compose YAML v2 vs V3
+* Myth busting: v3 does not replace v2
+* v2 focus: single-node dev/test
+* v3 focus: muti-node orchestration
+* If not using Swarm/Kubernetes, stick to v2
