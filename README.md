@@ -194,7 +194,13 @@ docker-compose down
 
 **NOTE: You must add 'USER node' before CMD in Dockerfile to enable non-root user**
 
-```sh
+```yml
+# Dockfile
 RUN groupadd --gid 1000 node \
   && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
 ```
+
+```sh
+docker build -t centos-node .
+```
+
