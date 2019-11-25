@@ -253,3 +253,4 @@ docker-compose exec -u root
 
 ### Proper CMD for Healthy Shutdown
 * Docker uses Linux signals to stop app (SIGINT/SIGTERM/SIGKILL)
+* SIGINT/SIGTERM allow graceful stop
