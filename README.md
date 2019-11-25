@@ -11,3 +11,10 @@
 * CLI: docker-compose
   * Included in Docker Desktop & Toolbox
   * Linux: pip install docker-compose
+
+```sh
+docker version
+# xx
+docker-compose version
+# xx
+```
