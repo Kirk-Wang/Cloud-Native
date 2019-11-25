@@ -52,3 +52,10 @@ docker-compose version
 * IDE's now support docker-compose
 * "batteries included, but swappable"
 * CLI and YAML versions differ
+
+### docker-compose up
+* "one stop shop"
+* build/pull image(s) if missing
+* create volume/network/container(s)
+* starts containers(s) in foregound(-d to detach)
+* --build to always build
