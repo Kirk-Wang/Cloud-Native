@@ -248,3 +248,5 @@ docker-compose exec -u root
 * Init process in a container has two jobs:
   * reap zombie processes
   * pass signals to sub-processes
+* Zombie not a big Node issue
+* Focus on proper Node shutdown
