@@ -155,3 +155,5 @@ docker-compose down
   * requires another application to run
   * not as literal in Dockerfiles
   * doesn't work well as an init or PID 1 process
+* WORKDIR not RUN mkdir
+  * Unless you need chown
