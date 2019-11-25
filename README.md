@@ -96,3 +96,13 @@ exit
 RUN apk add --update curl
 docker-compose up -d
 ```
+* Notice it didn't build so force it 
+```sh
+docker-compose up -d --build
+```
+* Now try curl again
+```sh
+docker-compose exec web sh
+curl localhost
+exit
+```
