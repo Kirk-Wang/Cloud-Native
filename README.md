@@ -73,3 +73,15 @@ docker-compose version
 * **push** images to registry
 * **logs** same as docker CLI
 * **exec** same as docker CLI
+
+### Compose CLI Basics
+* Run through simple compose commands
+```sh
+cd sample-02
+docker-compose up
+ctrl-c (same as docker-compose stop)
+docker-compose down
+docker-compose up -d
+docker-compose ps
+docker-compose logs
+```
