@@ -129,3 +129,4 @@ sample-02_web_1   docker-entrypoint.sh node  ...   Up      0.0.0.0:3000->3000/tc
   * `1` -> numerical number of the replica
 
 open [localhost:3000](http://localhost:3000)
+* `docker-machine ls`
