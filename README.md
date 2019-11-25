@@ -189,3 +189,12 @@ docker-compose down
 * Use ENV to specify node version
 * This will take a few tries
 * Useful for knowing how to make your own node, but only if you have to
+
+### Assignment Answers:Making a CentOS Node Image
+
+**NOTE: You must add 'USER node' before CMD in Dockerfile to enable non-root user**
+
+```sh
+RUN groupadd --gid 1000 node \
+  && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
+```
