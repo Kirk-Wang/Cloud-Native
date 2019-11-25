@@ -236,3 +236,10 @@ docker-compose exec -u root
 * One apt-get per Dockerfile
   * apt-get update cache prob
 
+### Node Process Management In Containers
+* No need for nodemon, forever, or pm2 on server
+  * We'll use nodemon in dev for file watch later
+* Docker manages app start, stop, restart, healthcheck
+* Node multi-thread: Docker manages multiple "replicas"
+* One npm/node problem: They don't listen for proper shutdown signal by default
+
