@@ -137,4 +137,11 @@ docker-compose logs web
 * `docker-compose exec`
 ```sh
 docker-compose exec web sh
+curl localhost
+```
+* add `RUN apk add --update curl` to `Dockerfile`
+```sh
+docker-compose up -d --build
+docker-compose exec web sh
+curl localhost
 ```
