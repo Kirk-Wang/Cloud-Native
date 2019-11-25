@@ -147,3 +147,11 @@ curl localhost
 curl localhost:3000
 docker-compose down
 ```
+
+### Dockerfiel Node Basics
+* COPY, not ADD
+* npm/yarn install during build
+* CMD node, not npm 
+  * requires another application to run
+  * not as literal in Dockerfiles
+  * doesn't work well as an init or PID 1 process
