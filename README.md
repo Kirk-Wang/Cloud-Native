@@ -254,3 +254,6 @@ docker-compose exec -u root
 ### Proper CMD for Healthy Shutdown
 * Docker uses Linux signals to stop app (SIGINT/SIGTERM/SIGKILL)
 * SIGINT/SIGTERM allow graceful stop
+* npm doesn't respond to SIGINT/SIGTERM
+* node doesn't respond by default, but can with code
+* Docker provides a init PID 1 replacement option
