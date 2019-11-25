@@ -182,3 +182,10 @@ docker-compose down
 * Alpine has its own issues
 * Alpine CVE scanning fails
 * Enterprises may require CentOS or Ubuntu/Debian
+
+### Making a CentOS Node Image
+* Install Node in the official CentOS
+* Copy Dockerfile lines frome node:10
+* Use ENV to specify node version
+* This will take a few tries
+* Useful for knowing how to make your own node, but only if you have to
