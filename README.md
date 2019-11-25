@@ -127,3 +127,5 @@ sample-02_web_1   docker-entrypoint.sh node  ...   Up      0.0.0.0:3000->3000/tc
   * `sample-02` -> name of the project
   * `web` -> name of the service
   * `1` -> numerical number of the replica
+
+open [localhost:3000](http://localhost:3000)
