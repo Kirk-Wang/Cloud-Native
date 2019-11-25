@@ -134,3 +134,7 @@ open [localhost:3000](http://localhost:3000)
 ```sh
 docker-compose logs web
 ```
+* `docker-compose exec`
+```sh
+docker-compose exec web sh
+```
