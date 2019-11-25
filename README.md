@@ -18,3 +18,12 @@ docker version
 docker-compose version
 # xx
 ```
+
+### Why Compose?
+* 2 parts: CLI and YAML files
+* Designed around developer workflows
+* docker-compose CLI a substitute for docker CLI
+* Use CLI by default locally
+
+**OOPS!~I meant to say "I reccomend you use Docker Compose locally"**
+
