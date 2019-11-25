@@ -148,7 +148,10 @@ curl localhost:3000
 docker-compose down
 ```
 
-### Dockerfiel Node Basics
+### Dockerfile Node Basics
+
+[Best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
+
 * COPY, not ADD
 * npm/yarn install during build
 * CMD node, not npm 
@@ -157,3 +160,11 @@ docker-compose down
   * doesn't work well as an init or PID 1 process
 * WORKDIR not RUN mkdir
   * Unless you need chown
+
+### FROM Base Image Guidelines
+* Stick to even numbered major releases
+* Don't use :latest tag
+* Start with Debian if migrating
+* Move to Alpline later
+* Don't use :slim
+* Don't use :onbuild
