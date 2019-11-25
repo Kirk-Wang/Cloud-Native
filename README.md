@@ -174,3 +174,11 @@ docker-compose down
 * Move to Alpline later
 * Don't use :slim
 * Don't use :onbuild
+
+### When to use Alpine Images
+* Alpine is "small" and "sec focused"
+* But Debian/Ubuntu are smaller now too
+* ~100MB space savings isn't significant
+* Alpine has its own issues
+* Alpine CVE scanning fails
+* Enterprises may require CentOS or Ubuntu/Debian
