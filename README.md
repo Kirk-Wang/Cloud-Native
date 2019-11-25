@@ -144,4 +144,6 @@ curl localhost
 docker-compose up -d --build
 docker-compose exec web sh
 curl localhost
+curl localhost:3000
+docker-compose down
 ```
