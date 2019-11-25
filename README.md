@@ -213,3 +213,15 @@ docker run centos-node node --version
 * Do this before `npm i`
 * May cause permissions issues with write access
 * May require `chown node:node`
+* Change user from root to node
+```sh
+USER node
+```
+* Set permissions on app dir
+```sh
+RUN mkdir app && chown -R node:node .
+```
+* Run a command as root in container
+```sh
+docker-compose exec -u root
+```
