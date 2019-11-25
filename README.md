@@ -85,3 +85,14 @@ docker-compose up -d
 docker-compose ps
 docker-compose logs
 ```
+* While app is running detached...
+```sh
+docker-compose exec web sh
+curl localhost
+exit
+```
+* edit Dockerfile, add curl with apk
+```sh
+RUN apk add --update curl
+docker-compose up -d
+```
