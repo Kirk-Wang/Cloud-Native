@@ -59,3 +59,17 @@ docker-compose version
 * create volume/network/container(s)
 * starts containers(s) in foregound(-d to detach)
 * --build to always build
+
+### docker-compose down
+* "one stop shop"
+* stop and delete network/container(s)
+* use -v to delete volumes
+
+### docker-compose...
+* Many commands take "service" option
+* **build** just build/rebuild image(s)
+* **stop** just stop containers don't delete
+* **ps** list "services"
+* **push** images to registry
+* **logs** same as docker CLI
+* **exec** same as docker CLI
