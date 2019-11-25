@@ -245,3 +245,6 @@ docker-compose exec -u root
 
 ### The Truth About The PID 1 Problem
 * PID 1 (Process Identifier) is the first process in a system (or container) (AKA init)
+* Init process in a container has two jobs:
+  * reap zombie processes
+  * pass signals to sub-processes
