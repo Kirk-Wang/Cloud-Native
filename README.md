@@ -46,3 +46,9 @@ docker-compose version
 * v2 focus: single-node dev/test
 * v3 focus: muti-node orchestration
 * If not using Swarm/Kubernetes, stick to v2
+
+### docker-compose CLI
+* many docker commands == docker-compose
+* IDE's now support docker-compose
+* "batteries included, but swappable"
+* CLI and YAML versions differ
