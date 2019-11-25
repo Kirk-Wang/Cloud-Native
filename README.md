@@ -74,7 +74,7 @@ docker-compose version
 * **logs** same as docker CLI
 * **exec** same as docker CLI
 
-### Compose CLI Basics
+### Compose CLI Basics-1
 * Run through simple compose commands
 ```sh
 cd sample-02
@@ -111,4 +111,19 @@ exit
 * Inside sample-02 directory
 ```sh
 docker-compose down
+docker-compose down --helps
 ```
+
+### Compose CLI Basics-2
+
+* build no chace
+```sh
+docker-compose build --no-cache
+```
+* `docker-compose ps`
+```sh
+sample-02_web_1   docker-entrypoint.sh node  ...   Up      0.0.0.0:3000->3000/tcp
+```
+  * `sample-02` -> name of the project
+  * `web` -> name of the service
+  * `1` -> numerical number of the replica
