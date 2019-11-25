@@ -243,3 +243,5 @@ docker-compose exec -u root
 * Node multi-thread: Docker manages multiple "replicas"
 * One npm/node problem: They don't listen for proper shutdown signal by default
 
+### The Truth About The PID 1 Problem
+* PID 1 (Process Identifier) is the first process in a system (or container) (AKA init)
