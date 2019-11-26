@@ -326,3 +326,12 @@ docker run -d -p 3002:3000 assignment1
 docker top 6ec2
 docker stop 6ec2
 ```
+
+### Multi-stage Builds
+* New feature in 17.06 (mid-2017)
+* Build multiple images from on file
+* Those images can FROM each other
+* COPY files between them
+* Space + Security benefits
+* Great for "artifact only"
+* Great for dev + test + prod
