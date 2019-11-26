@@ -415,3 +415,11 @@ docker build -t multistage:test --target test . && docker run --init multistage:
 * Not needed but useful in image
   * Dockerfile
   * README.md
+
+### Migrating Traditional Apps
+* "Traditional App" = Pre-Docker App
+* Take a typical Node app and "migrate"
+* ./assignment-mta
+* add .dockerignore
+* Create Dockerfile
+* Change Winston transport to Console
