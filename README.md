@@ -301,9 +301,10 @@ CMD
 ```sh
 docker build -t assignment1 .
 docker run -p 3001:3000 assignment1
+# docker run -d -p 3001:3000 assignment1
 ```
 
-[localhost:30001](http://localhost:3001)
+[localhost:3001](http://localhost:3001)
 
 ### Testing Graceful shutdowns
 * Use ./assignment-dockerfile/
@@ -312,3 +313,16 @@ docker run -p 3001:3000 assignment1
 * Remove ENTRYPOINT, rebuild
 * Add --init to run command,ctrl-c/stop
 * Bonus: add signal watch code
+
+```sh
+docker build -t assignment1:notini .
+docker run -d -p 3001:3000 assignment1:notini
+docker top 48a6
+docker stop 48a6
+# docker run --init -d -p 3001:3000 assignment1:notini
+# docker top
+
+docker run -d -p 3002:3000 assignment1
+docker top 6ec2
+docker stop 6ec2
+```
