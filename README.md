@@ -283,3 +283,17 @@ CMD ["node", "./bin/www"]
 * Start with node 10.15 on alpine
 * Install tini, start node with tini
 * Copy package/lock files first, then npm, then copy
+
+[Tini](https://github.com/krallin/tini)
+
+```yml
+FROM
+EXPOSE
+RUN
+WORKDIR
+COPY
+RUN
+COPY
+ENTRYPOINT
+CMD
+```
