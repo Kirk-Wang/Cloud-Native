@@ -436,3 +436,18 @@ docker build -t multistage:test --target test . && docker run --init multistage:
 * Changing `--env CHARCOAL_FACTOR` changes look of image (test with 10)
 * No `.gif` files in image
 * `docker logs` shows Winston output
+
+**Assignment**
+```sh
+docker build -t mta .
+docker run mta
+docker run -it mta bash
+
+docker run -v $(pwd)/in:/app/in -v $(pwd)/out:/app/out mta
+docker run -v $(pwd)/in:/app/in -v $(pwd)/out:/app/out --env CHARCOAL_FACTOR=10 mta
+docker ps -l
+docker logs dbda736f5c09
+
+docker run -v $(pwd)/logs:/app/logs -v $(pwd)/in:/app/in -v $(pwd)/out:/app/out mta
+docker run -v $(pwd)/logs:/app/logs -v $(pwd)/in:/app/in -v $(pwd)/out:/app/out --env CHARCOAL_FACTOR=10 mta
+```
