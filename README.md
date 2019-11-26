@@ -387,3 +387,8 @@ docker build -t multistage:test --target test . && docker run --init multistage:
   * Pin all versions, even npm
   * Graceful exit SIGTERM/INIT
 * Create a .dockerignore (like .gitignore)
+* Heroku wrote a highly respected guide to creating distributed apps
+* Twelve factors to consider when developing or designing distributed apps
+* Containers are almost always distributed apps
+* Good news: You get many of these by using Docker
+* Lets focus on a few for Node.js
