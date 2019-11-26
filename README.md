@@ -297,3 +297,10 @@ COPY
 ENTRYPOINT
 CMD
 ```
+
+```sh
+docker build -t assignment1 .
+docker run -p 3001:3000 assignment1
+```
+
+[localhost:30001](http://localhost:3001)
