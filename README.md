@@ -398,3 +398,10 @@ docker build -t multistage:test --target test . && docker run --init multistage:
 * Store environment config in Environment Variables (env vars)
 * Docker & Compose are great at this with multiple options
 * Old apps: Use CMD or ENTRYPOINT script with `envsubst` to pass env vars into conf files 
+
+### 12 Factor:Logs
+* [12factor.net/logs](https://12factor.net/logs)
+* Apps shouldn't route or transport logs to anything but stdout/stderr
+* `console.log()` works
+* Winston/Bunyan/Morgan: Use levels to control verbosity
+* Winston transport: "Console"
