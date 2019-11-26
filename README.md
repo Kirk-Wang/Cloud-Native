@@ -344,3 +344,11 @@ docker stop 6ec2
   7. FROM prod as dev
   8. ENV NODE_ENV = development
   9. CMD ["nodemon", "./bin/www", "--inspect=0.0.0.0:9229"]
+* To build dev image from dev stage
+```sh
+docker build -t myapp .
+```
+* To build prod image from prod stage
+```sh
+docker build -t myapp:prod --target prod .
+```
