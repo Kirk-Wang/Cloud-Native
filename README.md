@@ -335,3 +335,12 @@ docker stop 6ec2
 * Space + Security benefits
 * Great for "artifact only"
 * Great for dev + test + prod
+  1. FROM node as prod
+  2. ENV NODE_ENV=production
+  3. COPY package*.json ./
+  4. RUN npm install && npm cache clear --force
+  5. COPY . .
+  6. CMD ["node", "./bin/wwww"]
+  7. FROM prod as dev
+  8. ENV NODE_ENV = development
+  9. CMD ["nodemon", "./bin/www", "--inspect=0.0.0.0:9229"]
