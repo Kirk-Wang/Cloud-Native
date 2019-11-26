@@ -472,3 +472,13 @@ docker run -v $(pwd)/logs:/app/logs -v $(pwd)/in:/app/in -v $(pwd)/out:/app/out 
 * Perms: Linux != Windows 
 
 ### Bind-Mounting: Performance
+
+### node_modules in Images
+* Problem: we shouldn't build images with node_modules from host
+  * Example: node-gyp
+* Solution: add node_modules  to `.dockerignore`
+* Let's do this to `./sample-sails`
+  ```sh
+  cp .gitignore .dockerignore
+  docker build -t sailsbret .
+  ```
