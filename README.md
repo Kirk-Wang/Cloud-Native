@@ -458,3 +458,8 @@ docker run -v $(pwd)/logs:/app/logs -v $(pwd)/in:/app/in -v $(pwd)/out:/app/out 
 * Do use v2 format for local dev
   * v2 only: depends_on, hardware specific
 * Do study compose file and CLI features
+
+### Compose Project Tips: Don'ts
+* Unnecessary: "alias" & "container_name"
+* Legacy: "expose" & "links"
+* No need to set defaults
