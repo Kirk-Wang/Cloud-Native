@@ -405,3 +405,13 @@ docker build -t multistage:test --target test . && docker run --init multistage:
 * `console.log()` works
 * Winston/Bunyan/Morgan: Use levels to control verbosity
 * Winston transport: "Console"
+
+### .dockerignore
+* Prevent bloat and unneeded files
+  * .git/
+  * node_modules/
+  * npm-debug
+  * docker-compose*.yml
+* Not needed but useful in image
+  * Dockerfile
+  * README.md
