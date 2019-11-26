@@ -276,3 +276,10 @@ CMD ["node", "./bin/www"]
 ```sh
 ./sample-graceful-shutdown/sample.js
 ```
+
+### Assignment: Node Dockerfiles
+* Make a Dockerfile for existing Node app
+* use ./assignment-dockerfile/Dockerfile
+* Start with node 10.15 on alpine
+* Install tini, start node with tini
+* Copy package/lock files first, then npm, then copy
