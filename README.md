@@ -386,5 +386,4 @@ docker build -t multistage:test --target test . && docker run --init multistage:
   * Log to stdout/stderr
   * Pin all versions, even npm
   * Graceful exit SIGTERM/INIT
-
- 
+* Create a .dockerignore (like .gitignore)
