@@ -498,3 +498,17 @@ docker-compose up
 * Solution 1, simple but less flexible;
   * You can't `docker-compose up` until you've used `docker-compose run`
   * node_modules on host is now only usable from container
+* Solution 2, more setup but flexible:
+  * Move node_modules up a directory in Dockerfile
+  * Use empty volume to hide node_modules on bind-mount
+  * node_modules on host doesn't conflict
+  ```sh
+  # .dockerignore--->node_modules
+  ls
+  npm install
+  docker-compose build # rebuiding
+  docker-compose up -d
+  docker-compose ps
+  docker-compose exec express bash
+  ls node_modules/
+  ```
