@@ -430,3 +430,9 @@ docker build -t multistage:test --target test . && docker run --init multistage:
 * Change Winston to Console `winston.transports.Console`
 * bind-mount `in` and `out` dirs
 * Set `CHARCOAL_FACTOR` to 0.1
+
+### MTA Outcomes
+* Running container with `./in` and `./out` bind-mounts results in new chalk images in `./out` on host
+* Changing `--env CHARCOAL_FACTOR` changes look of image (test with 10)
+* No `.gif` files in image
+* `docker logs` shows Winston output
