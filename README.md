@@ -379,3 +379,12 @@ docker build -t multistage:dev --target dev . && docker run --init -p 3000:3000 
 # test
 docker build -t multistage:test --target test . && docker run --init multistage:test
 ```
+
+### Cloud Native App Guidelines
+* Follow [12factor.net](https://12factor.net) principles, especially
+  * Use Environment Variables for config
+  * Log to stdout/stderr
+  * Pin all versions, even npm
+  * Graceful exit SIGTERM/INIT
+
+ 
