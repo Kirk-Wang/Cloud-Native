@@ -367,3 +367,5 @@ docker build -t myapp:prod --target prod .
 * Test has devDep, runs npm test
 * Build all three stages with unique tags
 * Goal: don't repeat lines
+
+### Assignment Answers:Building A 3-Stage Dockerfile
