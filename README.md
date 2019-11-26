@@ -358,3 +358,12 @@ docker build -t myapp:prod --target prod .
 * Have CI build --target test stage before building prod
 * Add npm install --only=development to dev stage
 * Don't COPY code into dev stage
+
+### Building A 3-Stage Dockerfile
+* Create a Dockerfile from ./sample-multi-stage
+* Create three stages for prod, dev, and test
+* Prod has no devDependencies and runs node
+* Dev includes devDep, runs nodemon
+* Test has devDep, runs npm test
+* Build all three stages with unique tags
+* Goal: don't repeat lines
