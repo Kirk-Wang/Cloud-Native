@@ -257,3 +257,12 @@ docker-compose exec -u root
 * npm doesn't respond to SIGINT/SIGTERM
 * node doesn't respond by default, but can with code
 * Docker provides a init PID 1 replacement option
+
+### Proper Node Shutdown Options
+* Temp: Use --init to fix ctrl-c for now
+* Workaround: add tini to your image
+* Production: your app captures SIGINT for proper exit
+* Run any node app with --init to handle signals(temp solution)
+```sh
+docker run --init -d nodeapp
+```
