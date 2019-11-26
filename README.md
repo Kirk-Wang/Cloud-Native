@@ -488,3 +488,9 @@ docker run -v $(pwd)/logs:/app/logs -v $(pwd)/in:/app/in -v $(pwd)/out:/app/out 
 * To Potential Solutions:
   * Never use `npm i` on host, run `npm i` in compose
   * Move modules in image, hide modules from host
+  
+```sh
+# sample-express
+docker-compose up # can't find module ...
+
+```
