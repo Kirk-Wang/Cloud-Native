@@ -266,3 +266,9 @@ docker-compose exec -u root
 ```sh
 docker run --init -d nodeapp
 ```
+* Add tini to your Dockerfile, then use it in CMD (permanent workaround)
+```sh
+RUN apk add --no-cache tini
+ENTRYPOINT ["/sbin/tini", "--"]
+CMD ["node", "./bin/www"]
+```
