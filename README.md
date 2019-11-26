@@ -392,3 +392,9 @@ docker build -t multistage:test --target test . && docker run --init multistage:
 * Containers are almost always distributed apps
 * Good news: You get many of these by using Docker
 * Lets focus on a few for Node.js
+
+### 12 Factor:Config
+* [12factor.net/config](https://12factor.net/config)
+* Store environment config in Environment Variables (env vars)
+* Docker & Compose are great at this with multiple options
+* Old apps: Use CMD or ENTRYPOINT script with `envsubst` to pass env vars into conf files 
