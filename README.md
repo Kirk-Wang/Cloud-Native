@@ -470,3 +470,5 @@ docker run -v $(pwd)/logs:/app/logs -v $(pwd)/in:/app/in -v $(pwd)/out:/app/out 
 * For local dev only？don't copy in code
 * DDforWin needs drive perms
 * Perms: Linux != Windows 
+
+### Bind-Mounting: Performance
