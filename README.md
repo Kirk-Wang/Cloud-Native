@@ -482,3 +482,9 @@ docker run -v $(pwd)/logs:/app/logs -v $(pwd)/in:/app/in -v $(pwd)/out:/app/out 
   cp .gitignore .dockerignore
   docker build -t sailsbret .
   ```
+
+### node_modules in Bind-Mounts
+* Problem: we can't bind-mount node_modules from host on macOS/Windows (different arch)
+* To Potential Solutions:
+  * Never use `npm i` on host, run `npm i` in compose
+  * Move modules in image, hide modules from host
