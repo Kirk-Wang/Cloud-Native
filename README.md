@@ -272,3 +272,7 @@ RUN apk add --no-cache tini
 ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["node", "./bin/www"]
 ```
+* Use JS snippet to properly capture signals(production solution)
+```sh
+./sample-graceful-shutdown/sample.js
+```
