@@ -423,3 +423,10 @@ docker build -t multistage:test --target test . && docker run --init multistage:
 * add .dockerignore
 * Create Dockerfile
 * Change Winston transport to Console
+
+### MTA Requirements
+* See README.md for app details
+* Image shouldn't include `in`, `out`, `node_modules` or `logs` directories
+* Change Winston to Console `winston.transports.Console`
+* bind-mount `in` and `out` dirs
+* Set `CHARCOAL_FACTOR` to 0.1
