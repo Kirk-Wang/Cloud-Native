@@ -352,3 +352,9 @@ docker build -t myapp .
 ```sh
 docker build -t myapp:prod --target prod .
 ```
+
+### More Multi-stage
+* Add a test stage that runs npm test
+* Have CI build --target test stage before building prod
+* Add npm install --only=development to dev stage
+* Don't COPY code into dev stage
