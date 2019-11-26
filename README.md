@@ -304,3 +304,11 @@ docker run -p 3001:3000 assignment1
 ```
 
 [localhost:30001](http://localhost:3001)
+
+### Testing Graceful shutdowns
+* Use ./assignment-dockerfile/
+* Run with tini built in, try to ctrl-c
+* Run with tini built in, try to stop
+* Remove ENTRYPOINT, rebuild
+* Add --init to run command,ctrl-c/stop
+* Bonus: add signal watch code
