@@ -463,3 +463,10 @@ docker run -v $(pwd)/logs:/app/logs -v $(pwd)/in:/app/in -v $(pwd)/out:/app/out 
 * Unnecessary: "alias" & "container_name"
 * Legacy: "expose" & "links"
 * No need to set defaults
+
+### Bind-Mounting Code
+* Don't use host file paths
+* Don't bing-mount databases
+* For local dev only？don't copy in code
+* DDforWin needs drive perms
+* Perms: Linux != Windows 
