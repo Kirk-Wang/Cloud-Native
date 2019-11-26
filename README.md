@@ -488,9 +488,13 @@ docker run -v $(pwd)/logs:/app/logs -v $(pwd)/in:/app/in -v $(pwd)/out:/app/out 
 * To Potential Solutions:
   * Never use `npm i` on host, run `npm i` in compose
   * Move modules in image, hide modules from host
-  
 ```sh
 # sample-express
 docker-compose up # can't find module ...
 
+docker-compose run express npm install
+docker-compose up
 ```
+* Solution 1, simple but less flexible;
+  * You can't `docker-compose up` until you've used `docker-compose run`
+  * node_modules on host is now only usable from container
