@@ -368,4 +368,8 @@ docker build -t myapp:prod --target prod .
 * Build all three stages with unique tags
 * Goal: don't repeat lines
 
-### Assignment Answers:Building A 3-Stage Dockerfile
+**Assignment Answers**
+```sh
+#prod
+docker build -t multistage --target prod . && docker run multistage
+```
