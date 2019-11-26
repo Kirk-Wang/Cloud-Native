@@ -451,3 +451,10 @@ docker logs dbda736f5c09
 docker run -v $(pwd)/logs:/app/logs -v $(pwd)/in:/app/in -v $(pwd)/out:/app/out mta
 docker run -v $(pwd)/logs:/app/logs -v $(pwd)/in:/app/in -v $(pwd)/out:/app/out --env CHARCOAL_FACTOR=10 mta
 ```
+
+### Compose Project Tips: Do's
+* cd ./compose-tips
+* Do use docker-compose for local dev
+* Do use v2 format for local dev
+  * v2 only: depends_on, hardware specific
+* Do study compose file and CLI features
