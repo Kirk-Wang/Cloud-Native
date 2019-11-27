@@ -616,3 +616,10 @@ docker-compose up
 * RUN = maybe document
 * Add LABELS
 * RUN npm config list
+
+### Example Dockerfile Labels
+* LABEL has OCI standards now
+  * `LABEL org.opencontainers.image.<key>`
+* Use ARG to add info to labels like build date or git commit
+* Docker Hub has built-in envvars for use with ARGs
+* Sample `./dockerfile-labels/`
