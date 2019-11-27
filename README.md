@@ -584,3 +584,8 @@ docker-compose up
     `*.vcap.me` or `xip.io`  
   * Use dnsmasq on macOS/Linux
   * Manually edit hosts file
+
+### VS Code, Debugging, and TypeScript
+* VS Code and other editors have some Docker and Compose features built-in
+* Debugging works when we enable in nodemon and remote via TCP
+* TypeScript compile and other pre-processors go in `nodemon.json`
