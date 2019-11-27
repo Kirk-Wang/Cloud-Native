@@ -582,3 +582,5 @@ docker-compose up
   * Use x.localhost, y.localhost in Chrome
   * Use wildcard domains like
     `*.vcap.me` or `xip.io`  
+  * Use dnsmasq on macOS/Linux
+  * Manually edit hosts file
