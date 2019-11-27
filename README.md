@@ -512,3 +512,8 @@ docker-compose up
   docker-compose exec express bash
   ls node_modules/
   ```
+
+  ### NPM, Yarn, and Other Tools in Compose
+  * Two ways to run various tools inside the container:
+  * docker-compose run: start a new container and run command/shell
+  * docker-compose exec: run additional command/shell in currently running container
