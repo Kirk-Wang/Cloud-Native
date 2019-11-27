@@ -513,38 +513,44 @@ docker-compose up
   ls node_modules/
   ```
 
-  ### NPM, Yarn, and Other Tools in Compose
-  * Two ways to run various tools inside the container:
-  * docker-compose run: start a new container and run command/shell
-  * docker-compose exec: run additional command/shell in currently running container
+### NPM, Yarn, and Other Tools in Compose
+* Two ways to run various tools inside the container:
+* docker-compose run: start a new container and run command/shell
+* docker-compose exec: run additional command/shell in currently running container
 
-  ```sh
-  # sample-strapi, .dockerignore -> node_modules
-  # Also remember to postinstall for strapi:
-  docker-compose run api npm i
-  docker-compose up
+```sh
+# sample-strapi, .dockerignore -> node_modules
+# Also remember to postinstall for strapi:
+docker-compose run api npm i
+docker-compose up
 
-  # other iterm
-  docker-compose exec api strapi --help
-  docker-compose exec api bash
-  ```
+# other iterm
+docker-compose exec api strapi --help
+docker-compose exec api bash
+```
 
-  ### File Monitoring and Node Auto Restarts
-  * Use nodemon for compose file monitoring
-  * webpack-dev-server, etc. work the same
-  * Override Dockerfile via compose command
-  * If Windows, enable polling
-  * Create a nodemon.yml for advanced workflows(bower, webpack, parcel)
-  ```sh
-  docker-compose run express npm install nodemon --save-dev
+### File Monitoring and Node Auto Restarts
+* Use nodemon for compose file monitoring
+* webpack-dev-server, etc. work the same
+* Override Dockerfile via compose command
+* If Windows, enable polling
+* Create a nodemon.yml for advanced workflows(bower, webpack, parcel)
+```sh
+docker-compose run express npm install nodemon --save-dev
 
-  docker-compose build
-  docker-compose up
-  ```
+docker-compose build
+docker-compose up
+```
 
-  ### Startup Order and Dependencies
-  * Problem: Multi-service apps start out of order, node might exit or cycle
-  * Multi-container apps need:
-    * Dependency awareness
-    * Name resolution (DNS)
-    * Connection failure handling
+### Startup Order and Dependencies
+* Problem: Multi-service apps start out of order, node might exit or cycle
+* Multi-container apps need:
+  * Dependency awareness
+  * Name resolution (DNS)
+  * Connection failure handling
+
+### Dependency Awareness
+* `depends_on:` when "up X", start Y first
+* Fixes name resolution issues with "can't resolve <service_name>"
+* Only for compose, not Orch
+* compose YAML v2: works with healthchecks like a "wait for script"
