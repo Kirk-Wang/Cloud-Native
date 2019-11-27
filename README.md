@@ -601,3 +601,10 @@ docker-compose up
 * Uses Docke's example voting app (Dog vs. Cat)
 * Step-by-step in `README.md`
 
+### Avoiding devDependencies in Prod
+* Multi-stage can solve this
+* prod stages: npm i --only=production
+* Dev stage: npm i --only=development
+* Use `npm ci` to speed up builds
+* Ensure `NODE_ENV` is set
+* Sample `./multi-stage-deps/`
