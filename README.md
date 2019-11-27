@@ -519,7 +519,12 @@ docker-compose up
   * docker-compose exec: run additional command/shell in currently running container
 
   ```sh
-  # sample-strapi
+  # sample-strapi, .dockerignore -> node_modules
   # Also remember to postinstall for strapi:
   docker-compose run api npm i
+  docker-compose up
+
+  # other iterm
+  docker-compose exec api strapi --help
+  docker-compose exec api bash
   ```
