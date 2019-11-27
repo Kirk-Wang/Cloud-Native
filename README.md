@@ -535,3 +535,6 @@ docker-compose up
   * Override Dockerfile via compose command
   * If Windows, enable polling
   * Create a nodemon.yml for advanced workflows(bower, webpack, parcel)
+  ```sh
+  docker-compose run express npm install nodemon --save-dev
+  ```
