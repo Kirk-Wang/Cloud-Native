@@ -623,3 +623,23 @@ docker-compose up
 * Use ARG to add info to labels like build date or git commit
 * Docker Hub has built-in envvars for use with ARGs
 * Sample `./dockerfile-labels/`
+
+### Compose File Documentation
+* YAML (unlike JSON) supports comments!
+* Document objects that aren't obvious
+  * Why a volume is needed
+  * Why custom CMD is needed
+* Template blocks at top
+* Override objects and files
+
+### Run Tests During Image Build
+* `Run npm test` in a specific build-stage
+  * Also good for linting commands
+* Only run unit tests in build
+* Test stage not default
+* Locally, run docker-compose, run node npm test
+* Sample `./multi-stage-test/`
+```sh
+docker build -t testnode --target=test .
+docker build -t testnode --target=test --no-cache .
+```
