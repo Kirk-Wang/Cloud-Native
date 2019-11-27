@@ -517,3 +517,9 @@ docker-compose up
   * Two ways to run various tools inside the container:
   * docker-compose run: start a new container and run command/shell
   * docker-compose exec: run additional command/shell in currently running container
+
+  ```sh
+  # sample-strapi
+  # Also remember to postinstall for strapi:
+  docker-compose run api npm i
+  ```
