@@ -579,4 +579,6 @@ docker-compose up
 
 ### Local DNS For Many Endpoints
 * Problem: Multiple endpoints and need unique DNS for each
-  * Use x.localhost, y.localhost in Chrome 
+  * Use x.localhost, y.localhost in Chrome
+  * Use wildcard domains like
+    `*.vcap.me` or `xip.io`  
