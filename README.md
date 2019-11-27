@@ -554,3 +554,9 @@ docker-compose up
 * Fixes name resolution issues with "can't resolve <service_name>"
 * Only for compose, not Orch
 * compose YAML v2: works with healthchecks like a "wait for script"
+
+### Connection Failure Handling
+* `restart: on-failure`
+  * Good: helps slow db startup and Node.js failing. Better: depends_on
+  * Bad: could spike CPU with restart cycling
+* Solution: build connection timeout, buffer, and retries in your apps
