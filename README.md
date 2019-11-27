@@ -650,3 +650,6 @@ docker build -t testnode --target=test --no-cache .
 * Only report at first, no failing (most images have at least one CVE vuln)
 * Consider `RUN npm audit`
 * `./multi-stage-scanning/`
+```sh
+docker build -t auditnode --target=audit --build-arg MICROSCANNER_TOKEN=$MICROSCANNER_TOKEN .
+```
