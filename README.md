@@ -591,5 +591,13 @@ docker-compose up
 * TypeScript compile and other pre-processors go in `nodemon.json`
 ```sh
 # typescript
+docker-compose run ts npm i
 docker-compose up
 ```
+
+### Build A Sweet Compose File
+* `./assignment-sweet-compose`
+* Take all the learning from this section and apply it  to a single compose file!
+* Uses Docke's example voting app (Dog vs. Cat)
+* Step-by-step in `README.md`
+
