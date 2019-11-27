@@ -560,3 +560,11 @@ docker-compose up
   * Good: helps slow db startup and Node.js failing. Better: depends_on
   * Bad: could spike CPU with restart cycling
 * Solution: build connection timeout, buffer, and retries in your apps
+
+### Healthchecks for depends_on
+* `depends_on`: is only dependency control by default
+* Add v2 healthchecks for true "wait_for"
+* Let's see some examples
+  * Mongo
+  * Postgres/MySQL
+  * Web
