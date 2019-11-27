@@ -541,3 +541,10 @@ docker-compose up
   docker-compose build
   docker-compose up
   ```
+
+  ### Startup Order and Dependencies
+  * Problem: Multi-service apps start out of order, node might exit or cycle
+  * Multi-container apps need:
+    * Dependency awareness
+    * Name resolution (DNS)
+    * Connection failure handling
