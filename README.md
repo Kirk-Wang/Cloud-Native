@@ -528,3 +528,10 @@ docker-compose up
   docker-compose exec api strapi --help
   docker-compose exec api bash
   ```
+
+  ### File Monitoring and Node Auto Restarts
+  * Use nodemon for compose file monitoring
+  * webpack-dev-server, etc. work the same
+  * Override Dockerfile via compose command
+  * If Windows, enable polling
+  * Create a nodemon.yml for advanced workflows(bower, webpack, parcel)
