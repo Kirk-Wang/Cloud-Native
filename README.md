@@ -653,3 +653,10 @@ docker build -t testnode --target=test --no-cache .
 ```sh
 docker build -t auditnode --target=audit --build-arg MICROSCANNER_TOKEN=$MICROSCANNER_TOKEN .
 ```
+
+### CI/CD Automated Builds
+* Have CI build images on (some) branches
+* Push to registry once build/tests pass
+* Lint Dockerfile and Compose/Stack files
+* Use `docker-compose run` or `--exit-code-from` for proper exit codes
+* Docker Hub can do this
