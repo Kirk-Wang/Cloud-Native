@@ -608,3 +608,11 @@ docker-compose up
 * Use `npm ci` to speed up builds
 * Ensure `NODE_ENV` is set
 * Sample `./multi-stage-deps/`
+
+### Dockerfile Documentation
+* Document every line that isn't obvious
+* FROM stage, document why it's needed
+* COPY = don't document
+* RUN = maybe document
+* Add LABELS
+* RUN npm config list
