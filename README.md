@@ -643,3 +643,10 @@ docker-compose up
 docker build -t testnode --target=test .
 docker build -t testnode --target=test --no-cache .
 ```
+
+### Security Scanning and Audit
+* Use test stage in multi-stage, or new
+* Or run it once image is built with CI
+* Only report at first, no failing (most images have at least one CVE vuln)
+* Consider `RUN npm audit`
+* `./multi-stage-scanning/`
