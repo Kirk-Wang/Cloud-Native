@@ -570,3 +570,13 @@ docker-compose up
   * Web
 
 ### Making Microservices Easier
+* Problem: many HTTP endpoints, many ports
+* Solution: Nginx/HAProxy/Traefik for host header routing + wildcard localhost domain
+* Problem: CORS failures in dev
+* Solution: Proxy with  * header
+* Problem: HTTPS locally
+* Solution: Create local proxy certs
+
+### Local DNS For Many Endpoints
+* Problem: Multiple endpoints and need unique DNS for each
+  * Use x.localhost, y.localhost in Chrome 
