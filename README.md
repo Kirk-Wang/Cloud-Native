@@ -663,3 +663,6 @@ docker build -t auditnode --target=audit --build-arg MICROSCANNER_TOKEN=$MICROSC
 
 ### Image Tagging
 * <name>:latest is only a convention
+* Use latest for local easy access to current release
+* Maybe do this per major branch too for convenience
+* Don't repeat tags on CI or servers
