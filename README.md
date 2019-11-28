@@ -49,6 +49,9 @@ docker node ls
 docker node help
 docker swarm help
 docker service help
+
+docker service create alpine ping 8.8.8.8
+docker service ls
 ```
 ------------------------
 ### Check Our Tools
