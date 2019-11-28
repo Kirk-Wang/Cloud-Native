@@ -673,3 +673,15 @@ docker build -t auditnode --target=audit --build-arg MICROSCANNER_TOKEN=$MICROSC
 * Docker Swarm: Key for uptime and rolling updates
 * Kubernetes: Not used, but helps in others making readiness/liveness probes
 * Sample `./healthchecks/`
+
+```yml
+# option 1
+HEALTHCHECK --interval=5m --timeout=3s \
+  CMD curl -f http://localhost/ || exit 1
+
+# option 2
+HEALTHCHECK CMD curl -f http://localhost/healthz || exit 1
+
+# option 3
+HEALTHCHECK --interval=30s CMD node hc.js
+```
