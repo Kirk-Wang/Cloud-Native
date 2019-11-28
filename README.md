@@ -775,4 +775,14 @@ docker image inspect node:10-alpine | grep Arch
 # "Architectrue":"amd64",
 
 docker build -t arm64node .
+docker run -p 8080:3000 -d arm64node
+docker ps
 ```
+
+### Run Node ARM Containers for Prod
+* AWS A1 Instances (Graviton Processors)
+* Test your IOT/Embedded code
+* Docker Hub doesn't build arm64 images
+* Or does it?(QEMU hack)
+* Build your own CI with QEMU
+* Swarm just works!
