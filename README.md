@@ -41,7 +41,13 @@ docker service create --name hello --replicas 3 --detach=false --publish 8080:80
   * Encrypted by default on disk(1.13+)
   * No need for another key/value system to hold orchestration/secrets
   * Replicates logs amongst Managers via mutual TLS in "control plane"  
-
+```sh
+docker swarm init
+docker node ls
+# ...MANAGER STATUS
+# ...Leader
+docker node help
+```
 ------------------------
 ### Check Our Tools
 
