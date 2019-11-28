@@ -1,6 +1,6 @@
 # Cloud-Native-And-DevOps
 
-[Docker Swarm](https://docs.docker.com/swarm/)
+[Docker Swarm Docs](https://docs.docker.com/swarm/)
 
 ### Your First Swarm Service
 [Play with Docker](https://labs.play-with-docker.com/)
@@ -20,6 +20,29 @@ docker service create --name hello --replicas 3 --detach=false --publish 8080:80
 * How can we ensure only trusted servers run our containers?
 * How can we store secrets, keys, passwords and get them to the right container(and only that container)?
 
+### Swarm Mode:Built-In Orchestration
+* Swarm Mode is a clustering solution built inside Docker
+* Not related to Swarm "classic" for pre-1.12 versions
+* Added in 1.12(Summer 2016)via SwarmKit toolkit
+* Enhanced in 1.13(January 2017) via Stacks and Secrets
+* Not enabled by default, new commands once enabled
+  * docker swarm
+  * docker node
+  * docker service
+  * docker stack
+  * docker secret
+
+### docker swarm init: What Just Happened?
+* Lots of PKI and security automation
+  * Root Signing Certificate created  for our Swarm
+  * Certificate is issued for first Manager node
+  * Join tokens are created
+* Raft database created to store root CA, configs and secrets
+  * Encrypted by default on disk(1.13+)
+  * No need for another key/value system to hold orchestration/secrets
+  * Replicates logs amongst Managers via mutual TLS in "control plane"  
+
+------------------------
 ### Check Our Tools
 
 * Docker Desktop preferred(Win/Mac)
