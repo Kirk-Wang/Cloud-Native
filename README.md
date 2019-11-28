@@ -720,3 +720,9 @@ DOCKER_BUILDKIT=1 docker build --build-arg=MICROSCANNER_TOKEN=$MICROSCANNER -t u
 * Nginx and HAProxy have lots of options
 * Traefik is the new kid, full of cool features
 * Think early how your Node apps will communicate on a single server or cluster
+
+### Connections During Container Replacement
+* Add SIGTERM Code to all Node.js apps
+  * `./sample-graceful-shutdown`
+* Prevents killing app, but not graceful connection migration
+* Check godaddy/terminus for easier hc + shutdown
