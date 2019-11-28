@@ -732,3 +732,9 @@ DOCKER_BUILDKIT=1 docker build --build-arg=MICROSCANNER_TOKEN=$MICROSCANNER -t u
 * Kubernetes/Swarm use healthchecks differently for ingress LB
 * Give shutdown waits longer than HTTP long polling
 * HTTP: Use stoppable to track open connections
+
+### Node.js With Orchestration
+* Multi-container, single image
+* Startup "ready" state: healthchecks
+* Multi-container client state sharing(don't use in-memory state)
+* Shutdown cleanup: reconnect clients, close DB, fail readiness (K8s)
