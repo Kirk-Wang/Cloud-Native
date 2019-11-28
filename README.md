@@ -770,5 +770,9 @@ DOCKER_BUILDKIT=1 docker build --build-arg=MICROSCANNER_TOKEN=$MICROSCANNER -t u
 * Mix with x86 in compose
 ```sh
 docker image inspect arm64v8/node:10-alpine | grep Arch
-# "Architectrue":"arm64"
+# "Architectrue":"arm64",
+docker image inspect node:10-alpine | grep Arch
+# "Architectrue":"amd64",
+
+docker build -t arm64node .
 ```
