@@ -726,3 +726,9 @@ DOCKER_BUILDKIT=1 docker build --build-arg=MICROSCANNER_TOKEN=$MICROSCANNER -t u
   * `./sample-graceful-shutdown`
 * Prevents killing app, but not graceful connection migration
 * Check godaddy/terminus for easier hc + shutdown
+
+### Container Replacement Process
+* Shutdown wait defaults: Docker/Swarm: 10s, Kubernetes: 30s
+* Kubernetes/Swarm use healthchecks differently for ingress LB
+* Give shutdown waits longer than HTTP long polling
+* HTTP: Use stoppable to track open connections
