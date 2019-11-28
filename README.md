@@ -738,3 +738,18 @@ DOCKER_BUILDKIT=1 docker build --build-arg=MICROSCANNER_TOKEN=$MICROSCANNER -t u
 * Startup "ready" state: healthchecks
 * Multi-container client state sharing(don't use in-memory state)
 * Shutdown cleanup: reconnect clients, close DB, fail readiness (K8s)
+
+### Voting App, Cluster-Ready
+* `./sample-result-orchestration`
+* Kubernetes and Swarm-ready version
+* Healthcheck/Readiness wait for DB
+* Readiness re-checks DB connection
+* `socket.io` uses redis
+* Stoppable for cleanup
+
+### Node.js With Docker Swarm
+* `./sample-swarm/`
+* Example of Node.js app stack
+* Has cluster features under "deploy"
+* replicas, update_config
+* stop_grace_period
