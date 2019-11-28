@@ -52,6 +52,10 @@ docker service help
 
 docker service create alpine ping 8.8.8.8
 docker service ls
+docker service ps <NAME(service)>
+docker container ls
+docker service update <ID(service)> --replicas 3
+docker service ls
 ```
 ------------------------
 ### Check Our Tools
