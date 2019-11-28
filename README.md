@@ -753,3 +753,11 @@ DOCKER_BUILDKIT=1 docker build --build-arg=MICROSCANNER_TOKEN=$MICROSCANNER -t u
 * Has cluster features under "deploy"
 * replicas, update_config
 * stop_grace_period
+
+### State of ARM + Docker for Node
+* ARM processors are used everywhere
+* But it's hard to develop on ARM
+* April 2019: docker + ARM partnership
+* Docker Desktop runs ARM now!
+* Node is great on ARM
+* Docker is the easiest way to dev for ARM
