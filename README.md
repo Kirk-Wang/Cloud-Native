@@ -7,6 +7,17 @@
 ```sh
 docker service create --name hello --replicas 3 --detach=false --publish 8080:80 nginx
 ```
+
+### Containers Everywhere = New Problems
+* How do we automate container lifecycle?
+* How can we easily scale out/in/up/down?
+* How can we ensure our containers are re-created if they fail?
+* How can we replace containers are-created if they fail?
+* How can we control/track where containers get started?
+* How can we create cross-node virtual networks?
+* How can we ensure only trusted servers run our containers?
+* How can we store secrets, keys, passwords and get them to the right container(and only that container)?
+
 ### Check Our Tools
 
 * Docker Desktop preferred(Win/Mac)
