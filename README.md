@@ -685,3 +685,38 @@ HEALTHCHECK CMD curl -f http://localhost/healthz || exit 1
 # option 3
 HEALTHCHECK --interval=30s CMD node hc.js
 ```
+
+### Ultimate Node.js Dockerfile
+* `./ultimate-node-dockerfile/`
+* Use an existing Node.js sample app
+* Make a production grade Dockerfile
+* Development friendly, testing stage, security, non-root user, labels, minimal prod size
+* Requirements in `README.md`
+```sh
+# security
+docker build --build-arg=MICROSCANNER_TOKEN=$MICROSCANNER -t ultimatenode:test --target test .
+# buildkit
+DOCKER_BUILDKIT=1 docker build --build-arg=MICROSCANNER_TOKEN=$MICROSCANNER -t ultimatenode:test --target test .
+
+DOCKER_BUILDKIT=1 docker build --build-arg=MICROSCANNER_TOKEN=$MICROSCANNER -t ultimatenode:prod --target prod .
+```
+
+### Multi-Threaded Concerns
+* Node is usually single threaded
+* Use multiple replicas, not PM2/forever
+* Start with 1-2 replicas per CPU
+* Unit testing = single replica.
+* Integration testing = multiple replicas
+
+### Why Not Compose In Production?
+* Only understands a single server (engine)
+* Doesn't understand uptime or headlthchecks
+* Swarm is easy and solves most use cases
+* Single server? Use Swarm
+* Kubernetes not ideal for 1-5 servers. Try cloud hosted
+
+### Node.js With Proxies
+* Common: many HTTP containers need to listen on 80/443
+* Nginx and HAProxy have lots of options
+* Traefik is the new kid, full of cool features
+* Think early how your Node apps will communicate on a single server or cluster
