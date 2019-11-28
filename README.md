@@ -56,6 +56,20 @@ docker service ps <NAME(service)>
 docker container ls
 docker service update <ID(service)> --replicas 3
 docker service ls
+docker service ps <NAME(service)>
+
+docker update --help
+docker service update --help
+
+docker container ls
+docker container rm -f <name>.1.<ID>
+docker service ls
+
+docker service ps <NAME(service)>
+
+docker service rm <NAME(service)>
+docker service ls
+docker container ls
 ```
 ------------------------
 ### Check Our Tools
