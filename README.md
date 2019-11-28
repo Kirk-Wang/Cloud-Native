@@ -662,3 +662,4 @@ docker build -t auditnode --target=audit --build-arg MICROSCANNER_TOKEN=$MICROSC
 * Docker Hub can do this
 
 ### Image Tagging
+* <name>:latest is only a convention
