@@ -660,3 +660,5 @@ docker build -t auditnode --target=audit --build-arg MICROSCANNER_TOKEN=$MICROSC
 * Lint Dockerfile and Compose/Stack files
 * Use `docker-compose run` or `--exit-code-from` for proper exit codes
 * Docker Hub can do this
+
+### Image Tagging
