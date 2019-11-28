@@ -666,3 +666,10 @@ docker build -t auditnode --target=audit --build-arg MICROSCANNER_TOKEN=$MICROSC
 * Use latest for local easy access to current release
 * Maybe do this per major branch too for convenience
 * Don't repeat tags on CI or servers
+
+### Dockerfile Healthchecks
+* Always include `HEALTHCHECK`
+* Docker run and docker-compose: info noly
+* Docker Swarm: Key for uptime and rolling updates
+* Kubernetes: Not used, but helps in others making readiness/liveness probes
+* Sample `./healthchecks/`
