@@ -4,7 +4,9 @@
 [Play with Docker](https://labs.play-with-docker.com/)
 * Templates
   * 3 Managers and 2 Workers
-
+```sh
+docker service create --name hello --replicas 3 --detach=false --publish 8080:80 nginx
+```
 ### Check Our Tools
 
 * Docker Desktop preferred(Win/Mac)
