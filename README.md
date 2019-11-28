@@ -47,6 +47,8 @@ docker node ls
 # ...MANAGER STATUS
 # ...Leader
 docker node help
+docker swarm help
+docker service help
 ```
 ------------------------
 ### Check Our Tools
