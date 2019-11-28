@@ -2,6 +2,8 @@
 
 ### Your First Swarm Service
 [Play with Docker](https://labs.play-with-docker.com/)
+* Templates
+  * 3 Managers and 2 Workers
 
 ### Check Our Tools
 
