@@ -40,7 +40,10 @@ docker service create --name hello --replicas 3 --detach=false --publish 8080:80
 * Raft database created to store root CA, configs and secrets
   * Encrypted by default on disk(1.13+)
   * No need for another key/value system to hold orchestration/secrets
-  * Replicates logs amongst Managers via mutual TLS in "control plane"  
+  * Replicates logs amongst Managers via mutual TLS in "control plane" 
+
+### Create Your First Service and Scale It Locally
+
 ```sh
 docker swarm init
 docker node ls
