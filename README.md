@@ -786,3 +786,9 @@ docker ps
 * Or does it?(QEMU hack)
 * Build your own CI with QEMU
 * Swarm just works!
+
+### The Futrue: Making ARM Easier
+* ARM + Docker partnership will make this easier
+* Build multi-arch in one command
+* Store multi-arch images in single repo
+* Easier to know which arch you're running locally
