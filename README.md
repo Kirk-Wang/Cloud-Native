@@ -5,7 +5,7 @@
 
 Bitnami containers give you the latest stable versions of your application stacks, allowing you to focus on coding rather than updating dependencies or outdated libraries.
 
-[list](https://bitnami.com/containers)
+[Development Containers](https://bitnami.com/containers)|[Turnkey Containers](https://bitnami.com/containers#turnkey-containers)
 
 ### Your First Swarm Service
 
