@@ -1,8 +1,16 @@
 # Cloud-Native-And-DevOps
 
-[Docker Swarm Docs](https://docs.docker.com/swarm/)
+
+### Bitnami containers
+
+Bitnami containers give you the latest stable versions of your application stacks, allowing you to focus on coding rather than updating dependencies or outdated libraries.
+
+[list](https://bitnami.com/containers)
 
 ### Your First Swarm Service
+
+[Docker Swarm Docs](https://docs.docker.com/swarm/)
+
 [Play with Docker](https://labs.play-with-docker.com/)
 * Templates
   * 3 Managers and 2 Workers
