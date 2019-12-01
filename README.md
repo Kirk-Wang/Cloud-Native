@@ -190,6 +190,23 @@ docker service inspect drupal #VIP
 * Two ways this works:
 * Container-to-container in a Overlay network(uses VIP)
 * External traffic incoming to published ports(all nodes listen)
+
+```sh
+docker service create --name search --replicas 3 -p 9200:9200 elasticsearch:2
+docker service ps search
+curl localhost:9200
+curl localhost:9200
+curl localhost:9200
+```
+
+### Routing Mesh Cont.
+* This is stateless load balancing
+* This LB is at OSI Layer 3(TCP), not Layer 4(DNS)
+* Both limitation can be overcome with:
+* Niginx or HAProxy LB proxy, or:
+* Docker Enterprise Edition, which comes with built-in L4 web proxy
+
+
 ------------------------
 ### Check Our Tools
 
