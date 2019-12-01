@@ -95,6 +95,13 @@ docker container ls
   * docker-machine can provision machines for Amazon, Azure, DO, Google, etc.
   * Install docker anywhere with `get.docker.com`
 
+**play-with-docker.com**
+```sh
+# node1
+docker info
+ping node2
+```
+
 ------------------------
 ### Check Our Tools
 
