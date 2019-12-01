@@ -84,13 +84,16 @@ docker container ls
 ```
 
 ### Creating 3-Node Swarm: Host Options
-* A.play-with-docker.com
+* A.`play-with-docker.com`
   * Only needs a browser, but resets after 4 hours
 * B.docker-machine + VirtualBox
   * Free and runs locally,but requires a machine with 8GB memory
 * C.Digital Ocean + Docker install
   * Most like a production setup, but cost $5-10/node/month while learning
-  * 
+  * Use my referral code in section resources to get $10 free
+* D.Roll your own
+  * docker-machine can provision machines for Amazon, Azure, DO, Google, etc.
+  * Install docker anywhere with `get.docker.com`
 
 ------------------------
 ### Check Our Tools
