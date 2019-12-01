@@ -105,7 +105,10 @@ ping node2
 
 **docker-machine + VirtualBox**
 ```sh
-
+docker-machine create node1
+docker-machine ssh node1
+exit
+docker-machine env node1
 ```
 
 ------------------------
