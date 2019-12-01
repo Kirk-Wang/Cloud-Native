@@ -113,6 +113,12 @@ eval $(docker-machine env node1)
 docker info # node1
 ```
 
+**DO**
+```sh
+docker swarm init
+docker swarm init --advertise-addr <IP address>
+```
+
 ------------------------
 ### Check Our Tools
 
