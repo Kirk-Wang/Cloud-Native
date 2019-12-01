@@ -154,8 +154,9 @@ docker swarm join --token SWMTKN-1-1bn2hsyhjwqn4wztjqd7moftumffk4vwd2e88azwj7u7b
 docker node ls
 docker service create --replicas 3 alpine ping 8.8.8.8
 docker node ps
-docker service ps <NAME>
+docker service ps <service name>
 ```
+You have a fully operational swarm cluster.
 
 ------------------------
 ### Check Our Tools
