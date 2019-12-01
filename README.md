@@ -98,8 +98,14 @@ docker container ls
 **play-with-docker.com**
 ```sh
 # node1
+# create 3 new instances
 docker info
 ping node2
+```
+
+**docker-machine + VirtualBox**
+```sh
+
 ```
 
 ------------------------
