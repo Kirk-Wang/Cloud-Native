@@ -124,13 +124,35 @@ docker info
 # sh get-docker.sh
 
 # root@node1
-
 docker swarm init
 docker swarm init --advertise-addr <IP address>
+# docker swarm init --advertise-addr=192.168.99.100
+
 #I'm going to copy the swarm join command and go over to node2 and add it in.
+# root@node2
+docker swarm join --token SWMTKN-1-1bn2hsyhjwqn4wztjqd7moftumffk4vwd2e88azwj7u7bg0q6m-c91v8sc6vpsyxw4zsqmrmg4ji 192.168.99.100:2377
+# This node joined a swarm as a worker.
+docker node ls
+#Error response from daemon: This node is not a swarm manager. Worker nodes can't be used to view or modify cluster state. Please run this command on a manager node or promote the current node to a manager.
 
 # go back to node1
+# docker node ls
+docker node update --role manager node2
+
+# for node3, let's add it as a manager by default.
+# We need to go back to our original command of docker swarm, and then we need to get the join-token.
+# go back to node1
+docker swarm join-token manager
+# docker swarm join --token SWMTKN-1-1bn2hsyhjwqn4wztjqd7moftumffk4vwd2e88azwj7u7bg0q6m-dzz4pcg9inzkt9wnft4hskaxn 192.168.99.100:2377
+# I'm going to copy this, paste it into node3
+
+# node3
+docker swarm join --token SWMTKN-1-1bn2hsyhjwqn4wztjqd7moftumffk4vwd2e88azwj7u7bg0q6m-dzz4pcg9inzkt9wnft4hskaxn 192.168.99.100:2377
+# This node joined a swarm as a manager.
+
+# Back on node1
 docker node ls
+docker service --replicas 3 alpline ping 8.8.8.8
 ```
 
 ------------------------
