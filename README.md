@@ -111,12 +111,26 @@ exit
 docker-machine env node1
 eval $(docker-machine env node1)
 docker info # node1
+
+docker-machine env --unset
+eval $(docker-machine env --unset)
+docker info
 ```
 
 **DO**
+
 ```sh
+# curl -fsSL https://get.docker.com -o get-docker.sh
+# sh get-docker.sh
+
+# root@node1
+
 docker swarm init
 docker swarm init --advertise-addr <IP address>
+#I'm going to copy the swarm join command and go over to node2 and add it in.
+
+# go back to node1
+docker node ls
 ```
 
 ------------------------
