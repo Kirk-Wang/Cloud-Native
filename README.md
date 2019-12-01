@@ -170,6 +170,13 @@ docker network create --driver overlay mydrupal
 docker network ls
 
 docker service create --name psql --network mydrupal -e POSTGRES_PASSWORD=mypass postgres
+docker service ls
+docker service ps psql
+docker logs psql.1.terabjvf7wkt5j769t04tld02
+
+docker service create --name drupal --network mydrupal -p 80:80 drupal
+docker service ls
+docker service ps drupal #drupal is actrually running on Node2.
 ```
 
 ------------------------
