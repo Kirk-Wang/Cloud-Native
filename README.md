@@ -156,7 +156,13 @@ docker service create --replicas 3 alpine ping 8.8.8.8
 docker node ps
 docker service ps <service name>
 ```
-You have a fully operational swarm cluster.
+
+### Overlay Multi-Host Networking
+* Just choose `--driver overlay` when creating network
+* For container-to-container traffic inside a single Swarm
+* Optional IPSec(AES) encryption on network creation
+* Each service can be connected to multiple networks
+  * (e.g. front-end, back-end)
 
 ------------------------
 ### Check Our Tools
