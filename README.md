@@ -82,6 +82,13 @@ docker service rm <NAME(service)>
 docker service ls
 docker container ls
 ```
+
+### Creating 3-Node Swarm: Host Options
+* A.play-with-docker.com
+  * Only needs a browser, but resets after 4 hours
+* B.docker-machine + VirtualBox
+  * Free and runs locally,but requires a machine with 8GB memory
+
 ------------------------
 ### Check Our Tools
 
