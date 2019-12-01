@@ -109,6 +109,8 @@ docker-machine create node1
 docker-machine ssh node1
 exit
 docker-machine env node1
+eval $(docker-machine env node1)
+docker info # node1
 ```
 
 ------------------------
