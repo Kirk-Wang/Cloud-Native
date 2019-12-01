@@ -169,7 +169,8 @@ docker service ps <service name>
 docker network create --driver overlay mydrupal
 docker network ls
 
-docker service create --name psql --network mydrupal -e POSTGRES_PASSWORD=mypass postgres
+# https://github.com/bitnami/bitnami-docker-postgresql
+docker service create --name psql --network mydrupal -e POSTGRESQL_POSTGRES_PASSWORD=mypass -e POSTGRESQL_DATABASE=progres postgres
 docker service ls
 docker service ps psql
 docker logs psql.1.terabjvf7wkt5j769t04tld02
@@ -177,8 +178,18 @@ docker logs psql.1.terabjvf7wkt5j769t04tld02
 docker service create --name drupal --network mydrupal -p 80:80 drupal
 docker service ls
 docker service ps drupal #drupal is actrually running on Node2.
+
+docker service inspect drupal #VIP
 ```
 
+### Routing Mesh
+* Routes ingress(incoming) packets for a Service to proper Task
+* Spans All nodes in Swarm
+* Uses IPVS from Linux Kernel
+* Load balances Swarm Services across their Tasks
+* Two ways this works:
+* Container-to-container in a Overlay network(uses VIP)
+* External traffic incoming to published ports(all nodes listen)
 ------------------------
 ### Check Our Tools
 
