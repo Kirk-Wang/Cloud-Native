@@ -152,7 +152,9 @@ docker swarm join --token SWMTKN-1-1bn2hsyhjwqn4wztjqd7moftumffk4vwd2e88azwj7u7b
 
 # Back on node1
 docker node ls
-docker service --replicas 3 alpline ping 8.8.8.8
+docker service create --replicas 3 alpine ping 8.8.8.8
+docker node ps
+docker service ps <NAME>
 ```
 
 ------------------------
