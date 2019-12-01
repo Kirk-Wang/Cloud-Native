@@ -164,6 +164,14 @@ docker service ps <service name>
 * Each service can be connected to multiple networks
   * (e.g. front-end, back-end)
 
+```sh
+# root@node1
+docker network create --driver overlay mydrupal
+docker network ls
+
+docker service create --name psql --network mydrupal -e POSTGRES_PASSWORD=mypass postgres
+```
+
 ------------------------
 ### Check Our Tools
 
