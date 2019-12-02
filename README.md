@@ -259,6 +259,11 @@ docker stack deploy -c example-voting-app-stack.yml voteapp #update
 * `/run/secrets/<secret_name>` or `/run/secrets/<secret_alias>`
 * Local docker-compose can use file-based secrets, but not secure
 
+```sh
+docker secret create psql_user psql_user.txt
+```
+
+
 ------------------------
 ------------------------
 ------------------------
