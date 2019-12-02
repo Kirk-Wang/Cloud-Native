@@ -222,6 +222,22 @@ curl localhost:9200
 * Compose now ignores `deploy:`, Swarm ignores `build:`
 * `docker-compose` cli not needed on Swarm server
 
+```sh
+docker stack deploy -c example-voting-app-stack.yml voteapp
+
+docker stack --help
+
+docker stack ls
+
+docker stack services voteapp
+
+docker stack ps voteapp
+
+docker network ls
+# overlay
+
+docker stack deploy -c example-voting-app-stack.yml voteapp #update
+```
 
 
 ------------------------
