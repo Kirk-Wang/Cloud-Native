@@ -261,6 +261,10 @@ docker stack deploy -c example-voting-app-stack.yml voteapp #update
 
 ```sh
 docker secret create psql_user psql_user.txt
+echo "myDBpassWORD" | docker secret create psql_pass -
+
+docker secret ls
+docker secret inspect psql_user
 ```
 
 
