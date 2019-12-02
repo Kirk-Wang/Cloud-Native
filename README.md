@@ -277,6 +277,13 @@ docker service ps psql
 docker service update --secret-rm
 ```
 
+```sh
+docker stack deploy -c docker-compose.yml mydb
+docker secret ls
+
+docker stack rm mydb
+```
+
 
 ------------------------
 ------------------------
