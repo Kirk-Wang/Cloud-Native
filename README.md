@@ -270,6 +270,8 @@ docker service create --name psql --secret psql_user --secret psql_pass -e POSTG
 
 docker service ps psql
 docker exec -it <container name> bash
+cat /run/secrets/psql_user
+# mysqluser -> it worked
 ```
 
 
