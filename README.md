@@ -213,8 +213,18 @@ curl localhost:9200
 * Niginx or HAProxy LB proxy, or:
 * Docker Enterprise Edition, which comes with built-in L4 web proxy
 
-
+### Stacks: Production Grade Compose
+* In 1.13 Docker adds a new layer of abstraction to Swarm called Stacks
+* Stacks accept Compose files as their declarative definition for services, networks, and volumes
+* We use `docker stack deploy` ranther then docker service create
+* Stacks managers all those objects for us, including overlay network per stack. Adds stack name to start of their name
+* New `deploy:` key in Compose file. Can't do `build:`
+* Compose now ignores `deploy:`, Swarm ignores `build:`
 ------------------------
+------------------------
+------------------------
+
+
 ### Check Our Tools
 
 * Docker Desktop preferred(Win/Mac)
