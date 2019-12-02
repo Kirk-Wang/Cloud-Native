@@ -284,6 +284,14 @@ docker secret ls
 docker stack rm mydb
 ```
 
+### Using Secrets With Local Docker Compose
+```sh
+ll
+#docker-compose.yml
+#psql_password.txt
+#psql_user.txt
+docker node ls
+```
 
 ------------------------
 ------------------------
