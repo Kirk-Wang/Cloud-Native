@@ -291,6 +291,9 @@ ll
 #psql_password.txt
 #psql_user.txt
 docker node ls
+docker-compose up -d
+docker-compose exec psql cat /run/secrets/psql_user
+#dbuser
 ```
 
 ------------------------
