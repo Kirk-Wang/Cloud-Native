@@ -296,6 +296,13 @@ docker-compose exec psql cat /run/secrets/psql_user
 #dbuser
 ```
 
+### Full App Lifecycle With Compose
+* Live The Dream！
+* Single set of Compose files for:
+* Local `docker-compose up` development environment
+* Remote `docker-compose up` CI environment
+* Remote `docker stack deploy` production environment
+
 ------------------------
 ------------------------
 ------------------------
