@@ -272,6 +272,9 @@ docker service ps psql
 docker exec -it <container name> bash
 cat /run/secrets/psql_user
 # mysqluser -> it worked
+
+docker service ps psql
+docker service update --secret-rm
 ```
 
 
