@@ -239,6 +239,16 @@ docker network ls
 docker stack deploy -c example-voting-app-stack.yml voteapp #update
 ```
 
+### Secrets Storage
+* Easiest "secure" solution for storing secrets in Swarm
+* What is a Secret?
+  * Usernames and passwords
+  * TLS certificates and keys
+  * SSH keys
+  * Any data you would prefer not be "on front page of news"
+* Supports generic strings or binary content up to 500Kb in size
+* Doesn't require apps to be rewritten
+
 
 ------------------------
 ------------------------
