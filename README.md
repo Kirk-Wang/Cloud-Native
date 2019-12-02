@@ -184,7 +184,11 @@ docker service inspect drupal #VIP
 
 ### Routing Mesh
 
+[Use swarm mode routing mesh](https://docs.docker.com/engine/swarm/ingress/)
+
 ![service ingress image](https://docs.docker.com/engine/swarm/images/ingress-routing-mesh.png)
+
+![ingress with external load balancer image](https://docs.docker.com/engine/swarm/images/ingress-lb.png)
 
 * Routes ingress(incoming) packets for a Service to proper Task
 * Spans All nodes in Swarm
