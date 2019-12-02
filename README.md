@@ -220,6 +220,9 @@ curl localhost:9200
 * Stacks managers all those objects for us, including overlay network per stack. Adds stack name to start of their name
 * New `deploy:` key in Compose file. Can't do `build:`
 * Compose now ignores `deploy:`, Swarm ignores `build:`
+
+
+
 ------------------------
 ------------------------
 ------------------------
