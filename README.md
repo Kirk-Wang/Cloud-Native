@@ -183,6 +183,9 @@ docker service inspect drupal #VIP
 ```
 
 ### Routing Mesh
+
+![service ingress image](https://docs.docker.com/engine/swarm/images/ingress-routing-mesh.png)
+
 * Routes ingress(incoming) packets for a Service to proper Task
 * Spans All nodes in Swarm
 * Uses IPVS from Linux Kernel
