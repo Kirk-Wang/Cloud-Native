@@ -9,6 +9,9 @@ Bitnami containers give you the latest stable versions of your application stack
 
 ## Kubernetes features (1.16)
 
+### What and why of orchestration
+* There are many computing orchestrators
+* They make decisions about when and where to "do work"
 
 
 ------------------------------------------------------------
