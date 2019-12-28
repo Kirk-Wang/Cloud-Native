@@ -12,6 +12,12 @@ Bitnami containers give you the latest stable versions of your application stack
 ### What and why of orchestration
 * There are many computing orchestrators
 * They make decisions about when and where to "do work"
+* We've done this since the dawn of computing:Mainframe schedulers, Puppet, Terraform, AWS, Mesos, Hadoop, etc.
+* Since 2014 we've had resurgence of new orchestration projects because:
+  1. Popularity of distributed computing
+  2. Docker containers as a app package and isolated runtime
+* We needed "many servers to act like one, and run many containers"
+* An the Container Orchestrator was born
 
 
 ------------------------------------------------------------
