@@ -33,6 +33,18 @@ Bitnami containers give you the latest stable versions of your application stack
 * Cloud Foundry
 * Amazon ECS(not OSS, AWS-only)
 * HashiCorp Nomad
+* Many of these tools run on top of Docker Engine
+* Kubernetes is the one orchestator with many distributions
+
+### Kubernetes distributions
+* Kubernetes "vanilla upstream"(not a distribution)
+* Cloud-Managed distros: AKS, GKE, EKS,DOK...
+* Self-Managed distros: RedHat OpenShift, Docker Enterprise, Rancher, Canonical Charmed, openSUSE Kubic...
+* Vanilla installers: Kubeadm, kops, kubicorn...
+* Local dev/test: Docker Desktop, minikube, microK8s
+* CI testing:kind
+* Special builds: Rancher K3s
+* And Many, many more..(86 as of June 2019)
 
 ------------------------------------------------------------
 ------------------------------------------------------------
