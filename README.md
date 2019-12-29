@@ -91,6 +91,17 @@ Bitnami containers give you the latest stable versions of your application stack
 * Together, these services form the control plane of our cluster
 * The control plane is also called the "master"
 
+### Running the control plane on special nodes
+* It is common to reserve a dedicated node for the control plane
+  * (Except for single-node development clusters, like when using minikube)
+* This node is then called a "master"
+  * (Yes,this is ambiguous:is the "master" a node, or the whole control plane?)
+* Normal applications are restricted from running on this node
+  * (By using a mechanism called "taints")
+* When high availability is required, each service of the control plane must be resilient
+* The control plane is then replicated on multiple nodes
+  * (This is sometimes called a "multi-master" setup)
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
