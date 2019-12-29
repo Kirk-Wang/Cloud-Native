@@ -190,7 +190,9 @@ Exercise
 
 ### minikube(Windows 10 Home)
 * A good local install option if you can't run Docker Desktop
-
+* Inspired by Docker Toolbox
+* Will create a local VM and configure latest Kubernetes
+* Has lots of other features with it `minikube` CLI
 
 ------------------------------------------------------------
 ------------------------------------------------------------
