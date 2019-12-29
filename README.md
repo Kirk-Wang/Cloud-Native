@@ -71,6 +71,9 @@ Bitnami containers give you the latest stable versions of your application stack
 * Integrating third party services(service catalog)
 * Automating complex tasks(operators)
 
+### Kubernetes architecture
+* Ha ha ha ha
+* OK, I was trying to scare you, it's much simpler than that ❤️
 
 ------------------------------------------------------------
 ------------------------------------------------------------
