@@ -140,7 +140,14 @@ NIH--> Not Invented Here
 
 More information about CRI `on the Kubernetes blog`
 
-
+### Interacting with Kubernetes
+* We will interact with our Kubernetes cluster through the Kubernetes API
+* The Kubernetes API is (mostly) RESTful
+* It allows us to create, read, update, delete resources
+* A few common resource types are:
+  * node (a machine == physical or virtual -- in our cluster)
+  * pod (group of containers running together on a node)
+  * service (stable network endpoint to connect to one or multiple containers)
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
