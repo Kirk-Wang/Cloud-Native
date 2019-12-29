@@ -75,6 +75,14 @@ Bitnami containers give you the latest stable versions of your application stack
 * Ha ha ha ha
 * OK, I was trying to scare you, it's much simpler than that ❤️
 
+### Kubernetes architecture: the nodes
+* The nodes executing our containers run a collection of services:
+  * a container Engine(typically Docker)
+  * kubelet(the "node agent")
+  * kube-proxy(a necessary but not sufficient network component)
+* Nodes were formerly called "minions"
+  * (You might see that word in older articles or documentation)
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
