@@ -148,6 +148,16 @@ More information about CRI `on the Kubernetes blog`
   * node (a machine == physical or virtual -- in our cluster)
   * pod (group of containers running together on a node)
   * service (stable network endpoint to connect to one or multiple containers)
+
+### Pods
+* Pods are a new abstraction!
+* A `pod` can have multiple containers working together
+* (But you usually only have on container per pod)
+* Pod is our smallest deployable unit; Kubernetes can't mange containers directly
+* IP address are associated with `pods`, not with individual containers
+* Containers in a pod share `loacalhost`, and can share volumes
+* Multiple containers in a pod are deployed together
+* In reality, Docker doesn't know a pod, only containers/namespaces/volumes 
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
