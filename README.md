@@ -158,6 +158,20 @@ More information about CRI `on the Kubernetes blog`
 * Containers in a pod share `loacalhost`, and can share volumes
 * Multiple containers in a pod are deployed together
 * In reality, Docker doesn't know a pod, only containers/namespaces/volumes 
+
+
+### Getting a Kubernetes cluster for learning
+* Best: Get a environment locally
+  * Docker Desktop(Win/MacOS), minikube(Win Home), or microk8s(Linux)
+  * Small setup effort;free;flexible environments
+  * Requires 2GB+ of memory
+
+
+
+
+
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
