@@ -83,6 +83,15 @@ Bitnami containers give you the latest stable versions of your application stack
 * Nodes were formerly called "minions"
   * (You might see that word in older articles or documentation)
 
+### Kubernetes architecture: the control plane
+* The Kubernetes logic(its "brains") is a collection of services:
+  * the API server(our point of entry to everything!)
+  * core services like the scheduler and controller manager
+  * `etcd` (a highly available key/value store; the "database" of Kubernetes)
+* Together, these services form the control plane of our cluster
+* The control plane is also called the "master"
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
