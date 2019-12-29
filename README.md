@@ -132,6 +132,14 @@ Yes!
 
 NIH--> Not Invented Here
 
+* On your development environments, CI pipelines...:
+  * Yes, almost certainly
+* On our production servers:
+  * Yes(today)
+  * Probally not(in the future)
+
+More information about CRI `on the Kubernetes blog`
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
