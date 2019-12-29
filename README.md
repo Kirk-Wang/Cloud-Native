@@ -46,6 +46,32 @@ Bitnami containers give you the latest stable versions of your application stack
 * Special builds: Rancher K3s
 * And Many, many more..(86 as of June 2019)
 
+### Kubernetes concepts
+* Kubernetes is a container management system
+* It runs and manages containerized applications on a cluster(one or more servers)
+* Often this is simply called "container orchestration"
+* Sometimes shortened to Kube or K8s("Kay-eights" or "Kates")
+
+### Basic things we can ask Kubernetes to do
+* Start 5 containers using image `atseashop/api:v1.3`
+* Place an internal load balancer in front of these containers
+* Start 10 containers using image `atseashop/webfront:v1.3`
+* Place a public load balancer in front of these containers
+* It's Black Friday(or Christmas), traffic spikes, grow our cluster and add containers
+* New release!Replace my containers with the new image `atseashop/webfront:v1.4`
+* Keep processing requests during the upgrade;update my containers one at a time
+
+### Other things that Kubernetes can do for us
+* Basic autoscaling
+* Blue/green deployment, canary deployment
+* Long running services, but also batch(one-off) and CRON-like jobs
+* Overcommit our cluster and evict low-priority jobs
+* Run services with stateful data(database etc.)
+* Fine-grained access control defining what can be done whom on which resources
+* Integrating third party services(service catalog)
+* Automating complex tasks(operators)
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
