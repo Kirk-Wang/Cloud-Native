@@ -122,6 +122,16 @@ No!
 * CRI-O: maintained by Red Hat, SUSE, and community; based on containerd
 * Used by OpenShift and Kubic, version matched to Kubernetes
 
+Yes!
+* In this course, we'll run our apps on a single node first
+* We may need to build images and ship them around
+* We can dot these things without Docker
+  * (and get diagnosed with NIH syndrome)
+* Docker is still the most stable container engine today
+  * (but other options are maturing very quickly)
+
+NIH--> Not Invented Here
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
