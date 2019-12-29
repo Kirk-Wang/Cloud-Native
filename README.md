@@ -18,7 +18,21 @@ Bitnami containers give you the latest stable versions of your application stack
   2. Docker containers as a app package and isolated runtime
 * We needed "many servers to act like one, and run many containers"
 * An the Container Orchestrator was born
+* Many open source projects have been created in the last 5 years to:
+  * Schedule running of containers on servers
+  * Dispatch them across many nodes
+  * Monitor and react to container and server health
+  * Provide storage, networking, proxy, security, and logging features
+  * Do all this in a declarative way, rather than imperative
+  * Provide API's to allow extensibility and management
 
+### Major container orchestration projects
+* Kubernetes, aka K8s
+* Docker Swarm(and Swarm classic)
+* Apache Mesos/Marathon
+* Cloud Foundry
+* Amazon ECS(not OSS, AWS-only)
+* HashiCorp Nomad
 
 ------------------------------------------------------------
 ------------------------------------------------------------
