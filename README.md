@@ -112,6 +112,17 @@ Bitnami containers give you the latest stable versions of your application stack
 
 `For this reason, it is more accurate to say "control plane" ranther than "master"`
 
+### Do we need to run Docker at all?
+No!
+* By default, Kubernetes uses the Docker Engine to run containers
+* Or leverage other pluggable runtimes through the Container Runtime Interface
+* We could also use rkt("Rocket") from CoreOS(deprecated)
+* containerd: maintained by Docker, IBM, and community
+* Used by Docker Engine, microK8s, K3s, GKE, and standalone; has `ctr` CLI
+* CRI-O: maintained by Red Hat, SUSE, and community; based on containerd
+* Used by OpenShift and Kubic, version matched to Kubernetes
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
