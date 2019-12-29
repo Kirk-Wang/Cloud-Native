@@ -193,6 +193,8 @@ Exercise
 * Inspired by Docker Toolbox
 * Will create a local VM and configure latest Kubernetes
 * Has lots of other features with it `minikube` CLI
+* But, requires spearate install of VirtualBox and kubectl
+* May not work with older Windows version(YMMV)
 
 ------------------------------------------------------------
 ------------------------------------------------------------
