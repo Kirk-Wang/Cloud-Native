@@ -173,10 +173,23 @@ More information about CRI `on the Kubernetes blog`
   * Low setup effort; but host is short-lived and has limited resources
   * Not all hands-on examples will work in the browser sandbox
 
+### Docker Desktop(Windows 10/macOS)
+* Docker Desktop(DD) is great for a local dev/test setup
+* Requires modern macOS or Windows 10 Pro/Ent/Edu(no Home)
+* Requires Hyper-V, and disables VirtualBox
 
+Exercise
+* Download Windows or macOS versions and install
+* For Windows, ensure you pick "Linux Containers" mode
+* Once running, enabled Kubernetes in Settings/Perferences
 
+### Check your connection in a terminal
+```sh
+ kubectl get nodes
+```
 
-
+### minikube(Windows 10 Home)
+* A good local install option if you can't run Docker Desktop
 
 
 ------------------------------------------------------------
