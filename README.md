@@ -102,6 +102,15 @@ Bitnami containers give you the latest stable versions of your application stack
 * The control plane is then replicated on multiple nodes
   * (This is sometimes called a "multi-master" setup)
 
+### Running the control plane outside containers
+* The services of the control plane can run in or out of containers
+* For instance: since `etcd` is a critical service, some people deploy it directly on a dedicated cluster(without containers)
+  * (This is illustrated on the first "super complicated" schema)
+* In some hosted Kubernetes offerings(e.g. AKS, GKE, EKS), the control plane is invisible
+  * (We only "see" a Kubernetes API endpoint)
+* In that case, there is no "master node"
+
+`For this reason, it is more accurate to say "control plane" ranther than "master"`
 
 ------------------------------------------------------------
 ------------------------------------------------------------
