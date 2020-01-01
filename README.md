@@ -324,6 +324,19 @@ kubectl explain node.spec
 ```sh
 kubectl explain node --recursive
 ```
+e.g.
+```sh
+kubectl explain node
+kubectl explain node.spec
+```
+
+### Introspection vs. documentation
+* We can access the same information by reading the `API documentation`
+* The API documentation is usually easier to read, but:
+  * it won't show custom types(like Custom Resource Definitions)
+  * We need to make sure that we look at the correct version
+* `kubectl api-resources` and `kubectl explain` perform introspection
+  * (they communicate with the API server and obtain the exact type definitions)
 
 ------------------------------------------------------------
 ------------------------------------------------------------
