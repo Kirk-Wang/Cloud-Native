@@ -214,8 +214,10 @@ Exercise
 
 Exercise
 * Install `microk8s`, change group permissions, then set alias in bashrc
-```sh
+```
+sudo apt install snapd
 sudo snap install microk8s --classic
+microk8s.kubectl
 sudo usermod -a -G microk8s <username>
 echo "alias kubectl='microk8s.kubectl'" >> ~/.bashrc
 ```
