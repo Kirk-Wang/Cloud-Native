@@ -435,6 +435,8 @@ kubectl get pods -n kube-system
   * `kubectl delete` can delete resources across multiple namespaces
   * `kubectl label` can add/remove/update labels across multiple namespaces
 
+### What about `kube-public`?
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
