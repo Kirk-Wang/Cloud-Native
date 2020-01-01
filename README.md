@@ -359,6 +359,18 @@ kubectl get svc
 ```
 There is already one service on our cluster: the Kubernetes API itself.
 
+### More `get` commands: Listing running containers
+* Containers are manipulated through pods
+* A pod is a group of containers:
+  * running together (on the same node)
+  * sharing resources(RAM, CPU; but also network, volumes)
+
+Exercise
+* List pods on our cluster:
+```sh
+kubectl get pods
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
