@@ -256,6 +256,21 @@ Exercise
 * `kubectl` can be pronounced "Cube C T L", "Cube cuttle", "Cube cuddle"...
 * I'll be using the official name "Cube Control"
 
+### kubectl get
+* Let's look at our `Node` resources with `kubectl get`!
+
+Exercise
+* Look at the composition of our cluster:
+```sh
+kubectl get node
+```
+* These commands are equivalent:
+```sh
+kubectl get no
+kubectl get node
+kubectl get nodes
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
