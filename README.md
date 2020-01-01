@@ -343,6 +343,9 @@ kubectl explain node.spec
   * singular(e.g. `node`, `service`, `deployment`)
   * plural(e.g. `nodes`, `services`, `deployments`)
   * short(e.g. `no`, `svc`, `deploy`)
+* Some resources do not have a short name
+* `Endpoints` only have a plural form
+  * (because even a single `Endpoints` resource is actually a list of endpoints)
 
 ------------------------------------------------------------
 ------------------------------------------------------------
