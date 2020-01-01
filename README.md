@@ -244,6 +244,17 @@ Exercise
 * Attach to shell with `kubectl attach --namespace=shpod -ti shpod`
 * After finishing course `kubectl delete -f https://k8smastery.com/shpod.yaml`
 
+### First contact with `kubectl`
+* `kubectl` is(almost) the only tool we'll need to talk to Kubernetes
+* It is a rich CLI tool around the Kubernetes API
+  * (Everything you can do with `kubectl`, you can do directly with the API)
+* On our machines, there is a `~/.kube/config` file with:
+  * the Kubernetes API address
+  * the path to our TLS certificates used to authenticate
+* You can also use the `--kubeconfig` flag to pass a config file
+* Or directly `--server`, `--user`, etc.
+* `kubectl` can be pronounced "Cube C T L", "Cube cuttle", "Cube cuddle"...
+* I'll be using the official name "Cube Control"
 
 ------------------------------------------------------------
 ------------------------------------------------------------
