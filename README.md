@@ -347,6 +347,17 @@ kubectl explain node.spec
 * `Endpoints` only have a plural form
   * (because even a single `Endpoints` resource is actually a list of endpoints)
 
+### More `get` commands: Services
+* A service is a stable endpoint to connect to "something"
+  * (in the initial proposal, they were called "portals")
+
+Exercise
+* List the services on our cluster with one of these commands:
+```
+kubectl get services
+kubectl get svc
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
