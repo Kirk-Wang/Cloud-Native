@@ -197,16 +197,15 @@ Exercise
 * May not work with older Windows version(YMMV)
 
 Exercise
-* Download and install VirtualBox
-* Download kubectl, and add to $PATH
-* Download and install minikube
+* Download and install `VirtualBox`
+* Download `kubectl`, and add to $PATH
+* Download and install `minikube`
 * Run `minikube start` to create and run a Kubernetes VM
 * Run `minikube stop` when you're done
 
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
-
 
 ### Your First Swarm Service
 
