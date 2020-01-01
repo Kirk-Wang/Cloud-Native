@@ -338,6 +338,12 @@ kubectl explain node.spec
 * `kubectl api-resources` and `kubectl explain` perform introspection
   * (they communicate with the API server and obtain the exact type definitions)
 
+### Type names
+* The most common resource names have three forms:
+  * singular(e.g. `node`, `service`, `deployment`)
+  * plural(e.g. `nodes`, `services`, `deployments`)
+  * short(e.g. `no`, `svc`, `deploy`)
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
