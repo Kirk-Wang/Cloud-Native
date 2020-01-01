@@ -404,6 +404,17 @@ kubectl get pods -A
 ```
 Here are our system pods!
 
+### What are all these control plane pods?
+* `etcd` is our etcd server
+* `kube-apiserver` is the API server
+* `kube-controller-manager` and `kube-scheduler` are other control plane components
+* `coredns` provides DNS-based service discovery(replacing kube-dns as of 1.11)
+* `kube-proxy` is the(per-node) component managing port mappings and such
+* `<net name>` is the optional(per-node) component managing the network overlay
+* the `READY` column indicates the number of conatainers in each pod
+* Note: this only shows containers, you won't see host svcs(e.g. microk8s)
+* Also Note: you may see different namespaces depending on setup
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
