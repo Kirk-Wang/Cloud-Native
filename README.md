@@ -415,6 +415,17 @@ Here are our system pods!
 * Note: this only shows containers, you won't see host svcs(e.g. microk8s)
 * Also Note: you may see different namespaces depending on setup
 
+
+### Scoping another namespace
+* We can also look at a different namespace(other than `default`)
+
+Exercise
+* List only the pods in the `kube-system` namespace:
+```sh
+kubectl get pods --namespace=kube-system
+kubectl get pods -n kube-system
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
