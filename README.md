@@ -285,6 +285,15 @@ kubectl get no -o yaml
 ```
 See that `kind: List` at the end? It's the type of our result!
 
+### (Ab)using `kubectl` and `jq`
+* It's super easy to build custom reports
+
+Exercise
+* Show the capacity of all our nodes as a stream of JSON objects:
+```sh
+kubectl get nodes -o json | jq ".items[] | {name:.metadata.name} + .status.capacity"
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
