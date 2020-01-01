@@ -233,6 +233,8 @@ Exercise
 * Or setup a Kubernetes node at `play-with-k8s.com`
 * Maybe try the latest OpenShift at `learn.openshift.com`
 * See if instruqt works for `a Kubernetes playground`
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
