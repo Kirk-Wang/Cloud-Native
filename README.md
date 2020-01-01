@@ -304,8 +304,26 @@ Exercise
 ```sh
 kubectl describe node/<node>
 kubectl describe node <node>
+
+kubectl describe node/docker-desktop
 ```
 (We should notice a bunch of control plane pods.)
+
+### Exploring types and definitions
+* We can list all available resource types by running `kubectl api-resources`
+  * (in Kubernetes 1.10 and prior, this command used to be `kubectl get`)
+* We can view the definition for a resource type with:
+```sh
+kubectl explain type
+```
+* We can view the definition of a field in a resource, for instance:
+```sh
+kubectl explain node.spec
+```
+* Or get the list of all fields and sub-fields:
+```sh
+kubectl explain node --recursive
+```
 
 ------------------------------------------------------------
 ------------------------------------------------------------
