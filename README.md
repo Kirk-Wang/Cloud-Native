@@ -426,6 +426,15 @@ kubectl get pods --namespace=kube-system
 kubectl get pods -n kube-system
 ```
 
+### Namespaces and other `kubectl` commands
+* We can use `-n/--namespace` with almost every `kubectl` command
+* Example:
+  * `kubectl create --namespace=X` to create something in namespace X
+* We can use `-A/--all-namespaces` with most commands that manipulate multiple objects
+* Examples:
+  * `kubectl delete` can delete resources across multiple namespaces
+  * `kubectl label` can add/remove/update labels across multiple namespaces
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
