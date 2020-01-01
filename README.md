@@ -357,6 +357,7 @@ Exercise
 kubectl get services
 kubectl get svc
 ```
+There is already one service on our cluster: the Kubernetes API itself.
 
 ------------------------------------------------------------
 ------------------------------------------------------------
