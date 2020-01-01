@@ -271,6 +271,20 @@ kubectl get node
 kubectl get nodes
 ```
 
+### Obtaining machine-readable output
+* `kubectl get` con output JSON, YAML, or be directly formatted
+
+Exercise
+* Give us more info about the nodes:
+```sh
+kubectl get nodes -o wide
+```
+* Let's have some YAML:
+```sh
+kubectl get no -o yaml
+```
+See that `kind: List` at the end? It's the type of our result!
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
