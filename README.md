@@ -203,6 +203,23 @@ Exercise
 * Run `minikube start` to create and run a Kubernetes VM
 * Run `minikube stop` when you're done
 
+
+### microk8s(linux)
+* Easy install and management of local Kubernetes
+* Made by Canonical(Ubuntu).Installs using `snap`.Works nearly everywhere
+* Has lots of other features with its `microk8s` CLI
+* But, requires you install snap if not on Ubuntu
+* Runs on containerd rather than Docker, no biggie
+* Needs alias setup for `microk8s.kubectl`
+
+Exercise
+* Install `microk8s`, change group permissions, then set alias in bashrc
+```sh
+sudo snap install microk8s --classic
+sudo usermod -a -G microk8s <username>
+echo "alias kubectl='microk8s.kubectl'" >> ~/.bashrc
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
