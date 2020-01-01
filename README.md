@@ -382,6 +382,28 @@ kubectl get namespace
 kubectl get ns
 ```
 
+You know what...This `kube-system` thing looks suspicious
+
+In fact, I'm pretty sure it showed up earlier, when we did:
+```sh
+kubectl describe node <node-name>
+```
+
+### Accessing namespaces
+* By default, `kubectl` uses the `default` namespace
+* We can see resources in all namespaces with `--all-namespaces`
+
+Exercise
+* List the pods in all namespaces:
+```sh
+kubectl get pods --all-namespaces
+```
+* Since Kubernetes 1.14, we can also use `-A` as a shorter version:
+```sh
+kubectl get pods -A
+```
+Here are our system pods!
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
