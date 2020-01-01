@@ -436,10 +436,55 @@ kubectl get pods -n kube-system
   * `kubectl label` can add/remove/update labels across multiple namespaces
 
 ### What about `kube-public`?
+Exercise
+* List the pods in the `kube-public` namespace:
+```sh
+kubectl -n kube-public get pods
+```
+
+Nothing!
+
+`kube-public` is created by our installer & `used for security bootstrapping`.
+
+### Exploring `kube-public`
+* The only interesting object in `kube-public` is a ConfigMap named `cluster-info`
+
+Exercise
+* List ConfigMap objects:
+```sh
+kubectl -n kube-public get configmaps
+```
+* inspect `cluster-info`:
+```sh
+kubectl -n kube-public get configmap cluster-info -o yaml
+```
+Note the `selfLink` URI:`/api/v1/namespaces/kube-public/configmaps/cluster-info`
+
+We can use that (later in `kubectl context` lecture)!
+
+
+
+
+
+
+
+
+
+
+
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
+------------------------------------------------------------
+------------------------------------------------------------
+------------------------------------------------------------
+
+------------------------------------------------------------
+------------------------------------------------------------
+------------------------------------------------------------
+
 
 ### Your First Swarm Service
 
