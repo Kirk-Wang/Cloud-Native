@@ -371,6 +371,17 @@ Exercise
 kubectl get pods
 ```
 
+### Namespaces
+* Namespaces allow us to segregate resources
+
+Exercise
+* List the namespaces on our cluster with one of these commands:
+```sh
+kubectl get namespaces
+kubectl get namespace
+kubectl get ns
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
