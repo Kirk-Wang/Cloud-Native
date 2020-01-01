@@ -294,6 +294,19 @@ Exercise
 kubectl get nodes -o json | jq ".items[] | {name:.metadata.name} + .status.capacity"
 ```
 
+### Kubectl describe
+* `kubectl describe` needs a resource type and (optionally) a resource name
+* It is possible to provide a resource name prefix(all matching objects will be displayed)
+* `kubectl describe` will retrieve some extra information about the resource
+
+Exercise
+* Look at the information available for your node name with one of the following:
+```sh
+kubectl describe node/<node>
+kubectl describe node <node>
+```
+(We should notice a bunch of control plane pods.)
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
