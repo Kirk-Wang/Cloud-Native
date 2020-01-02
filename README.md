@@ -460,7 +460,20 @@ kubectl -n kube-public get configmap cluster-info -o yaml
 ```
 Note the `selfLink` URI:`/api/v1/namespaces/kube-public/configmaps/cluster-info`
 
-We can use that (later in `kubectl context` lecture)!
+We can use that (later in `kubectl context` lectures)!
+
+```sh
+kubectl -n kube-public get configmaps
+kubectl -n kube-public get configmap cluster-info -o yaml
+```
+
+### What about `kube-node-lease`?
+* Starting with kubernetes 1.14, there is `kube-node-lease` namespace
+  * (or in Kubernetes 1.13 if the NodeLease feature gate is enabled)
+* That namespace contains one Lease object per node
+* Node leases are a new way to implement node heartbeats
+  * (i.e. node regularly pinging the control plane to say "I'm alive!")
+* For more details, see `KEP-0009` or the `node controller documentation`
 
 
 
