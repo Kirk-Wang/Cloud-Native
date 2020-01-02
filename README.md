@@ -532,6 +532,14 @@ NAME                                  DESIRED     CURRENT      READY      AGE
 replicaset.apps/pingpong-7c8bbcd9bc   1           1            1          10m 
 ```
 
+* That replica set created a pod, `pod/pingpong-xxxxxxxxxxxxx-yyyy`
+```
+NAME                            READY    STATUS      RESTARTS    AGE
+pod/pingpong-7c8bbcd9bc-6c9qz   1/1      Running     0           10m
+```
+
+* We'll see later how these folks play together for:
+  * scaling, high availability, rolling updates
 
 
 
