@@ -475,7 +475,11 @@ kubectl -n kube-public get configmap cluster-info -o yaml
   * (i.e. node regularly pinging the control plane to say "I'm alive!")
 * For more details, see `KEP-0009` or the `node controller documentation`
 
-
+### Running our first containers on Kubernetes
+* First things first: we cannot run a container
+* We are going to run a pod, and in that pod there will be a single container
+* In that container in the pod, we are going to run a simple `ping` command
+* Then we are going to start additional copies of the pod
 
 
 
