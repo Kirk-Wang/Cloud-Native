@@ -491,6 +491,16 @@ kubectl run pingpong --image alpine ping 1.1.1.1
 ```
 (Starting with Kubernetes 1.12, we get a message telling us that `kubectl run` is deprecated. Let's ignore it for now.)
 
+### Behind the scenes of `kubectl run`
+* Let's look at the resources that were created by `kubectl run`
+
+Exercise
+* List most resource types:
+```sh
+kubectl get all
+```
+
+
 
 
 
