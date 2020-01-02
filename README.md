@@ -500,6 +500,12 @@ Exercise
 kubectl get all
 ```
 
+We should see the following things:
+* `deployment.apps/pingpong` (the deployment that we just created)
+* `replicaset.apps/pingpong-xxxxxxxxx ` (a replica set created by the deployment)
+* `pod/pingpong-xxxxxxxx-yyyyyyy` (a pod created by the replica set)
+
+Note: as of 1.10.1, resource types are displayed in more detail.
 
 
 
