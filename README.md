@@ -481,6 +481,16 @@ kubectl -n kube-public get configmap cluster-info -o yaml
 * In that container in the pod, we are going to run a simple `ping` command
 * Then we are going to start additional copies of the pod
 
+### Starting a simple pod with `kubectl run`
+* We need to spcify at least a name and the image we want to use
+
+Exercise
+* Let's ping `1.1.1.1`, Cloudflare's `public DNS resolver`:
+```sh
+kubectl run pingpong --image alpine ping 1.1.1.1
+```
+(Starting with Kubernetes 1.12, we get a message telling us that `kubectl run` is deprecated. Let's ignore it for now.)
+
 
 
 
