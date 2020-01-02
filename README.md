@@ -519,6 +519,14 @@ Note: as of 1.10.1, resource types are displayed in more detail.
 * Note: A replication controller is the (deprecated) predecessor of a replica set
 
 
+### Our `pingpong` deployment
+* `kubectl run` created a deployment, `deployment.apps/pingpong`
+```
+NAME                       DESIRED     CURRENT      UP-TO-DATE     AVAILABLE  AGE
+deployment.apps/pingpong   1           1            1              1          10m 
+``` 
+
+
 
 
 
