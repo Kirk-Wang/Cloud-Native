@@ -507,6 +507,17 @@ We should see the following things:
 
 Note: as of 1.10.1, resource types are displayed in more detail.
 
+### What are these different things?
+* A deployment is a high-level construct
+  * allows scaling, rolling updates, rollbacks
+  * multiple deployments can be used together to implement a `canary deployment`
+  * delegates pods management to replica sets
+* A replica set is a low-level construct
+  * makes sure that a given number of identical pods are running
+  * allows scaling
+  * rarely used directly
+* Note: A replication controller is the (deprecated) predecessor of a replica set
+
 
 
 
