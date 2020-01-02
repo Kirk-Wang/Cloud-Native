@@ -526,6 +526,11 @@ NAME                       DESIRED     CURRENT      UP-TO-DATE     AVAILABLE  AG
 deployment.apps/pingpong   1           1            1              1          10m 
 ``` 
 
+* That deployment created a replica set,`replicaset.apps/pingpong-xxxxxxxxxxxxx`
+```
+NAME                                  DESIRED     CURRENT      READY      AGE
+replicaset.apps/pingpong-7c8bbcd9bc   1           1            1          10m 
+```
 
 
 
