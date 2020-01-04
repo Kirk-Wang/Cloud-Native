@@ -799,7 +799,14 @@ Tail multiple pods and containers from Kubernetes
 Usage:
 stern pod-query [flags]
 ```
-* 
+* If it is not installed, the easiest method is to download a `binary release`
+* The following commands will install Stern on a Linux Intel 64 bit machine:
+```sh
+sudo curl -L -o /usr/local/bin/stern \
+  https://github.com/wercker/stern/releases/download/1.11.0/stern_linux_amd64
+sudo chmod +x /usr/local/bin/stern
+```
+* On OS X, just `brew install stern`
 
 
 
