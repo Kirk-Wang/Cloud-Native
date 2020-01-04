@@ -691,6 +691,18 @@ kubectl get jobs
 * Eventually, `kubectl run` will be used only to start one-shot pods
   * (see https://github.com/kubernetes/kubernetes/pull/68132)
 
+### Various ways of creating resources
+* `kubectl run`
+  * easy way to get started
+  * versatile
+* `kubectl create <resource>`
+  * explicit, but lacks some features
+  * can't create a CronJob before Kubernetes 1.14
+  * can't pass command-lin arguments to deployments
+* `kubectl create -f foo.yaml` or `kubectl apply -f foo.yaml`
+  * all features are available
+  * requires writing YAML
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
