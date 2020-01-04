@@ -769,6 +769,15 @@ kubectl logs -l run=pingpong --tail 1 -f
 * We are going to see how to do it better
 
 
+### Doing it manually
+* We could(if we were so inclined) write a program or script that would:
+  * take a selector as an argument
+  * enumerate all pods matching that selector (with `kubectl get -l...`)
+  * for one `kubectl logs --follow ...` command per container
+  * annotate the logs (the output of each `kubectl logs ....` process) with their origin
+  * preserve ordering by using `kubectl logs --timestramps ...` and merge the output
+
+
 
 
 
