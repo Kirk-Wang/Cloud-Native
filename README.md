@@ -652,6 +652,32 @@ kubectl delete pod pingpong-xxxxxxxxxxxxx-yyyyyy
 * Example: `*/3 * * * *` means "every three minutes"
 
 ### Creating a Cron Job
+* Let's create a simple job to be executed every three minutes
+* Cron Jobs need to terminate, otherwise they'd run forever
+
+Exercise
+* Create the Cron Job:
+```sh
+kubectl run --schedule="*/3 * * * *" --restart=OnFailure --image=alpine sleep 10
+```
+* Check the resource that was created:
+```sh
+kubectl get cronjobs
+```
+
+### Cron Jobs in action
+* At the specified schedule, the Cron Job will create a Job
+* The Job will create a Pod
+* The Job will make sure that the Pod completes
+  * (re-creating another on if it fails, for instance if its node fails)
+
+Exercise
+* Check the Jobs that are created:
+```sh
+kubectl get jobs
+```
+(it will take a few minutes before the first job is scheduled.)
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
