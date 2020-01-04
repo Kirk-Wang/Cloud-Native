@@ -703,6 +703,22 @@ kubectl get jobs
   * all features are available
   * requires writing YAML
 
+### Streaming logs of multiple pods
+* Can we stream the logs of all our `pingpong` pods?
+
+Exercise
+* Combine `-l` and `-f` flags:
+```sh
+kubectl logs -l run=pingpong --tail 1 -f
+```
+
+Note: combining `-l` and `-f` is only possible since Kubernetes 1.14!
+
+Let's try to understand why...
+
+
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
