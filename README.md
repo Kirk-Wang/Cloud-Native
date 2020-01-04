@@ -808,6 +808,17 @@ sudo chmod +x /usr/local/bin/stern
 ```
 * On OS X, just `brew install stern`
 
+### Using Stern
+* There are two ways to specify the pods whose logs we want to see:
+  * `-l` followed by a selector expression(like with many `kubectl` commands)
+  * with a "pod query," i.e. a regex used to match pod names
+* These two ways can be combined if necessary
+
+Exercise
+* View the logs for all the pingpong containers:
+```sh
+stern pingpong
+```
 
 
 
