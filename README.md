@@ -601,7 +601,20 @@ kubectl logs deploy/pingpong --tail 1 --follow
 
 Let's leave `kubectl logs` running while we keep exploring.
 
+### Resilience
+* The deployment `pingpong` watches its `replica set`
+* The replica set ensures that the right number of pods are running
+* What happens if pods disappear?
 
+Exercise
+* In a separate window, watch the list of pods:
+```sh
+watch kubectl get pods
+```
+* Destroy the pod currently shown by `kubectl logs`:
+```sh
+kubectl delete pod pingpong-xxxxxxxxxxxxx-yyyyyy
+```
 
 ------------------------------------------------------------
 ------------------------------------------------------------
