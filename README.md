@@ -639,6 +639,19 @@ kubectl delete pod pingpong-xxxxxxxxxxxxx-yyyyyy
   and create them on the cluster with `kubectl apply -f`(discussed later)
 * With `kubectl run --schedule=...`, we can also create cronjobs.
 
+### Scheduling periodic background work
+* A Cron Job is a job that will be executed at specific intervals
+  * (the name comes from the traditional cronjobs executed by the UNIX crond)
+* It requires a schedule,represented as five space-separated fields:
+  * minute[0,59]
+  * hour[0,23]
+  * day of the month[1,31]
+  * month of the year[1,12]
+  * day of the week([0,6] with 0=Sunday)
+* `*` means "all vaild values";`/N` means "every N"
+* Example: `*/3 * * * *` means "every three minutes"
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
