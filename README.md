@@ -832,6 +832,14 @@ Exercise
 stern --tail 1 --timestamps pingpong
 ```
 
+### Cleanup
+Let's cleanup before we start the next lecture!
+
+Exercise
+* remove our deployment and cronjob:
+```sh
+kubectl delete deployment/pingpong cronjob/sleep
+```
 
 
 
