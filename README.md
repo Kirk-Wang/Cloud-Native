@@ -776,6 +776,9 @@ kubectl logs -l run=pingpong --tail 1 -f
   * for one `kubectl logs --follow ...` command per container
   * annotate the logs (the output of each `kubectl logs ....` process) with their origin
   * preserve ordering by using `kubectl logs --timestramps ...` and merge the output
+* We could do it, but thankfully, other did it for us already!
+
+
 
 
 
