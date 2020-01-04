@@ -753,6 +753,14 @@ kubectl logs -l run=pingpong --tail 1 -f
   * (this can be changed with `--max-log-requests`)
 * For more details about the rationale, see `PR #67573`
 
+### Shortcomings of `kubectl logs`
+* We don't see which pod sent which log line
+* If pods are restarted/replaced, the log stream stops
+* If new pods are added, we don't see their logs
+* To stream the logs of multiple pods, we need to write a selector
+* There are external tools to address these shortcomings
+  * (e.g.: Stern)
+
 
 
 
