@@ -541,11 +541,47 @@ pod/pingpong-7c8bbcd9bc-6c9qz   1/1      Running     0           10m
 * We'll see later how these folks play together for:
   * scaling, high availability, rolling updates
 
+### Viewing container output
+* Let's use the `kubectl logs` command
+* We will pass either a pod name, or a type/name
+  * (E.g. if we specify a deployment or replica set, it will get the first pod in it)
+* Unless specified otherwise, it will only show logs of the first container in the pod
+  * (Good thing there's only one in ours!)
 
+Exercise
+* View the result of our `ping` command:
+```
+kubectl logs deploy/pingpong
+```
 
+### Scaling our application
+* We can create additional copies of our container(I mean, our pod) with `kubectl scale`
 
+Exercise
+* Scale our `pingpong` deployment:
+```sh
+kubectl scale deploy/pingpong --replicas 3
+```
+* Note that this command does exactly the same thing:
+```sh
+kubectl scale deployment pingpong --replicas 3
+```
+Note: what if we tried to scale `replicaset.apps/pingpong-xxxxxxx`?
 
+We could! But he deployment would notice it right away, and scale back to the ...
 
+```sh
+kubectl scale deploy/pingpong --replicas 3
+```
+
+Streaming logs in real time
+* Just like `docker logs`, `kuberctl logs` supports conveninent options:
+  * `-f/--follow` to stream logs in real time(a la `tail -f`)
+  * `--tail` to indicate how many lines you want to see(from the end)
+  * `--since` to get logs only after a given timestramp
+
+Exercise
+* 
 
 
 
