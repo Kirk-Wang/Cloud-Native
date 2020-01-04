@@ -790,7 +790,8 @@ The query is a regular expression so the pod name can easily be filtered and you
 
 Exactly what we need!
 
-
+### Installing Stern
+* Run `stern`(without arguments) to check if it's installed
 
 
 
