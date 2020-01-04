@@ -616,6 +616,20 @@ watch kubectl get pods
 kubectl delete pod pingpong-xxxxxxxxxxxxx-yyyyyy
 ```
 
+e.g.
+```sh
+watch kubectl get pods
+kubectl delete pod pingpong-xxxxxxxxxxxxx-yyyyyy
+```
+
+### What happened?
+* `kubectl delete pod` terminates the pod gracefully
+  * (sending it the TERM signal and waiting for it to shutdown)
+* As soon as the pod is in "Terminating" state, the Replica Set replaces it
+* But we can still see the output of the "Terminating" pod in `kubectl logs`
+* Until 30 seconds later, when the grace period expires
+* The pod is then killed, and `kubectl logs` exits
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
