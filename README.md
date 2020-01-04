@@ -792,6 +792,14 @@ Exactly what we need!
 
 ### Installing Stern
 * Run `stern`(without arguments) to check if it's installed
+```
+$ stern
+Tail multiple pods and containers from Kubernetes
+
+Usage:
+stern pod-query [flags]
+```
+* 
 
 
 
