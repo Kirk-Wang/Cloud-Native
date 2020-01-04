@@ -820,6 +820,12 @@ Exercise
 stern pingpong
 ```
 
+### Stern conveninent options
+* The `--tail N` flag shows the last `N` lines for each container
+  * (instead of showing the logs since the creation of the container)
+* The `-t`/`--timestamps` flag shows timestamps
+* The `--all-namespaces` flag is self-explanatory
+
 
 
 
