@@ -717,6 +717,27 @@ Note: combining `-l` and `-f` is only possible since Kubernetes 1.14!
 Let's try to understand why...
 
 
+### Streaming logs of many pods
+* Let's see what happens if we try to stream the logs for more than 5 pods
+
+Exercise
+* Scale up our deployment:
+```sh
+kubectl scale deployment pingpong --replicas=8
+```
+* Stream the logs
+```sh
+kubectl logs -l run=pingpong --tail 1 -f
+```
+
+We see a message like the following one:
+```
+error: your are attempting to follow 8 log streams,
+but maximum allowed concurency is 5,
+use --max-log-requests to increase the limit
+```
+
+
 
 
 ------------------------------------------------------------
