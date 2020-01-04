@@ -778,6 +778,17 @@ kubectl logs -l run=pingpong --tail 1 -f
   * preserve ordering by using `kubectl logs --timestramps ...` and merge the output
 * We could do it, but thankfully, other did it for us already!
 
+### Stern
+[Stern](https://github.com/wercker/stern) is an open source project by `Wercker`
+
+From the README:
+```
+Stern allows you to tail multiple pods on Kubernetes and multiple containers within the pod. Each result is color coded for quicker debugging.
+
+The query is a regular expression so the pod name can easily be filtered and you don't need to specify the exact id (for instance omitting the deployment id). If a pod is deleted it gets removed from tail and if a new pod is added it automatically gets tailed.
+```
+
+Exactly what we need!
 
 
 
