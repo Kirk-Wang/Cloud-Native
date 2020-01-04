@@ -679,6 +679,18 @@ kubectl get jobs
 (it will take a few minutes before the first job is scheduled.)
 
 
+### What about that deprecation warning?
+
+* As we can see from the previous slide, `kubectl run` can do many things
+* The exact type of resource created is not obvious
+* To make things more explicit, it is better to use `kubectl create`:
+  * `kubectl create deployment` to create a deployment
+  * `kubectl create job` to create a job
+  * `kubectl create cronjob` to run a job periodically
+    * (since Kubernetes 1.14)
+* Eventually, `kubectl run` will be used only to start one-shot pods
+  * (see https://github.com/kubernetes/kubernetes/pull/68132)
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
