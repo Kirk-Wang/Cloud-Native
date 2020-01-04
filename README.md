@@ -826,7 +826,11 @@ stern pingpong
 * The `-t`/`--timestamps` flag shows timestamps
 * The `--all-namespaces` flag is self-explanatory
 
-
+Exercise
+* View what's up with the `pingpong` system containers:
+```sh
+stern --tail 1 --timestamps pingpong
+```
 
 
 
