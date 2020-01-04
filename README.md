@@ -581,8 +581,25 @@ Streaming logs in real time
   * `--since` to get logs only after a given timestramp
 
 Exercise
-* 
+* View the latest logs of our `ping` command:
+```sh
+kubectl logs deploy/pingpong --tail 1 --follow
+```
+* Leave that command running, so that we can keep an eye on these logs
 
+### Streaming logs of multiple pods
+* What happens if we restart `kubctl logs`?
+
+Exercise
+* interrupt `kubectl logs` (with Ctrl-C)
+* Restart it:
+```sh
+kubectl logs deploy/pingpong --tail 1 --follow
+```
+
+`kubectl logs` will warn us that multiple pods were found, and that it's showing us only one of them.
+
+Let's leave `kubectl logs` running while we keep exploring.
 
 
 
