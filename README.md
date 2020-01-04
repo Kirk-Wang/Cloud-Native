@@ -630,6 +630,15 @@ kubectl delete pod pingpong-xxxxxxxxxxxxx-yyyyyy
 * Until 30 seconds later, when the grace period expires
 * The pod is then killed, and `kubectl logs` exits
 
+### What if we wanted something different?
+* What if we wanted to start a "one-shot" container that doesn't get restarted?
+* We could use `kubectl run --restart=OnFailure` or `kubectl run --restart=Never`
+* These commands would create jobs or pods instead of deployments
+* Under the hood, `kubectl run` invokes "generators" to create resource descriptions
+* We could also write these resource descriptions ourselves(typically in YAML),
+  and create them on the cluster with `kubectl apply -f`(discussed later)
+* With `kubectl run --schedule=...`, we can also create cronjobs.
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
