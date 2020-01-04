@@ -736,6 +736,22 @@ error: your are attempting to follow 8 log streams,
 but maximum allowed concurency is 5,
 use --max-log-requests to increase the limit
 ```
+e.g.
+```sh
+kubectl scale deployment pingpong --replicas=8
+kubectl get pods
+kubectl logs -l run=pingpong --tail 1 -f
+# error: you are attempting to follow 8 log streams, but maximum allowed concurency is 5, use --max-log-requests to increase the limit
+```
+### Why can't we stream the logs of many pods?
+* `kubectl` opens one connection to the API server per pod
+* For each pod, the API server opens one extra connection to the corresponding kubelet
+* If there are 1000 pods in our deployments, that's 1000 inbound + 1000 outbound connections on the API server
+* This could easily put a lot of stress on the API server
+* Prior Kubernetes 1.14, it was decided to not allow multiple connections
+* From Kubernetes 1.14, it is allowed, but limited to 5 connetcions
+  * (this can be changed with `--max-log-requests`)
+* For more details about the rationale, see `PR #67573`
 
 
 
