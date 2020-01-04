@@ -762,6 +762,25 @@ kubectl logs -l run=pingpong --tail 1 -f
   * (e.g.: Stern)
 
 
+### Accessing logs from the CLI
+* The `kubectl logs` commands has limitaions:
+  * it cannot stream logs from multiple pods at a time
+  * when showing logs from multiple pods, it mixes them all together
+* We are going to see how to do it better
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ------------------------------------------------------------
