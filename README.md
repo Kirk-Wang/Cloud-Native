@@ -857,6 +857,19 @@ kubectl run web --image=nginx --replicas=3
 * There are different types of services, detailed on the following slides:
   * `ClusterIP`, `NodePort`, `LoadBalancer`, `ExternalName`
 
+### Basic service types
+* `ClusterIP`(default type)
+  * a virtual IP address is allocated for the service(in an internal, private range)
+  * this IP address is reachable only from within the cluster(nodes and pods)
+  * our code can connect to the service using the original port number
+* `NodePort`
+  * a port is allocated for the service(by default, in the 30000-32768 range)
+  * that port is made available on all our nodes and anybody can connect to it
+  * our code must be changed to connect to that new port number
+
+These service types are always available.
+
+Under the hood:`kube-proxy` is using a userland proxy and a bunch of `iptables` rules.
 
 
 
