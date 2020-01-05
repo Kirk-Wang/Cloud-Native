@@ -891,6 +891,25 @@ Under the hood:`kube-proxy` is using a userland proxy and a bunch of `iptables` 
 * The environment variables will include `HOSTNAME`, which will be the pod name
   * (and therefore, will be different on each backend)
 
+### Creating a deployment for our HTTP server
+* We could do `kubectl run httpenv --image=bretfisher/httpenv` ...
+* But since `kubectl run` is changing, let's see how to see `kubectl create` instead
+
+Exercise
+* In another window, watch the pods(to see when they are created)
+```sh
+kubectl get pods -w
+```
+* Create a deployment for this very lightweight HTTP server:
+```sh
+kubectl create deployment httpenv --image=bretfisher/httpenv
+```
+* Scale it to 10 replicas:
+```sh
+kubectl scale deployment httpenv --replicas=10
+```
+
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
