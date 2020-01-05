@@ -871,8 +871,25 @@ These service types are always available.
 
 Under the hood:`kube-proxy` is using a userland proxy and a bunch of `iptables` rules.
 
+* `LoadBalancer`
+  * an external load balancer is allocated for the service
+  * the load balancer is configured accordingly
+    * (e.g.: a `NodePort` service is created, and the load balancer sends traffic to that port)
+  * available only when the underlying infrastructure provides some "load balancer as as service"
+    * (e.g. AWS, Azure, GCE, OpenStack...)
+* `ExternalName`
+  * the DNS entry managed by CoreDNS will just be a `CNAME` to a provided record
+  * no port, no IP address, no nothing else is allocated
 
-
+### Running containers with open ports
+* Since `ping` doesn't have anything to connect to, we'll have to run something else
+* We could use the `nginx` offical image, but ...
+  * ...we wouldn't be able to tell the backends from each other!
+* We are going to use `bretfisher/httpenv`, a tiny HTTP server written in Go
+* `bretfisher/httpenv` listens on port 8888
+* it serves its environment variables in JSON format
+* The environment variables will include `HOSTNAME`, which will be the pod name
+  * (and therefore, will be different on each backend)
 
 
 ------------------------------------------------------------
