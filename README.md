@@ -851,8 +851,11 @@ kubectl run web --image=nginx --replicas=3
 ### Exposing containers
 * `kubectl expose` creates a service for existing pods
 * A service is a stable address for a pod (or a bunch of pods)
-
-
+* If we want to connect to our pod(s), we need to create a service
+* Once a service is created, CoreDNS will allow us to resolve it by name
+  * (i.e. after creating service `hello`, the name `hello` will resolve to something)
+* There are different types of services, detailed on the following slides:
+  * `ClusterIP`, `NodePort`, `LoadBalancer`, `ExternalName`
 
 
 
