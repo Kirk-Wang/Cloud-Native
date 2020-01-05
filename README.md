@@ -841,6 +841,12 @@ Exercise
 kubectl delete deployment/pingpong cronjob/sleep
 ```
 
+### 19,000 words
+* They say, "a picture is worth one thousand words."
+* The following 19 slides show what really happens when we run:
+```sh
+kubectl run web --image=nginx --replicas=3
+```
 
 
 
