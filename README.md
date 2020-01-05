@@ -848,9 +848,9 @@ kubectl delete deployment/pingpong cronjob/sleep
 kubectl run web --image=nginx --replicas=3
 ```
 
-
-
-
+### Exposing containers
+* `kubectl expose` creates a service for existing pods
+* A service is a stable address for a pod (or a bunch of pods)
 
 
 
