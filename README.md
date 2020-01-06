@@ -963,6 +963,23 @@ kubectl delete -f https://bret.run/shpod.yml
 kubectl delete deployment/httpenv
 ```
 
+### If we don't need a load balancer
+* Sometimes, we want to access our scaled services directly:
+  * if we want to save a tiny little bit of latency(typically less than 1ms)
+  * if we need to connect over arbitrary ports(instead of a few fixed ones)
+  * if we need to communicate over another protocol than UDP or TCP
+  * if we want to decide how to balance the requests client-side
+  * ...
+* In that case, we can use a `headless service`
+
+### Headless services
+* A headless service is obtained by setting the `clusterIP` field to `None`
+  * (Either with `--cluster-ip=None`, or by providing a custom YAML)
+* As a result, the service doesn't have a virtual IP address
+* Since there is no virtual IP address, there is no load balancer either
+* CoreDNS will return the pods' IP addresses as multiple `A` records
+* This gives us an easy way to discover all the replicas for a deployment
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
