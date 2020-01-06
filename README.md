@@ -928,7 +928,13 @@ kubectl get service
 ```
 
 ### Services are layer 4 constructs 
-* 
+* You can assign IP addresses to services, but they are stll layer 4
+  * (i.e. a service is not an IP address; it's an IP address + protocol + port)
+* This is caused by the current implementation of `kube-proxy`
+  * (it relies on mechanisms that don't support layer 3)
+* As a result: you have to indicate the port number for your service
+* Running services with arbitrary port (or port ranges) requires hacks
+  * (e.g. host networking mode)
 
 ------------------------------------------------------------
 ------------------------------------------------------------
