@@ -993,6 +993,20 @@ kubectl describe service httpenv
 * In the output, there will be a line starting with `Endpoints:`.
 * That line will list a bunch of addresses in `host:port` format. 
 
+### Viewing endpoint details
+* When we have many endpoints, our deploy commands truncate the list
+```sh
+kubectl get endpoints
+```
+* If we want to see the full list, we can use a different output:
+```sh
+kubectl get endpoints httpenv -o yaml
+```
+* These IP addresses should match the addresses of the corresponding pods:
+```sh
+kubectl get pods -l app=httpenv -o wide
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
