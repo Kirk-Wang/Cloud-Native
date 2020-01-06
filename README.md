@@ -936,6 +936,29 @@ kubectl get service
 * Running services with arbitrary port (or port ranges) requires hacks
   * (e.g. host networking mode)
 
+
+### Testing our service
+* We will now send a few HTTP requests to our pods
+
+Exercise
+* Run shpod if not on Linux host so we can access internal ClusterIP
+```sh
+kubectl apply -f https://bret.run/shpod.yml
+kubectl attach --namespace=shpod -ti shpod
+```
+* Let's obtain the IP address that was allocated for our service, programmatically:
+```sh
+IP=$(kubectl get svc httpenv -o go-template --template '{{ .spec.clusterIP }}')
+```
+* Send a few requests:
+```sh
+curl http://$IP:8888/
+```
+* Too much output? Filter it with `jq`:
+```sh
+curl -s http://$IP:8888/ | jq .HOSTNAME
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
