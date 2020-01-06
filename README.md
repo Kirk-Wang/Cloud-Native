@@ -980,6 +980,19 @@ kubectl delete deployment/httpenv
 * CoreDNS will return the pods' IP addresses as multiple `A` records
 * This gives us an easy way to discover all the replicas for a deployment
 
+### Services and endpoints
+* A service has a number of "endpoints"
+* Each endpoint is a host + port where the service is available
+* The endpoints are maintained and updated automatically by Kubernetes
+
+Exercise
+* Check the endpoints that Kubernetes has associated with our `httpenv` service:
+```sh
+kubectl describe service httpenv
+```
+* In the output, there will be a line starting with `Endpoints:`.
+* That line will list a bunch of addresses in `host:port` format. 
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
