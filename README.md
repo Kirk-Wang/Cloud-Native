@@ -944,11 +944,12 @@ Exercise
 * Run shpod if not on Linux host so we can access internal ClusterIP
 ```sh
 kubectl apply -f https://bret.run/shpod.yml
-kubectl attach --namespace=shpod -ti shpod
+kubectl attach --namespace=shpod -it shpod
 ```
 * Let's obtain the IP address that was allocated for our service, programmatically:
 ```sh
 IP=$(kubectl get svc httpenv -o go-template --template '{{ .spec.clusterIP }}')
+echo $IP
 ```
 * Send a few requests:
 ```sh
@@ -957,6 +958,9 @@ curl http://$IP:8888/
 * Too much output? Filter it with `jq`:
 ```sh
 curl -s http://$IP:8888/ | jq .HOSTNAME
+exit
+kubectl delete -f https://bret.run/shpod.yml
+kubectl delete deployment/httpenv
 ```
 
 ------------------------------------------------------------
