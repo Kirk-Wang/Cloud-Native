@@ -909,7 +909,26 @@ kubectl create deployment httpenv --image=bretfisher/httpenv
 kubectl scale deployment httpenv --replicas=10
 ```
 
+Exercise
+```sh
+# t1
+kubectl get pods -w
+# t2
+kubectl create deployment httpenv --image=bretfisher/httpenv
+# t1
+ctrl+c
+kubectl get pods
+kubectl get all
+clear
+kubectl get pods -w
+# t2
+kubectl scale deployment httpenv --replicas=10
+kubectl expose deployment httpenv --port 8888
+kubectl get service
+```
 
+### Services are layer 4 constructs 
+* 
 
 ------------------------------------------------------------
 ------------------------------------------------------------
