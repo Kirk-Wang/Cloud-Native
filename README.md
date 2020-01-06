@@ -1027,6 +1027,15 @@ kubectl get endpoint
 
 We'll see NodePorts and Ingresses more in detail later.
 
+### Cleanup
+Let's cleanup before we start the next lecture!
+
+Exercise
+* remove our httpenv resources:
+```sh
+kubectl delete deployment/httpenv service/httpenv
+```
+
 
 
 
