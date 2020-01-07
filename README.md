@@ -1057,6 +1057,15 @@ kubectl delete deployment/httpenv service/httpenv
   * (For example, We can use a subnet per node and use a simple routed topology)
 * The specification is simple enough to allow many various implementaions
 
+### Kubernetes network model:the less good
+* Everything can reach everything
+  * if you want security, you need to add network policies
+  * the network implementation you use needs to support them
+* There are literally dozens of implementations out there
+  * (15 are listed in the Kubernetes documentaion)
+* Pods have level 3(IP) connectivity, but services are level 4(TCP or UDP)
+  * (Services map to a single UDP or TCP port; no port ranges or arbitrary IP packets)
+* `kube-proxy` is on the data path when connecting to a pod or container,and its not particularly fast(relies on userland proxying or iptables)
 
 ------------------------------------------------------------
 ------------------------------------------------------------
