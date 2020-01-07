@@ -1067,6 +1067,17 @@ kubectl delete deployment/httpenv service/httpenv
   * (Services map to a single UDP or TCP port; no port ranges or arbitrary IP packets)
 * `kube-proxy` is on the data path when connecting to a pod or container,and its not particularly fast(relies on userland proxying or iptables)
 
+### Kubernetes network model:in practice
+* The nodes we are using have been set up to use kubenet, Calico, or something else
+* Don't worry about the warning about `kube-proxy` performance
+* Unless you:
+  * routinely saturate 10G network interfaces
+  * count packet rates in millions per second
+  * run high-traffic VOIP or gaming platforms
+  * do weird things that involve millions of simultaneous connections
+    * (in which case you're already familiar with kernel tuning)
+* if necessary, there are alternatives to `kube-proxy`; e.g. `kube-router`
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
