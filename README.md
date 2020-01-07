@@ -1036,7 +1036,16 @@ Exercise
 kubectl delete deployment/httpenv service/httpenv
 ```
 
-
+### Kubernetes network model
+* TL,DR:
+  * Our cluster(nodes and pods) is one big flat IP network.
+* In detail:
+  * all nodes must be able to reach each other, without NAT
+  * all pods must be able to reach each other, without NAT
+  * pods and nodes must be able to reach each other, without NAT
+  * each pod is aware of its IP address(no NAT)
+  * pod IP addresses are assigned by the network implementation
+* Kubernetes doesn't mandate any particular implementaion
 
 
 ------------------------------------------------------------
