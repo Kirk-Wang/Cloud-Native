@@ -1047,6 +1047,16 @@ kubectl delete deployment/httpenv service/httpenv
   * pod IP addresses are assigned by the network implementation
 * Kubernetes doesn't mandate any particular implementaion
 
+### Kubernetes network model:the good
+* Everything can reach everything
+* No address translation
+* No port translation
+* No new protocol
+* The network implementation can decide how to allocate addresses
+* IP addresses don't have to be "portable" from a node to another
+  * (For example, We can use a subnet per node and use a simple routed topology)
+* The specification is simple enough to allow many various implementaions
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
