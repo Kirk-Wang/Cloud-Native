@@ -1117,6 +1117,13 @@ kubectl delete deployment/httpenv service/httpenv
   * repeat forever!
 * DockerCoins is not a cryptocurrency
   * (the only common points are "randomness", "hashing" and "coins" in the name)
+* DockerCoins is made of 5 services
+  * `rng` = web service generating random bytes
+  * `hasher` = web service computing hash of POSTed data
+  * `worker` = background process calling `rng` and `hasher`
+  * `webui` = web interface to watch progress
+  * `redis` = data store(holds a counter updated by `worker`)
+* These 5 services are visible in the application's Compose file, dockercoins-compose.yml
 
 ------------------------------------------------------------
 ------------------------------------------------------------
