@@ -1125,6 +1125,14 @@ kubectl delete deployment/httpenv service/httpenv
   * `redis` = data store(holds a counter updated by `worker`)
 * These 5 services are visible in the application's Compose file, dockercoins-compose.yml
 
+### How DockerCoins works
+* `worker` invokes web service `rng` to generate random bytes
+* `worker` invokes web service `hasher` to hash these bytes
+* `worker` does this in an infinite loop
+* Every sceond, `worker` updates `redis` to indicate how many loops were done
+* `webui` queries `redis`, and computes and exposes "hashing speed" in our browser
+(See diagram on next slide!)
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
