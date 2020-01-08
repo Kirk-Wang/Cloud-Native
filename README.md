@@ -1133,6 +1133,13 @@ kubectl delete deployment/httpenv service/httpenv
 * `webui` queries `redis`, and computes and exposes "hashing speed" in our browser
 (See diagram on next slide!)
 
+### Service discovery in container-land
+How does each service find out the address of the other ones?
+* We do not hard-code IP addresses in the code
+* We do not hard-code FQDNs in the code, either
+* We just connect to a service name, and container-magic does the rest
+  * (And by container-magic, we mean "a crafty, dynamic, embedded DNS server")
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
