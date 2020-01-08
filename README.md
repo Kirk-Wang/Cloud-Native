@@ -1079,6 +1079,25 @@ kubectl delete deployment/httpenv service/httpenv
 * if necessary, there are alternatives to `kube-proxy`; e.g. `kube-router`
 
 ### The Container Network Interface(CNI)
+* Most Kubernetes cluster use CNI "plugins" to implement networking
+* When a pod is created, Kubernetes delegates the network setup to these plugins
+  * (it can be a single plugin, or a combination of plugins, each doing one task)
+* Typically, CNI plugins will:
+  * allocate an IP address(by calling an IPAM plugin)
+  * add a network interface into the pod's network namespace
+  * configure the interface as well as required routes, etc.
+
+### Multiple moving parts
+* The "pod-to-pod network" or "pod network"
+  * provides communication between pods and nodes
+  * is generally implemented with CNI plugins
+* The "pod-to-service network"
+  * provides internal communication and load balancing
+  * is generally implemented with kube-prox(or maybe kube-router)
+* Network policies:
+  * provide firewalling and isolation
+  * can be bundled with the "pod network" or provided by another component
+
 
 
 ------------------------------------------------------------
