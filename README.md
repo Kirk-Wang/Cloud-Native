@@ -1140,6 +1140,21 @@ How does each service find out the address of the other ones?
 * We just connect to a service name, and container-magic does the rest
   * (And by container-magic, we mean "a crafty, dynamic, embedded DNS server")
 
+### Example in `worker/worker.py`
+```py
+redis = Redis("redis")
+
+def get_random_bytes():
+    r = requests.get("http://rng/32")
+    return r.content
+
+def hash_bytes(data):
+    r = requets.post("http://hasher/",
+                    data=data,
+                    headers={"Content-Type":"application/octet-stream"})
+```
+(Full source code available `here`)
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
