@@ -1098,6 +1098,15 @@ kubectl delete deployment/httpenv service/httpenv
   * provide firewalling and isolation
   * can be bundled with the "pod network" or provided by another component
 
+### Even more moving parts
+* Inbound traffic can be handled by multiple components:
+  * something like kube-proxy or kube-router(for NodePort services)
+  * load balancers(ideally, connected to the pod network)
+* It is possible to use multiple pod networks in parallel
+  * (with "meta-plugins" like CNI-Genie or Multus)
+* Some solutions can fill multiple roles
+  * (e.g. kube-router can be set up to provide the pod network and/or network polcies and/or replace kube-proxy)
+
 
 
 ------------------------------------------------------------
