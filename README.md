@@ -1107,7 +1107,16 @@ kubectl delete deployment/httpenv service/httpenv
 * Some solutions can fill multiple roles
   * (e.g. kube-router can be set up to provide the pod network and/or network polcies and/or replace kube-proxy)
 
-
+### What's this application?
+* It is a DockerCoin miner!
+* No,you can't buy coffee with DockerCoins
+* How DockerCoins works:
+  * generate a few random bytes
+  * hash these bytes
+  * increment a counter(to keep track of speed)
+  * repeat forever!
+* DockerCoins is not a cryptocurrency
+  * (the only common points are "randomness", "hashing" and "coins" in the name)
 
 ------------------------------------------------------------
 ------------------------------------------------------------
