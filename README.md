@@ -1173,6 +1173,40 @@ docker-compose up
 ```
 * View the `webui` on `localhost:8000` or click the `8080` link in PWD
 
+### The reason why this graph is not awesome
+* The worker doesn't update the counter after every loop, but up to once per second
+* The speed is computed by the browser, checking the counter about once per second
+* Between two consecutive updates, the counter will increase either by 4, or by 0
+* The perceived speed will therefore be 4 - 4 - 4 - 0 - 4 - 4 - 0 etc.
+* What can we conclude from this?
+* "I'm clearly incapple of writing good frontend code!"😁
+
+### Stopping the application
+* If we interrupt Compose(with `^C`),it will politely ask the Docker Engine to stop the app
+* The Docker Engine will send a `TERM` signal to the containers
+* If the containers do not exit in a timely manner, the Engine sends a `KILL` signal
+
+Exercise
+* Stop the application by hitting `^C`
+
+### Shipping images with a registry
+* For development using Docker, it has build, ship, and run features
+* Now that we want to run on a cluster, things are different
+* Kubernetes doesn't have a build feature built-in
+* The way to ship(pull) images to Kubernetes is to use a registry
+
+### How Docker registries work(a reminder)
+* What happens when we execute `docker run alpine`?
+* If the Engine needs to pull the `alpine` image, it expands it into `library/alpine`
+* `library/alpine` is expanded into `index.docker.io/library/alpine`
+* The Engine communicates with `index.docker.io` to retrieve `library/alpine:latest`
+* To use something else than `index.docker.io`, we specify it in the image name
+* Examples:
+```sh
+docker pulll gcr.io/google-containers/alpine-with-bash:1.0
+docker build -t registry.mycompany.io:5000/myimage:awesome .
+docker push registry.mycompany.io:5000/myimage:awesome
+```
 
 
 
