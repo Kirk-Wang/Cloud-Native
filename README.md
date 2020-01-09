@@ -1155,6 +1155,27 @@ def hash_bytes(data):
 ```
 (Full source code available `here`)
 
+### DockerCoins at work
+* `worker` will log HTTP requests to `rng` and `hasher`
+* `rng` and `hasher` will log incoming HTTP requests
+* `webui` will give us a graph on coins mined per second
+
+### Check out the app in Docker Compose
+* Compose is(still) great for local development
+* You can test this app if you have Docker and Compose installed
+* If not, remember `play-with-docker.com`
+
+Exercise
+* Download the compose file somewhere and run it
+```sh
+curl -o docker-compose.yml https://k8smastery.com/dockercoins-compose.yml
+docker-compose up
+```
+* View the `webui` on `localhost:8000` or click the `8080` link in PWD
+
+
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
