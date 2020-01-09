@@ -1233,6 +1233,23 @@ docker push registry.mycompany.io:5000/myimage:awesome
   * Multi-user auth and mgmt(RBAC)
   * Storage feature(replication, cahing, garbage collection)
 
+### Running DockerCoins on Kubernetes
+* Create one deployment for each component
+  * (hasher, redis, rng, webui, worker)
+* Expose deployments that need to accept connections
+  * (hasher, redis, rng, webui)
+* For redis, we can use the official redis image
+* For the 4 others, we need to build images and push them to some registry
+
+### Using images from the Docker Hub
+* For everyone's convenience, we took care of building DockerCoins images
+* We pushed these images to the DockerHub, under the `dockercoins` user
+* These images are tagged with a version number, v0.1
+* The full image names are therefore:
+  * `dockercoins/haser:v0.1`
+  * `dockercoins/rng:v0.1`
+  * `dockercoins/webui:v0.1`
+  * `dockercoins/worker:v0.1`
 
 
 
