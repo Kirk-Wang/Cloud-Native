@@ -1208,6 +1208,33 @@ docker build -t registry.mycompany.io:5000/myimage:awesome .
 docker push registry.mycompany.io:5000/myimage:awesome
 ```
 
+### Building and shipping images
+* There are many options!
+* Manually:
+  * build locally(with `docker build` or otherwise)
+  * push to the registry
+* Automatically:
+  * build and test locally
+  * when ready, commit and push a code repository
+  * the code repository notifies an automated build system
+  * that system gets the code, builds it, pushes the image to the registry
+
+### Which registry do we want to use?
+* There are SAAS products like Docker Hub, Quay, GitLab...
+* Each major cloud provider has an option as well
+  * (ACR on Azure, ECR on AWS, GCR on Google Cloud...)
+* There are also commercial products to run our own registry
+  * (Docker Enterprise DTR, Quay, GitLab, JFrog Artifacotry...)
+* And open source options, too!
+  * (Quay, Portus, OpenShift OCR, Gitlab, Harbor, Kraken...)
+  * (I don't mention Docker Distribution here because it's too basic)
+* When picking a registry, pay attention to:
+  * Its build system
+  * Multi-user auth and mgmt(RBAC)
+  * Storage feature(replication, cahing, garbage collection)
+
+
+
 
 
 ------------------------------------------------------------
