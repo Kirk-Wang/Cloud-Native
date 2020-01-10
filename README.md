@@ -1267,6 +1267,35 @@ kuberctl create deployment rng --image=dockercoins/rng:v0.1
 kuberctl create deployment webui --image=dockercoins/webui:v0.1
 kuberctl create deployment worker --image=dockercoins/worker:v0.1
 ```
+
+
+### Is this working?
+* After waiting for the deployment to complete, let's look at the logs!
+  * (Hint: use `kubectl get deploy -w` to watch deployment events)
+
+Exercise
+* Look at some logs:
+```sh
+kubectl logs deploy/rng
+kubectl logs deploy/worker
+```
+🤔`rng` is fine... But not `worker`.
+
+Oh right! We forgot to `expose`
+
+### Connecting containers together
+* Three deployments need to be reachable by others:`hasher`, `redis`, `rng`
+* `worker` doesn't need to be exposed
+* `webui` will be dealt with later
+
+Exercise
+* Expose each deployment, specifying the right port:
+```sh
+kubectl expose deployment redis --port 6379
+kubectl expose deployment rng --port 80
+kubectl expose deployment hasher --port 80
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
