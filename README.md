@@ -1246,14 +1246,27 @@ docker push registry.mycompany.io:5000/myimage:awesome
 * We pushed these images to the DockerHub, under the `dockercoins` user
 * These images are tagged with a version number, v0.1
 * The full image names are therefore:
-  * `dockercoins/haser:v0.1`
+  * `dockercoins/hasher:v0.1`
   * `dockercoins/rng:v0.1`
   * `dockercoins/webui:v0.1`
   * `dockercoins/worker:v0.1`
 
 
+### Running DockerCoins on Kubernetes
+* We can now deploy our code(as well as a redis instance)
 
-
+Exercise
+* Deploy `redis`:
+```sh
+kuberctl create deployment redis --image=redis
+```
+* Deploy everything else:
+```sh
+kuberctl create deployment hasher --image=dockercoins/hasher:v0.1
+kuberctl create deployment rng --image=dockercoins/rng:v0.1
+kuberctl create deployment webui --image=dockercoins/webui:v0.1
+kuberctl create deployment worker --image=dockercoins/worker:v0.1
+```
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
