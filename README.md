@@ -1258,7 +1258,7 @@ docker push registry.mycompany.io:5000/myimage:awesome
 Exercise
 * Deploy `redis`:
 ```sh
-kuberctl create deployment redis --image=redis
+kubectl create deployment redis --image=redis
 ```
 * Deploy everything else:
 ```sh
@@ -1294,6 +1294,12 @@ Exercise
 kubectl expose deployment redis --port 6379
 kubectl expose deployment rng --port 80
 kubectl expose deployment hasher --port 80
+```
+
+```sh
+$ minikube start --vm-driver=hyperkit --registry-mirror=https://registry.docker-cn.com --image-mirror-country=cn --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers
+
+$ minikube start --image-mirror-country=cn --iso-url=https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/iso/minikube-v1.6.0.iso --registry-mirror=https://dockerhub.azk8s.cn  --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers --vm-driver="hyperv" --hyperv-virtual-switch="minikube v switch"  --memory=4096 
 ```
 
 ------------------------------------------------------------
@@ -1603,13 +1609,6 @@ docker-compose exec psql cat /run/secrets/psql_user
 * Local `docker-compose up` development environment
 * Remote `docker-compose up` CI environment
 * Remote `docker stack deploy` production environment
-
-```sh
-$ minikube start --vm-driver=hyperkit --registry-mirror=https://registry.docker-cn.com --image-mirror-country=cn --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers
-
-$ minikube start --image-mirror-country=cn --iso-url=https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/iso/minikube-v1.6.0.iso --registry-mirror=https://dockerhub.azk8s.cn  --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers --vm-driver="hyperv" --hyperv-virtual-switch="minikube v switch"  --memory=4096 
-
-```
 
 -----------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------
