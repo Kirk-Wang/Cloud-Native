@@ -1604,6 +1604,13 @@ docker-compose exec psql cat /run/secrets/psql_user
 * Remote `docker-compose up` CI environment
 * Remote `docker stack deploy` production environment
 
+```sh
+$ minikube start --vm-driver=hyperkit --registry-mirror=https://registry.docker-cn.com --image-mirror-country=cn --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers
+
+$ minikube start --image-mirror-country=cn --iso-url=https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/iso/minikube-v1.6.0.iso --registry-mirror=https://dockerhub.azk8s.cn  --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers --vm-driver="hyperv" --hyperv-virtual-switch="minikube v switch"  --memory=4096 
+
+```
+
 -----------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------
