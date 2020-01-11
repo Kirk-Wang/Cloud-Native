@@ -1302,6 +1302,27 @@ $ minikube start --vm-driver=hyperkit --registry-mirror=https://registry.docker-
 $ minikube start --image-mirror-country=cn --iso-url=https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/iso/minikube-v1.6.0.iso --registry-mirror=https://dockerhub.azk8s.cn  --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers --vm-driver="hyperv" --hyperv-virtual-switch="minikube v switch"  --memory=4096 
 ```
 
+### Exposing services for external access
+* Now we would like to access the Web UI
+* We will expose it with a `NodePort`
+  * (just like we did for the registry)
+
+Exercise
+* Create a `NodePort` service for the Web UI:
+```sh
+kubectl expose deploy/webui --type=NodePort --port=80
+```
+* Check the port that was allocated:
+```sh
+kubectl get svc
+```
+
+### Scaling our demo app
+* Our ultimate goal is to get more DockerCoins
+  * (i.e. increase the number of loops per second shown on the web UI)
+* Let's look at the `architecture` again:
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
