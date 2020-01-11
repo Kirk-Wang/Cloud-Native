@@ -1395,7 +1395,18 @@ RNG=$(kubectl get svc rng -o go-template={{.spec.clusterIP}})
 ```
 Now we can access the IP addresses of our services through `$HASHER` and `$RNG`.
 
-
+### Checking `hasher` and `rng` response times
+Exercise
+* Remember to use `shpod` on macOS and Windows:
+```sh
+kubectl apply -f https://bret.run/shpod.yml
+kubectl attach --namespace=shpod -ti shpod
+```
+* Check the response times for both services:
+```sh
+httping -c 3 $HASHER
+httping -c 3 $RNG
+```
 
 
 
