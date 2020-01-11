@@ -1383,6 +1383,18 @@ httping ip.ad.dr.ess
 ```
 * We will use `httping` on the ClusterIP addresses of our services
 
+### Obtaining ClusterIP addresses
+* We can simply check the output of `kubectl get services`
+* Or do it programmatically, as in the example below
+
+Exercise
+* Retrieve the IP addresses:
+```sh
+HASHER=$(kubectl get svc hasher -o go-template={{.spec.cluterIP}})
+RNG=$(kubectl get svc rng -o go-template={{.spec.clusterIP}})
+```
+Now we can access the IP addresses of our services through `$HASHER` and `$RNG`.
+
 
 
 
