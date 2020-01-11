@@ -1492,6 +1492,16 @@ kubectl apply -f https://k8smastery.com/dockercoins.yaml
 * Dashboard users need to authenticate
 * We are going to take a dangerous shortcut
 
+### The insecure method
+* We could(and should) use Let's Encrypt...
+* ...but we don't want to deal with TLS certificates
+* We could(and should) learn how authentication and authorization work...
+* ...but we will use a guest account with admin access instead
+
+Yes, this will open our cluster to all kinds of shenanigans.Don't do this at home.
+
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
