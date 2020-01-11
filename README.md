@@ -1470,6 +1470,28 @@ items:
   ...
 ```
 
+### Deploying DockerCoins with YAML
+* We provide a YAML manifest with all the resources for DockerCoins
+(Deployments and Services)
+* We can use it if we need to deploy or redeploy DockerCoins
+
+Exercise
+* Deploy or redeploy DockerCoins:
+```sh
+kubectl apply -f https://k8smastery.com/dockercoins.yaml
+```
+* Note the warinings if you already had the resources created
+* This is because we didn't use `apply` before
+* This is OK for us learning, so ignore the warnings
+* Generally in production you want to stick with one method or the other
+
+### The Kubernetes Dashboard
+* Kubernetes resources can also be viewed with an official web UI
+* That dashboard is usually exposed over HTTPS
+(this requires obtaining a proper TLS certificate)
+* Dashboard users need to authenticate
+* We are going to take a dangerous shortcut
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
