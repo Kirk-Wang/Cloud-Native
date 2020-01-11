@@ -5,7 +5,7 @@ Bitnami containers
 
 Bitnami containers give you the latest stable versions of your application stacks, allowing you to focus on coding rather than updating dependencies or outdated libraries.
 
-[Development Containers](https://bitnami.com/containers)|[Turnkey Containers](https://bitnami.com/containers#turnkey-containers)
+[Development Containers](https://bitnami.com/containers) | [Turnkey Containers](https://bitnami.com/containers#turnkey-containers) | [k8s-for-docker-desktop](https://github.com/AliyunContainerService/k8s-for-docker-desktop)
 
 ## Kubernetes features (1.16)
 
