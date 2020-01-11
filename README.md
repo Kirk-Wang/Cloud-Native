@@ -1324,6 +1324,22 @@ kubectl get svc
 * We're at 4 hashes a second.Let's ramp this up!
 * The loop is done in the worker; perhaps we could try adding more workers?
 
+
+### Adding another worker
+* All we have to do is scale the `worker` Deployment
+
+Exercise
+* Open two new terminals to check what's going on with pods and deployments:
+```sh
+kubectl get pods -w
+kubectl get deployments -w
+```
+* Now, create more `worker` replicas:
+```sh
+kubectl scale deployment worker --replicas=2
+```
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
