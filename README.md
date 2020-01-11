@@ -1361,6 +1361,11 @@ kubectl scale deployment worker --replicas=10
 The graph will peak at 10 hashes/second.
 (We can add as many workers as we want: we will never go past 10 hashes/second.)
 
+### Why are we stuck at 10 hashes per second?
+* If this was high-quality, production code, we would have instrumentation
+  * (Datadog, Honeycomb, New Relic, statsd, Sumologic,...)
+
+
 
 
 
