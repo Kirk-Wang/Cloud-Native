@@ -1339,6 +1339,23 @@ kubectl get deployments -w
 kubectl scale deployment worker --replicas=2
 ```
 
+### Adding more workers
+* If 2 workers give us 2x speed,what about 3 workers?
+
+Exercise
+* Scale the `worker` Deployment further:
+```sh
+kubectl scale deployment worker --replicas=3
+```
+* The graph in the web UI should go up again.
+  * (This is looking great!We're gonna be RICH!)
+
+
+
+
+
+
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
