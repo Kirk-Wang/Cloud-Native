@@ -1364,7 +1364,9 @@ The graph will peak at 10 hashes/second.
 ### Why are we stuck at 10 hashes per second?
 * If this was high-quality, production code, we would have instrumentation
   * (Datadog, Honeycomb, New Relic, statsd, Sumologic,...)
-
+* It's not
+* Perhaps we could benchmark our web services?
+  * (with tools like `ab`, or even simpler, `httping`)
 
 
 
