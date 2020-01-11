@@ -1368,6 +1368,21 @@ The graph will peak at 10 hashes/second.
 * Perhaps we could benchmark our web services?
   * (with tools like `ab`, or even simpler, `httping`)
 
+### Benchmarking our web services
+* We want to check `hasher` and `rng`
+* We are going to use `httping`
+* It's just like `ping`, but using HTTP `GET` requests
+  * (it measures how long it takes to perform one `GET` request)
+* It's used like this:
+```sh
+httping [-c count] http://host:port/path
+```
+* Or even simpler:
+```sh
+httping ip.ad.dr.ess
+```
+* We will use `httping` on the ClusterIP addresses of our services
+
 
 
 
