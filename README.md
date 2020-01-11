@@ -1500,6 +1500,19 @@ kubectl apply -f https://k8smastery.com/dockercoins.yaml
 
 Yes, this will open our cluster to all kinds of shenanigans.Don't do this at home.
 
+### Running a very insecure dashboard
+* We are going to deploy that dashboard with one single command
+* This command will create all the necessary resources
+(the dashboard itself, the HTTP wrpper, the admin/guest account)
+* All these resources are defined in a YAML file
+* All we have to do is load that YAML file with `kubctl apply -f`
+
+Exercise
+* Create all the dashboard resources, with the following command:
+```sh
+kubectl apply -f https://k8smastery.com/insecure-dashboard.yaml
+kubectl get svc dashboard
+```
 
 
 ------------------------------------------------------------
