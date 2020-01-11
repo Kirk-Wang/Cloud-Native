@@ -1277,6 +1277,7 @@ Exercise
 ```sh
 kubectl logs deploy/rng
 kubectl logs deploy/worker
+kubectl logs deploy/worker --follow
 ```
 🤔`rng` is fine... But not `worker`.
 
