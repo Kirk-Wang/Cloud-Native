@@ -1321,7 +1321,8 @@ kubectl get svc
 * Our ultimate goal is to get more DockerCoins
   * (i.e. increase the number of loops per second shown on the web UI)
 * Let's look at the `architecture` again:
-
+* We're at 4 hashes a second.Let's ramp this up!
+* The loop is done in the worker; perhaps we could try adding more workers?
 
 ------------------------------------------------------------
 ------------------------------------------------------------
