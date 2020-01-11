@@ -1358,6 +1358,10 @@ Exercise
 ```sh
 kubectl scale deployment worker --replicas=10
 ```
+The graph will peak at 10 hashes/second.
+(We can add as many workers as we want: we will never go past 10 hashes/second.)
+
+
 
 
 
