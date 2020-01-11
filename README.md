@@ -1348,7 +1348,16 @@ Exercise
 kubectl scale deployment worker --replicas=3
 ```
 * The graph in the web UI should go up again.
-  * (This is looking great!We're gonna be RICH!)
+  * (This is looking great! We're gonna be RICH!)
+
+### Adding even more workers
+* Let's see if 10 workers give us 10x speed!
+
+Exercise
+* Scale the `worker` Deployment to a bigger number:
+```sh
+kubectl scale deployment worker --replicas=10
+```
 
 
 
