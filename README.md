@@ -1390,7 +1390,7 @@ httping ip.ad.dr.ess
 Exercise
 * Retrieve the IP addresses:
 ```sh
-HASHER=$(kubectl get svc hasher -o go-template={{.spec.cluterIP}})
+HASHER=$(kubectl get svc hasher -o go-template={{.spec.clusterIP}})
 RNG=$(kubectl get svc rng -o go-template={{.spec.clusterIP}})
 ```
 Now we can access the IP addresses of our services through `$HASHER` and `$RNG`.
@@ -1408,11 +1408,18 @@ httping -c 3 $HASHER
 httping -c 3 $RNG
 ```
 
+### Let's draw hasty conclusions
+* The bottleneck seems to be `rng`
+* What if we don't have enough entropy and can't generate enough random numbers?
+* We need to scale out the `rng` service on multiple machines!
 
+Note:this is a fiction!We have enough entropy.But we need a pretext to scale out.
+* Oops we only have one node for learning.🤔
+* Let's pretend and I'll explain along the way.
 
+(in fact, the code of `rng` uses `/dev/urandom`. which never runs out of entropy......
 
-
-
+...and is just as good as `/dev/random`)
 
 
 ------------------------------------------------------------
