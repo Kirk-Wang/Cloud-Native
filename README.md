@@ -1514,6 +1514,15 @@ kubectl apply -f https://k8smastery.com/insecure-dashboard.yaml
 kubectl get svc dashboard
 ```
 
+### Dashboard authentication
+* We have three authentication options at this point:
+  * token (associated with a role that has appropriate permissions)
+  * kubeconfig (e.g. using the `~/.kube/config` file)
+  * "skip" (use the dashboard "service account")
+* Let's use "skip": we're logged in!
+
+By the way, we just added a backdoor to our Kubernetes cluster!
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
