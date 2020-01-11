@@ -1421,6 +1421,23 @@ Note:this is a fiction!We have enough entropy.But we need a pretext to scale out
 
 ...and is just as good as `/dev/random`)
 
+### Deploying with YAML
+* So far, we created resources with the following commands:
+  * `kubectl run`
+  * `kubectl create deployment`
+  * `kubectl expose`
+* We can also create resources directly with YAML manifests
+
+### Kubectl apply vs create
+* `kubectl create -f whatever.yaml`
+  * creates resources if they don't exist
+  * if resources already exist, don't alter them(and display error message)
+* `kubectl apply -f whatever.yaml`
+  * creates resources if they don't exist
+  * if resources already exist,update them(to match the definition provided by the YAML file)
+  * stores the manifest as an annotation in the resource
+
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
