@@ -1803,6 +1803,15 @@ kubectl edit service rng
 
 For a good laugh:if we had used "ja", "oui", "si"... as the value,it would have world.
 
+### Updating the service selector, take 2
+Exercise
+* Update the service to add `enabled: "yes"`  to its selector:
+```sh
+kubectl edit service rng
+```
+* This time is should work!
+* If we did everything correctly, the web UI shouldn't show any change.
+
 
 
 
