@@ -1714,6 +1714,14 @@ this deployment gets the label `app=rng`
 * Therefore, the pods created by the daemon set get the same labels
 * When we use `kubectl run stuff`, the label is `run=stuff` instead
 
+### Updating load balancer configuration
+* We would like to remove a pod from the load balancer
+* What would happen if we removed that pod, with `kubectl delete pod...`?
+  * It would be re-created immediately(by the replica set ro the daemon set)
+* What would happen if we removed the `app=rng` label from that pod?
+  * It would also be re-created immediately
+  * Why?!?
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
