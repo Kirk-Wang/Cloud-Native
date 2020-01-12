@@ -1673,6 +1673,13 @@ In a multi-node setup, master usually have taints preventing pods from running t
 
 (To schedule a pod on this node anyway,the pod will require appropriate tolerations)
 
+### Is this working?
+* Look at the web UI
+* The graph should now go above 10 hashes per second!
+* It looks like the newly created pods are serving traffic correctly
+* How and why did this happen?
+(We didn't do anything special to add them to the `rng` service load balancer!)
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
