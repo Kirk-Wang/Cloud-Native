@@ -1634,6 +1634,8 @@ Exercise
 ```sh
 kubectl apply -f rng.yml --validate=false
 ```
+Wait...Now, can it be that easy?
+
 
 
 ------------------------------------------------------------
