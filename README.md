@@ -1658,6 +1658,16 @@ NAME                 DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE S
 daemonset.apps/rng   1         1         1       1            1           <none>          7s
 ```
 
+### Too many pods
+* If we check with `kubectl get pods`, we see:
+  * one pod for the deployment(named `rng-xxxxxxxxxxx-yyyyy`)
+  * one pod per node for the daemon set(named `rng-zzzzz`)
+```sh
+NAME                             READY   STATUS    RESTARTS   AGE
+pod/rng-58596fdbd-lqlsp          1/1     Running   0          20h
+pod/rng-qnq4n                    1/1     Running   0          7s
+```
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
