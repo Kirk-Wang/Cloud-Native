@@ -1644,6 +1644,20 @@ Exercise
 kubectl get all
 ```
 
+#### `deploy/rng` and `ds/rng`
+* You can have different resource types with the same name
+(i.e. a deployment and a daemon set both named `rng`)
+* We still have the old `rng` deployment
+```
+NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/rng         1/1     1            1           20h
+```
+* But how we have the new `rng` daemon set as well
+```
+NAME                 DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+daemonset.apps/rng   1         1         1       1            1           <none>          7s
+```
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
