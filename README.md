@@ -1570,6 +1570,18 @@ By the way, we just added a backdoor to our Kubernetes cluster!
 * If we remove(or reboot) a node, one `rng` container will restart elsewhere
 (add we will end up with two instances `rng` on the same node)
 
+### Daemon sets in practice
+* Daemon sets are great for cluster-wide, per-node processes:
+  * `kube-proxy`
+  * CNI network plugins
+  * monitoring agents
+  * hardware management tools(e.g. SCSI/FC HBA agents)
+  * etc.
+* They can also be restricted to run only on some nodes
+
+### Creating a daemon set
+* Unfortunately, as of Kubernetes 1.15, the CLI cannot create daemon sets
+
 
 
 ------------------------------------------------------------
