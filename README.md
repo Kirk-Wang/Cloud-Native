@@ -1775,6 +1775,23 @@ there won't be any interruption.
 * ... Or we could use `kubectl label` to label them all
 * `kubectl label` can use selectors itself
 
+Exercise
+* Add `enabled=yes` to all pods that have `app=rng`
+```sh
+kubectl label pods -l app=rng enabled=yes
+```
+
+### Updating the service selector
+* We need to edit the service specification
+* Reminder: in the service deinition, we will see `app: rng` in two places
+  * the label of the service itself(we don't need to touch that one)
+  * the selector of the service(that's the one we want to change)
+
+Exercise
+* Update the service to add `enabled: yes` to its selector:
+```sh
+kubectl edit service rng
+```
 
 
 
