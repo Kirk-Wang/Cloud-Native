@@ -1840,7 +1840,11 @@ kubectl label pod -l app=rng,pod-template-hash enabled-
 
 There might be a slight change in the web UI(since we removed a bit of capacity from `rng` service).if we remove more pods, the effect should be more visible.
 
-### 
+### Updating the daemon set
+* If we scale up our cluster by adding new nodes, the daemon set will create more pods
+* These pods won't have the `enable=yes` label
+* If we want these pods to have that label, we need to edit the daemon set spec
+* We can do that with e.g.`kubectl edit daemonset rng`
 
 
 ------------------------------------------------------------
