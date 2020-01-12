@@ -1913,6 +1913,18 @@ metadata:
 spec:
 ```
 
+### A simple Pod in YAML
+* This is a single manifest that creates one Pod
+```yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.17.3
+```
 
 ------------------------------------------------------------
 ------------------------------------------------------------
