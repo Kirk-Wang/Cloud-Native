@@ -1978,6 +1978,24 @@ spec:
   * Use `kubectl apply -f ...` with the YAML file to:
   * update the resource(if it's the same kind)
   * create a new resource(if it's a different kind)
+* Or...we have the docs, with good starter YAML
+  * StatefulSet, DaemonSet, ConfigMap, and a ton more on Github
+* Or...we can use `-o yaml --dry-run`
+
+### Generating YAML without creating resources
+* We can use the `-o yaml --dry-run` option combo withe `run` and `create`
+
+Exercise
+* Generate the YAML for a Deployment without creating it:
+```sh
+kubectl create deployment web --image nginx -o yaml --dry-rn
+``` 
+* Generate the YAML for a Namespace without creating it:
+```sh
+kubectl create namespace awesome-app -o yaml --dry-run
+```
+* We can clean up the YAML even more if we want
+  * (for instance, we can remove the `creationTimestamp` and empty dicts)
 
 
 ------------------------------------------------------------
