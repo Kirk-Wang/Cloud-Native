@@ -2047,6 +2047,7 @@ kubectl api-versions
 kubectl explain pod
 kubectl explain pod.spec
 kubectl explain pod.spec.volumes
+kubectl explain pod.spec --recursive
 ```
 
 ------------------------------------------------------------
