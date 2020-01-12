@@ -1745,7 +1745,8 @@ this deployment gets the label `app=rng`
 * The only way to remove a pod is to remove or change the `app` label
 * ...But that will cause another pod to be created instead!
 * What's the solution?
-
+* We need to change the selector of the `rng` service!
+* Let's add another label to that selector(e.g. enabled=yes)
 
 
 
