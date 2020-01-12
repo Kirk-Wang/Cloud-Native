@@ -1769,6 +1769,11 @@ requests to the service will time out.By doing
 there won't be any interruption.
 ```
 
+### Adding labels to pods
+* We want to add the label `enabled=yes` to all pods that have `app=rng`
+* We could edit each pod one by one with `kubectl edit`...
+* ... Or we could use `kubectl label` to label them all
+* `kubectl label` can use selectors itself
 
 
 
