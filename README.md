@@ -1748,6 +1748,12 @@ this deployment gets the label `app=rng`
 * We need to change the selector of the `rng` service!
 * Let's add another label to that selector(e.g. enabled=yes)
 
+### Complex selectors
+* If a selector specifies multiple labels, they are understood as a logical AND
+(In other words: the pods must match all the labels)
+* Kubernetes has support for advanced, set-based selectors
+(But these cannot be used with services, at least not yet!)
+
 
 
 
