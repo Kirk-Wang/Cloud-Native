@@ -1722,6 +1722,9 @@ this deployment gets the label `app=rng`
   * It would also be re-created immediately
   * Why?!?
 
+### Seletors for replia sets and daemon sets
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
