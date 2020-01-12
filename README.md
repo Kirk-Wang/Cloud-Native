@@ -1530,6 +1530,15 @@ By the way, we just added a backdoor to our Kubernetes cluster!
   * check this execllent post on Heptio's blog
 * Minikube/microK8s can be enabled with easy commands
   * `minikube dashboard` and `microk8s.enable dashboard`
+
+### Other dashboards
+* Kube Web View
+  * read-only dashboard
+  * optimized for "troubleshooting and incident response"
+  * see vision and goals for details
+* Kube Ops View
+  * "provides a common operational picture for multiple Kubernetes clusters"
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
