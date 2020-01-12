@@ -1636,7 +1636,13 @@ kubectl apply -f rng.yml --validate=false
 ```
 Wait...Now, can it be that easy?
 
-
+### Checking what we've done
+* Did we transform our `deployment` into a `daemonset`?
+Exercise
+* Look at the resources that we have now:
+```sh
+kubectl get all
+```
 
 
 ------------------------------------------------------------
