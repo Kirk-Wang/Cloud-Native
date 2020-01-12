@@ -1812,6 +1812,15 @@ kubectl edit service rng
 * This time is should work!
 * If we did everything correctly, the web UI shouldn't show any change.
 
+### Updating labels
+* We want to disable the pod that was created by the deployment
+* All we have to do, is remove the `enabled` label from that pod
+* To identify that pod, we can use its name
+* ... Or rely on the fact that it's the only one with a `pod-template-hash` label
+* Good to know:
+  * `kubctl label ... foo=` doesn't remove a label(it sets it to an empty string)
+  * to remove label `foo`, use `kubectl label ... foo-`
+  * to change an existing label, we would need to add `--overwrite`
 
 
 
