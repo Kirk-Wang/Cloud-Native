@@ -1734,7 +1734,11 @@ this deployment gets the label `app=rng`
   *...The pod "disappears" for its parent, which re-creates another pod to replace it
 * Since both the `rng` daemon set and the `rng` replica set use `app=rng`...
   * ...Why don't they "find" each other's pods?
-
+* Replica sets have a more specific selector, visible with `kubectl describe`
+  * (It looks like `app=rng, pod-template-hash=abcd1234`)
+* Daemon sets also have a more specific selector, but it's invisible
+  * (It looks like `app=rng, controller-revision-hash=abcd1234`)
+* As a result,each controller only "sees" the pods it manages
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
