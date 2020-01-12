@@ -2034,7 +2034,11 @@ spec:       # find with "kubectl describe pod"
 
 ### General workflow of YAML from scrach
 * Find the resource `kind` you want to create(`api-resources`)
-
+* Find the latest `apiVersion` your cluster supports for `kind`(`api-versions`)
+* Give it a `name` in metadata(minimum)
+* Dive into the `spec` of that `kind`
+  * `kubectl explain <kind>.spec`
+  * `kubectl explain <kind> --recursive`
 
 ------------------------------------------------------------
 ------------------------------------------------------------
