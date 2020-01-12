@@ -1964,6 +1964,21 @@ spec:
   * resource limits
   * healthchecks
   * many other resource options
+* Other resource types don't have their own commands!
+  * DaemonSets
+  * StatefulSets
+  * and more!
+* How do we access these features?
+
+### We don't have to start from scratch
+* Output YAML from existing resources
+  * Create a resource(e.g. Deployment)
+  * Dump its YAML with `kubectl get -o yaml...`
+  * Edit the YAML
+  * Use `kubectl apply -f ...` with the YAML file to:
+  * update the resource(if it's the same kind)
+  * create a new resource(if it's a different kind)
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
