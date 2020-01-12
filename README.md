@@ -1549,7 +1549,13 @@ By the way, we just added a backdoor to our Kubernetes cluster!
   * bing-mounts our nodes' filesystem
   * inserts SSH keys in the root account(on the node)
   * encrypts our data and ransoms it
-  * 😱😱😱
+
+### `kubectl apply` is the new `curl | sh`
+* `curl | sh` is convenient
+* It's safe if you use HTTPS URLs from trusted sources
+* `kubectl apply -f` is convenient
+* It's safe if you use HTTPS URLs from trusted sources
+* Example:the official setup instructions for most pod networks
 
 ------------------------------------------------------------
 ------------------------------------------------------------
