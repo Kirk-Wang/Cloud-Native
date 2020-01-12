@@ -1723,7 +1723,15 @@ this deployment gets the label `app=rng`
   * Why?!?
 
 ### Seletors for replia sets and daemon sets
-
+* The "mission" of a replica set is:
+  * "Make sure that there is the right number of pods matching this spec!"
+* The "mission" of a daemon set is:
+  * "Make sure that there is a pod matching this spec on each node!"
+* In fact, replica sets adn daemon sets do not check pod specifications
+* They merely have a selector, and they look for pods matching that selector
+* Yes, we can fool them by manually creating pods with the "right" labels
+* Bottom line:if we remove our `app=rng` label...
+  *...The pod "disappears" for its parent, which re-creates another pod to replace it
 
 ------------------------------------------------------------
 ------------------------------------------------------------
