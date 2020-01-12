@@ -1889,6 +1889,18 @@ kubectl delete daemonset/rng
 * How do we write YAML from scratch?
 * And maybe,what is YAML?
 
+### YAML Basics(just in case you need a refresher)
+* It's technically a superset of JSON, designed for humans
+* JSON was good for machines, but not for humans
+* Spaces set the structure. One space off and game over
+* Remember spaces not tabs,Ever!
+* Two spaces is standard, but four spaces works too
+* You don't have to learn all YAML features, but key concepts you need:
+  * Key/Value Pairs
+  * Array/Lists
+  * Dictionary/Maps
+* Good online tutorials exist here, here, here, and YouTube here
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
