@@ -1997,7 +1997,26 @@ kubectl create namespace awesome-app -o yaml --dry-run
 * We can clean up the YAML even more if we want
   * (for instance, we can remove the `creationTimestamp` and empty dicts)
 
+### Try `-o yaml --dry-run` with other create commands
+```sh
+clusterrole         # Create a ClusterRole.
+clusterrolebinding  # Create a ClusterRoleBinding for a particular ClusterRole.
+configmap           # Create a configmap from a local file, directory or literal
+cronjob             # Create a cronjob with the specified name
+deployment          # Create a deployment with the specified name
+job                 # Create a job with the specified name
+namespace           # Create a namespace with the specified name
+poddisruptionbudget # Create a pod disruption budget with the specified name
+priorityclass       # Create a priorityclass with the specified name
+quota               # Create a quota with the specified name
+role                # Create a role with single rule
+rolebinding         # Create a RoleBinding for a particular Role or ClusterRole
+secret              # Create a secret using specified subcommand
+service             # Create a service using specified subcommand
+serviceaccount      # Create a service account with the specified name
+```
 
+* Ensure you use valid `create` commands with required options for each
 
 
 ------------------------------------------------------------
