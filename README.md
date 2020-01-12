@@ -2052,6 +2052,26 @@ kubectl explain pod.spec.volumes
 kubectl explain pod.spec --recursive
 ```
 
+### Advantage of YAML
+* Using YAML(instead of `kubectl run/create/etc.` )allows to be declarative
+* The YAML describes the desired state of our cluster and applications
+* YAML can be stored. versioned, archived(e.g. in git repositories)
+* To change resource, change the YAML files(instead of using `kubectl edit/scale/label/etc.`)
+* Changes can be reviewed before being applied
+(with code reviews, pull requests...)
+* This workflow is sometimes called "GitOps"
+(there are tools like Weave Flux or GitKube to facilitate it)
+
+### YAML in practice
+* Get started with `kubectl run/create/expose/etc.`
+* Dump the YAML with `kubectl get -o yaml`
+* Tweak that YAML and `kubectl apply` it back
+* Store that YAML for reference(for further deployments)
+* Feel free to clean up the YAML
+  * remove fields you don't know
+  * check that it still works!
+* `That YAML` will be useful later when using e.g. Kustomize or Helm
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
