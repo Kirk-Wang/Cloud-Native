@@ -1847,6 +1847,16 @@ There might be a slight change in the web UI(since we removed a bit of capacity 
 * We can do that with e.g.`kubectl edit daemonset rng`
 
 
+### Labels and debugging
+* When a pod is misbehaving, we can delete it:another one will be recreated
+* But we can also change its labels
+* It will be removed from the load balancer(it won't receive traffic anymore)
+* Another pod will be recreated immediately
+* But the problematic pod is still here, and we can inspect and debug it
+* We can even re-add it to the rotation if necessary
+  * (Very useful to troubleshoot intermittent and elusive bugs)
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
