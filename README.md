@@ -2040,6 +2040,8 @@ spec:       # find with "kubectl describe pod"
   * `kubectl explain <kind>.spec`
   * `kubectl explain <kind> --recursive`
 * Browse the docs `API Reference` for your cluster version to supplement
+* Use `--dry-run` and `--server-dry-run` for testing
+* `kubectl create` and `delete` until you get it right
 
 ```sh
 kubectl api-resources
