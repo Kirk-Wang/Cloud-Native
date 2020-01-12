@@ -1988,7 +1988,7 @@ spec:
 Exercise
 * Generate the YAML for a Deployment without creating it:
 ```sh
-kubectl create deployment web --image nginx -o yaml --dry-rn
+kubectl create deployment web --image nginx -o yaml --dry-run
 ``` 
 * Generate the YAML for a Namespace without creating it:
 ```sh
