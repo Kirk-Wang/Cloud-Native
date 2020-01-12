@@ -1827,7 +1827,7 @@ Exercise
 * In one window, check the logs of that pod:
 ```sh
 POD=$(kubectl get pod -l app=rng,pod-template-hash -o name)
-kubectl logs --tail 1 --fllow $POD
+kubectl logs --tail 1 --follow $POD
 
 (We should see a steady stream of HTTP logs)
 ```
