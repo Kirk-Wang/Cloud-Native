@@ -1581,6 +1581,11 @@ By the way, we just added a backdoor to our Kubernetes cluster!
 
 ### Creating a daemon set
 * Unfortunately, as of Kubernetes 1.15, the CLI cannot create daemon sets
+* More precisely: it doesn't have a subcommand to create a daemon set
+* But any kind of resource can always be created by providing a YAML description:
+```sh
+kubectl apply -f foo.yaml
+```
 
 
 
