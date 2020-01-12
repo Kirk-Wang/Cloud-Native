@@ -2041,6 +2041,12 @@ spec:       # find with "kubectl describe pod"
   * `kubectl explain <kind> --recursive`
 * Browse the docs `API Reference` for your cluster version to supplement
 
+```sh
+kubectl api-resources
+kubectl api-versions
+kubectl explain pod
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
