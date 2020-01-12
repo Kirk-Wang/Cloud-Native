@@ -2087,6 +2087,14 @@ kubectl explain pod.spec --recursive
 * Let's talk more about options for testing YAML
 * Including testing against the live cluster API!
 
+### Using `--dry-run` with `kubectl apply`
+* The `--dry-run` option can also be used with `kubectl apply`
+* However, it can be mileading(it doesn't do a "real" dry run)
+* Let's see what happens in the following scenario:
+  * generate the YAML for a Deployment
+  * tweak the YAML to transform it into a DaemonSet
+  * apply that YAML to see what would actually be created
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
