@@ -2045,6 +2045,8 @@ spec:       # find with "kubectl describe pod"
 kubectl api-resources
 kubectl api-versions
 kubectl explain pod
+kubectl explain pod.spec
+kubectl explain pod.spec.volumes
 ```
 
 ------------------------------------------------------------
