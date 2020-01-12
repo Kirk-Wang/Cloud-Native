@@ -1926,6 +1926,38 @@ spec:
     image: nginx:1.17.3
 ```
 
+### Deployment and Service manifests in one YAML file
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: mynginx
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+  selector:
+    app: mynginx
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mynginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mynginx
+  template:
+    metadata:
+      labels:
+        app: mynginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.17.3
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
