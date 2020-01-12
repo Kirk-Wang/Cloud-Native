@@ -1856,6 +1856,15 @@ There might be a slight change in the web UI(since we removed a bit of capacity 
 * We can even re-add it to the rotation if necessary
   * (Very useful to troubleshoot intermittent and elusive bugs)
 
+### Labels and advanced rollout control
+* Conversely, we can add pods matching a service's selector
+* These pods will then receive requests and serve traffic
+* Examples:
+  * `one-shot pod with all debug flags enabled, to collect logs`
+  * pods created automatically, but added to rotation in a second step
+  (by setting their label accordingly)
+* This gives us building blocks for canary and blue/green deployments
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
