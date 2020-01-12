@@ -1667,6 +1667,11 @@ NAME                             READY   STATUS    RESTARTS   AGE
 pod/rng-58596fdbd-lqlsp          1/1     Running   0          20h
 pod/rng-qnq4n                    1/1     Running   0          7s
 ```
+The daemon set created one pod per node.
+
+In a multi-node setup, master usually have taints preventing pods from running there.
+
+(To schedule a pod on this node anyway,the pod will require appropriate tolerations)
 
 
 ------------------------------------------------------------
