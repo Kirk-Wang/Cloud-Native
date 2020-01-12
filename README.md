@@ -1538,6 +1538,18 @@ By the way, we just added a backdoor to our Kubernetes cluster!
   * see vision and goals for details
 * Kube Ops View
   * "provides a common operational picture for multiple Kubernetes clusters"
+* Your Kubernetes distro comes with one!
+* Cloud-provided control-planes often don't come with one.
+
+### Security implications of `kubectl apply`
+* When we do `kubectl apply -f <URL>`.we create arbitrary resources
+* Resources can be evil;imagine a `deployment` that...
+  * starts bitcoin miners on the whole cluster
+  * hides in a non-default namespace
+  * bing-mounts our nodes' filesystem
+  * inserts SSH keys in the root account(on the node)
+  * encrypts our data and ransoms it
+  * 😱😱😱
 
 ------------------------------------------------------------
 ------------------------------------------------------------
