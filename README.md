@@ -1759,6 +1759,15 @@ this deployment gets the label `app=rng`
 2. Update the selector for the `rng` service to also include `enabled=yes`
 3. Toggle traffic to a pod by manually adding/removing the `enabled` label 
 4. Profit!
+```
+Note: if we swap steps 1 and 2, it will cause a short
+ service disruption, becasuse there will be
+a period of time during which the service selector
+ won't match any pod. During that time,
+requests to the service will time out.By doing
+ things in the order above, we guarantee that
+there won't be any interruption.
+```
 
 
 
