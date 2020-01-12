@@ -2108,6 +2108,7 @@ kubectl apply -f web.yaml --dry-run --validate=false -o yaml
 ```
 The resulting YAML doesn't represent a valid DaemonSet.
 
+### Server-side dry run
 
 ------------------------------------------------------------
 ------------------------------------------------------------
