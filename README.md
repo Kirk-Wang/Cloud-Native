@@ -1822,7 +1822,23 @@ kubectl edit service rng
   * to remove label `foo`, use `kubectl label ... foo-`
   * to change an existing label, we would need to add `--overwrite`
 
+### Removing a pod from the load balancer
+Exercise
+* In one window, check the logs of that pod:
+```sh
+POD=$(kubectl get pod -l app=rng,pod-template-hash -o name)
+kubectl logs --tail 1 --fllow $POD
 
+(We should see a steady stream of HTTP logs)
+```
+* In another window, remove the label from the pod:
+```sh
+kubectl label pod -l app=rng,pod-template-hash enabled-
+
+(The stream of HTTP logs should stop immediately)
+```
+
+There might be a slight change in the web UI(since we removed a bit of capacity from `rng` service).if we remove more pods, the effect should be more visible.
 
 
 
