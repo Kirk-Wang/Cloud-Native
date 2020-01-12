@@ -1563,6 +1563,15 @@ By the way, we just added a backdoor to our Kubernetes cluster!
 * We do not want two instances of `rng` on the same node
 * We will do that with a daemon set
 
+### Why not a deployment?
+* Can't we just do `kubectl scale deployment rng --replicas=...`?
+* Nothing guarantees that the `rng` containers will be distributed evenly
+* If we add nodes later,they will not automatically run a copy of `rng`
+* If we remove(or reboot) a node, one `rng` container will restart elsewhere
+(add we will end up with two instances `rng` on the same node)
+
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
