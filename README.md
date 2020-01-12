@@ -1706,7 +1706,13 @@ kubectl get pods --selector app=rng
 But...why do these pods(in particular, the new ones)have this `app=rng` label?
 
 Where do labels come from?
-* 
+* When we create a deployment with `kubectl create deployment rng`,
+this deployment gets the label `app=rng`
+* The replica sets created by this deployment also get the label `app=rng`
+* The pods created by these replica sets also get the label `app=rng`
+* When we created the daemon set from the deployment, we re-used the same spec
+* Therefore, the pods created by the daemon set get the same labels
+* When we use `kubectl run stuff`, the label is `run=stuff` instead
 
 ------------------------------------------------------------
 ------------------------------------------------------------
