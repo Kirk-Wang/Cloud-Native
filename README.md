@@ -1865,6 +1865,16 @@ There might be a slight change in the web UI(since we removed a bit of capacity 
   (by setting their label accordingly)
 * This gives us building blocks for canary and blue/green deployments
 
+### Cleanup
+Let's cleanup before we start the next lecture!
+
+Exercise
+* remove our DockerCoin resources(for now):
+```sh
+kubectl delete -f https://k8smastery.com/dockercoins.yaml
+kubectl delete daemonset/rng
+```
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
