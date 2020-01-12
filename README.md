@@ -1557,6 +1557,12 @@ By the way, we just added a backdoor to our Kubernetes cluster!
 * It's safe if you use HTTPS URLs from trusted sources
 * Example:the official setup instructions for most pod networks
 
+### Daemon sets
+* We want to scale `rng` in a way that is different from how we scaled `worker`
+* We want one(and exactly one) instance of `rng` per node
+* We do not want two instances of `rng` on the same node
+* We will do that with a daemon set
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
