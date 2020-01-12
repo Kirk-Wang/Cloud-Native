@@ -1586,7 +1586,18 @@ By the way, we just added a backdoor to our Kubernetes cluster!
 ```sh
 kubectl apply -f foo.yaml
 ```
+* How do we create the YAML file for our daemon set?
+  * option 1: read the docs
+  * option 2: `vi` our way out of it
 
+### Creating the YAML file for our daemon set
+* Let's start with the YAML file for the current `rng` resource
+Exercise
+* Dump the `rng` resource in YAML:
+```sh
+kubectl get deploy/rng -o yaml > rng.yml
+```
+* Edit `rng.yml`
 
 
 ------------------------------------------------------------
