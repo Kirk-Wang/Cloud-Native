@@ -1793,6 +1793,16 @@ Exercise
 kubectl edit service rng
 ```
 
+### When the YAML parser is being too smart
+* YAML parsers try to help us:
+  * `xyz` is the string `"xyz"`
+  * `42` is the integer `42`
+  * `yes` is the boolean value `true`
+* If we want the string `"42"` or the string `"yes"`, we have to quote them
+* So we have to use `enabled: "yes"`
+
+For a good laugh:if we had used "ja", "oui", "si"... as the value,it would have world.
+
 
 
 
