@@ -1528,7 +1528,8 @@ By the way, we just added a backdoor to our Kubernetes cluster!
 * If you do that on your production cluster, people can and will abuse it
 * For an in-depth discussion about securing the dashboard
   * check this execllent post on Heptio's blog
-
+* Minikube/microK8s can be enabled with easy commands
+  * `minikube dashboard` and `microk8s.enable dashboard`
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
