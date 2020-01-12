@@ -2039,6 +2039,7 @@ spec:       # find with "kubectl describe pod"
 * Dive into the `spec` of that `kind`
   * `kubectl explain <kind>.spec`
   * `kubectl explain <kind> --recursive`
+* Browse the docs `API Reference` for your cluster version to supplement
 
 ------------------------------------------------------------
 ------------------------------------------------------------
