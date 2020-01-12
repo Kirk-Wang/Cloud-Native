@@ -1523,6 +1523,11 @@ kubectl get svc dashboard
 
 By the way, we just added a backdoor to our Kubernetes cluster!
 
+### Running the Kubernetes Dashboard securely
+* The steps that we just showed you are for educational purpose only!
+* If you do that on your production cluster, people can and will abuse it
+* For an in-depth discussion about securing the dashboard
+  * check this execllent post on Heptio's blog
 
 ------------------------------------------------------------
 ------------------------------------------------------------
