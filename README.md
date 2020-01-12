@@ -1901,6 +1901,18 @@ kubectl delete daemonset/rng
   * Dictionary/Maps
 * Good online tutorials exist here, here, here, and YouTube here
 
+### Basic parts of any Kubernetes resource manifest
+* Can be in YAML or JSON, but YAML is 100%.
+* Each file contains one or more manifests
+* Each manifest describes an API object(deployment, service, etc.)
+* Each manifest needs four parts(root key:values in the file)
+```yml
+apiVersion:
+kind:
+metadata:
+spec:
+```
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
