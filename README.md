@@ -1958,6 +1958,13 @@ spec:
         image: nginx:1.17.3
 ```
 
+### The limits of generate YAML
+* Advanced(and even not-so-advanced) features require us to write YAML:
+  * pods with multiple containers
+  * resource limits
+  * healthchecks
+  * many other resource options
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
