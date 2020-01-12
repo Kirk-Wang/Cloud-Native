@@ -2095,6 +2095,19 @@ kubectl explain pod.spec --recursive
   * tweak the YAML to transform it into a DaemonSet
   * apply that YAML to see what would actually be created
 
+### The limits of `kubectl apply --dry-run`
+Exercise
+* Generate the YAML for a deployment:
+```sh
+kubectl create deployment web --image=nginx -o yaml > web.yaml
+```
+* Change the `kind` in the YAML to make it a `DaemonSet`
+* Ask `kubectl` what would be applied:
+```sh
+kubectl apply -f web.yaml --dry-run --validate=false -o yaml
+```
+The resulting YAML doesn't represent a valid DaemonSet.
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
