@@ -1875,6 +1875,20 @@ kubectl delete -f https://k8smastery.com/dockercoins.yaml
 kubectl delete daemonset/rng
 ```
 
+### Authoring YAML
+* To use Kubernetes is to "live in YAML"!
+* It's more important to learn the foundations then to memorize all YAML keys(hundreds+)
+* There are various ways to generate YAML with Kubernetes, e.g.:
+  * `kubectl run`
+  * `kubectl create deployment`(and a few other `kubectl create` variants)
+  * `kubectl expose`
+* These commands use "generators" because the API only accepts YAML(actually JSON)
+* Pro: They are easy to use
+* Con: They have limits
+* When and why do we need to write our own YAML?
+* How do we write YAML from scratch?
+* And maybe,what is YAML?
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
