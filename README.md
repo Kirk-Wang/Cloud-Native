@@ -2018,6 +2018,23 @@ serviceaccount      # Create a service account with the specified name
 
 * Ensure you use valid `create` commands with required options for each
 
+### Writing YAML from scratch, "YAML The Hard Way"
+* Paying homage to Kelsey Hightower's "Kubernetes The Hard Way"
+* A reminder about manifest:
+  * Each file contains one or more manifests
+  * Each manifest describes an API object(deployment, service, etc.)
+  * Each manifest needs four parts(root key:values in the file)
+```yml
+apiVersion: # find with "kubectl api-versions"
+kind:       # find with "kubectl api-resources"
+metadata:
+spec:       # find with "kubectl describe pod"
+```
+* Those three `kubectl` commands, plus the API docs, is all we'll need
+
+### General workflow of YAML from scrach
+* Find the resource `kind` you want to create(`api-resources`)
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
