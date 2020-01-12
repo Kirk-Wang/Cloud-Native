@@ -1754,6 +1754,12 @@ this deployment gets the label `app=rng`
 * Kubernetes has support for advanced, set-based selectors
 (But these cannot be used with services, at least not yet!)
 
+### The plan
+1. Add the label `enabled=yes` to all our `rng` pods
+2. Update the selector for the `rng` service to also include `enabled=yes`
+3. Toggle traffic to a pod by manually adding/removing the `enabled` label 
+4. Profit!
+
 
 
 
