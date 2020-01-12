@@ -1680,6 +1680,18 @@ In a multi-node setup, master usually have taints preventing pods from running t
 * How and why did this happen?
 (We didn't do anything special to add them to the `rng` service load balancer!)
 
+### Labels and selectors
+* The `rng` service is load balancing requests to a set of pods
+* That set of pods is defined by the selector of the `rng` service
+
+Exercise
+* Check the selector in the `rng` service definition:
+```sh
+kubectl describe service rng
+```
+* The selector is `app=rng`
+* It means "all the pods having the label app=rng"
+(They can have additional labels as well, that's OK!)
 
 ------------------------------------------------------------
 ------------------------------------------------------------
