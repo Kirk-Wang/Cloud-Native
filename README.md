@@ -1693,6 +1693,21 @@ kubectl describe service rng
 * It means "all the pods having the label app=rng"
 (They can have additional labels as well, that's OK!)
 
+### Selector evaluation
+* We can use selectors with many `kubectl` commands
+* For instance, with `kubectl get`, `kubectl logs`, `kubectl delete`... and more
+
+Exercise
+* Get the list of pods matching selector `app=rng`:
+```sh
+kubectl get pods -l app=rng
+kubectl get pods --selector app=rng
+```
+But...why do these pods(in particular, the new ones)have this `app=rng` label?
+
+Where do labels come from?
+* 
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
