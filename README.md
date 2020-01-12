@@ -2072,6 +2072,16 @@ kubectl explain pod.spec --recursive
   * check that it still works!
 * `That YAML` will be useful later when using e.g. Kustomize or Helm
 
+### YAML linting and validation
+* Use generic linters to check proper YAML formatting
+  * yamllint.com
+  * codebeautiful.org/yaml-validator
+* For humans without kubectl, use a web Kubernetes YAML validator: kubeyaml.com
+* In CI, you might use CLI tools
+  * YAML linter: `pip install yamllint` github.com/adrienverge/yamllint
+  * Kubernetes validator: `kubeval` github.com/instrumenta/kubeval
+* We'll learn about Kubernetes cluster-specific validation with kubectl later
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
