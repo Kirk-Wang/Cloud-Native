@@ -2082,6 +2082,12 @@ kubectl explain pod.spec --recursive
   * Kubernetes validator: `kubeval` github.com/instrumenta/kubeval
 * We'll learn about Kubernetes cluster-specific validation with kubectl later
 
+### Using server-dry-run and diff
+* We already talked about using `--dry-run` for building YAML
+* Let's talk more about options for testing YAML
+* Including testing against the live cluster API!
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
