@@ -1625,6 +1625,16 @@ unknown field "replicas" in io.k8s.api.extensions.v1beta1.DaemonSetSpec,
   * remove the `progressDeadlineSeconds` field(also used by the rollout mechani)
   * remove the `status: {}` line at the end
 
+### Use the `--force`, Luke
+* We could also tell Kubernetes to ignore these errors and try anyway
+* The `--force` flag's actual name is `--validate=false`
+
+Exercise
+* Try to load our YAML file and ignore errors:
+```sh
+kubectl apply -f rng.yml --validate=false
+```
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
