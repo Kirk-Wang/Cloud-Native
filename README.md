@@ -1998,6 +1998,8 @@ kubectl create namespace awesome-app -o yaml --dry-run
   * (for instance, we can remove the `creationTimestamp` and empty dicts)
 
 
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
