@@ -1739,6 +1739,21 @@ this deployment gets the label `app=rng`
 * Daemon sets also have a more specific selector, but it's invisible
   * (It looks like `app=rng, controller-revision-hash=abcd1234`)
 * As a result,each controller only "sees" the pods it manages
+
+### Removing a pod from the load balancer
+* Currently, the `rng` service is defined by the `app=rng` selector
+* The only way to remove a pod is to remove or change the `app` label
+* ...But that will cause another pod to be created instead!
+* What's the solution?
+
+
+
+
+
+
+
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
