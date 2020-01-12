@@ -1599,7 +1599,32 @@ kubectl get deploy/rng -o yaml > rng.yml
 ```
 * Edit `rng.yml`
 
-###
+### "Casting" a resource to another
+* What if we just changed the `kind` field?(It can't be that easy,right?)
+
+Exercise
+* Change `kind: Deployment` to `kind: DaemonSet`
+* Save, quit
+* Try to create our new resource:
+```sh
+kubectl apply -f rng.yml
+```
+
+### Understanding the problem
+* The core of the error is:
+```sh
+error validating data:
+[ValidationError(DaemonSet.spec):
+unknown field "replicas" in io.k8s.api.extensions.v1beta1.DaemonSetSpec,
+...
+```
+* Obviously, it doesn't make sense to specify a number of replicas for a daemon set
+* Workaround:fix the YAML
+  * remove the `replicas` field
+  * remove the `strategy` field(which defines the rollout mechanism for a deployment)
+  * remove the `progressDeadlineSeconds` field(also used by the rollout mechani)
+  * remove the `status: {}` line at the end
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
