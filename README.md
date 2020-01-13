@@ -2333,6 +2333,17 @@ We might see something like 1, 4, 5.
 
 (Depending on how many "undos" we did before.)
 
+### Explaining deployment revisions
+* These revisions correspond to our ReplicaSets
+* This information is stored in the ReplicaSet annotations
+
+Exercise
+* Check the annotations for our replica sets:
+```sh
+kubectl describe replicasets -l app=worker | grep -A3 Annotaions
+```
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
