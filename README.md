@@ -2219,6 +2219,19 @@ That rollout should be pretty quick. What shows in the web UI?
 * After a grace period, Kubernetes gets impatient and kills the container
 (The grace period is 30 seconds, but can be changed if needed)
 
+### Rolling out something invalid
+* What happens if we make a mistake?
+
+Exercise
+* Update `worker` by specifiying a non-existent image:
+```sh
+kubectl set images deploy worker worker=dockercoins/worker:v0.3
+```
+* Check what's going on:
+```sh
+kubectl rollout status deploy worker
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
