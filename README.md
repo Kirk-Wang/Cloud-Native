@@ -2302,6 +2302,18 @@ kubectl rollout undo deployment worker
 
 🤔That didn't work.
 
+### Multiple "undos" don't work
+* If we see successive versions as a stack:
+  * `kubectl rollout undo` doesn't "pop" the last element from the stack
+  * it copies the N-1th element to the top
+* Multiple "undos" just swap back and forth between the last two versions!
+
+Exercise
+* Go back to v0.2 again:
+```sh
+kubectl rollout undo deployment worker
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
