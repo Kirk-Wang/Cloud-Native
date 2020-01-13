@@ -2208,7 +2208,7 @@ kubectl set image deploy worker worker=dockercoins/worker:v0.2
 ```
 That rollout should be pretty quick. What shows in the web UI?
 
-
+### Give it some time
 
 
 ------------------------------------------------------------
