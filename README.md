@@ -2158,6 +2158,7 @@ kubectl delete -f just-a-pod.yaml
   * ...all at the same time
   * if something goes wrong,
 * With rolling updates, when a Deployment is updated, it happens progressively
+* The Deployment controls multiple ReplicaSets
 
 
 
