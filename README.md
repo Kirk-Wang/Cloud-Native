@@ -2290,6 +2290,18 @@ kubectl rollout status deploy worker
 * But this version still has a performance problem
 * How can we get back to the previous version?
 
+### Multiple "undos"
+* What happens if we try `kubectl rollout undo` again?
+
+Exercise
+* Try it:
+```sh
+kubectl rollout undo deployment worker
+```
+* Check the web UI, the list of pods....
+
+🤔That didn't work.
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
