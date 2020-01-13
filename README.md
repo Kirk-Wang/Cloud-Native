@@ -2340,7 +2340,7 @@ We might see something like 1, 4, 5.
 Exercise
 * Check the annotations for our replica sets:
 ```sh
-kubectl describe replicasets -l app=worker | grep -A3 Annotaions
+kubectl describe replicasets -l app=worker | grep -A3 Annotations
 ```
 
 
