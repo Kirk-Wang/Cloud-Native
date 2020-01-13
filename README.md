@@ -2225,12 +2225,14 @@ That rollout should be pretty quick. What shows in the web UI?
 Exercise
 * Update `worker` by specifiying a non-existent image:
 ```sh
-kubectl set images deploy worker worker=dockercoins/worker:v0.3
+kubectl set image deploy worker worker=dockercoins/worker:v0.3
 ```
 * Check what's going on:
 ```sh
 kubectl rollout status deploy worker
 ```
+Our rollout is stuck. However, the app is not dead.
+(After a minute, it will stabilize to be 20-25% slower.)
 
 ------------------------------------------------------------
 ------------------------------------------------------------
