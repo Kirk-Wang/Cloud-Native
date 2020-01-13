@@ -2259,7 +2259,20 @@ but the total number of pods being rolled out is allowed to be 25+25=50%
 * Now we have 8 replicas up and running, and 5 being depoyed
 * Our rollout is stuck at this point!
 
+### Checking the dashboard during the bad rollout
+* If you didn't deploy the Kubernetes dashboard earlier, just kip this slide.
 
+Exercise
+* Connect to the dashboard that we deployed earlier
+* Check that we have failures in Deployments, Pods, and Replica Sets
+* Can we see the reason for the failure?
+
+```sh
+kubectl describe deploy worker
+```
+
+### Recovering from a bad rollout
+* 
 
 ------------------------------------------------------------
 ------------------------------------------------------------
