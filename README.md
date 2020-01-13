@@ -2343,6 +2343,14 @@ Exercise
 kubectl describe replicasets -l app=worker | grep -A3 Annotations
 ```
 
+### What about the missing revisions?
+* The missing revisions are stored in another annotation:
+```sh
+deployment.kubernetes.io/revision-history
+```
+* These are not shown in `kubectl rollout history`
+* We could easily reconstruct the full list with a script
+(if we wanted to!)
 
 ------------------------------------------------------------
 ------------------------------------------------------------
