@@ -2177,7 +2177,11 @@ kubectl delete -f just-a-pod.yaml
 * We have the possibility of rolling back to the previous version
 (if the update fails or is unsatisfactory in any way)
 
+### Checking current rollout parameters
+* Recall how we build custom reports with `kubectl` and `jq`:
 
+Exercise
+* 
 
 
 ------------------------------------------------------------
