@@ -2194,6 +2194,19 @@ kubectl get deploy -o json | jq ".items[] | {name:.metadata.name} + .spec.strate
 * Editing one of these resources will automatically result in a rolling update
 * Rolling updates can be monitored with the `kubectl rollout` subcommand
 
+### Rolling out the new `worker` service
+Exercise
+* Let's monitor what's going on by opening a few terminals, and run :
+```sh
+kubectl get pods -w
+kubectl get replicasets -w
+kubectl get deployments -w
+```
+* Update `worker` either with `kubectl edit`, or by running:
+```sh
+kubectl set image deploy worker worker=dockercoins/worker:v0.2
+```
+
 
 
 ------------------------------------------------------------
