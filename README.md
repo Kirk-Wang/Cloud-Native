@@ -2314,6 +2314,11 @@ Exercise
 kubectl rollout undo deployment worker
 ```
 
+### In this specific scenario
+* Our version numbers are easy to guess
+* What if we had used git hashes?
+* What if we had changed other parameters in the Pod spec?
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
