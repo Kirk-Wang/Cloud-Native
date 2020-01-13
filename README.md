@@ -2167,6 +2167,16 @@ kubectl delete -f just-a-pod.yaml
 * We can have multiple "old" sets
 (if we start another update before the first one is done)
 
+### Update strategy
+* Two parameters determine the pace of the rollout: `maxUnavailable` and `maxSurge`
+* They can be specified in absolute number of pods, or percentage of the `replicas` count
+* At any given time...
+  * there will always be at least `replicas-maxUnavailable` pods available
+  * there will never be more than `replicas` + `maxSurge` pods in total
+  * there will therefore be up to `maxUnavailable` + `maxSurge` pods being updated
+* We have the possibility of rolling back to the previous version
+(if the update fails or is unsatisfactory in any way)
+
 
 
 
