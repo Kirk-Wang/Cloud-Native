@@ -2319,6 +2319,20 @@ kubectl rollout undo deployment worker
 * What if we had used git hashes?
 * What if we had changed other parameters in the Pod spec?
 
+### Listing versions
+* We can list successive versions of a Deployment with `kubectl rollout history`
+
+Exercise
+* Look at our successive versions:
+```sh
+kubectl rollout history deployment worker
+```
+We don't see all revisions.
+
+We might see something like 1, 4, 5.
+
+(Depending on how many "undos" we did before.)
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
