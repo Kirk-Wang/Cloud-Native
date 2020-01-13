@@ -2259,6 +2259,8 @@ but the total number of pods being rolled out is allowed to be 25+25=50%
 * Now we have 8 replicas up and running, and 5 being depoyed
 * Our rollout is stuck at this point!
 
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
