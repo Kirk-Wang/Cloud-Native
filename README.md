@@ -2238,6 +2238,16 @@ kubectl get pods
 # ErrImagePull
 ```
 
+### What's going on with our rollout?
+* Why is our app a bit slower?
+* Because `MaxUnavailable=25%`
+  * ...So the rollout terminated 2 replicas out of 10 available
+* Okay, but why do we see 5 new replicas being rolled out?
+* Because `MaxSurge=25%`
+...So in addition to replacing 2 replicas, the rollout is also starting 3 more
+* It rounded down the number of MaxUnavailable pods conservatively.
+but the total number of pods being rolled out is allowed to be 25+25=50%
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
