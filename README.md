@@ -2248,6 +2248,12 @@ kubectl get pods
 * It rounded down the number of MaxUnavailable pods conservatively.
 but the total number of pods being rolled out is allowed to be 25+25=50%
 
+
+### The nitty-gritty details
+* We start with 10 pods running for the `worker` deployment
+* Current settings: Max
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
