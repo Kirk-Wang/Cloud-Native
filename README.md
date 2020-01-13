@@ -2233,6 +2233,10 @@ kubectl rollout status deploy worker
 ```
 Our rollout is stuck. However, the app is not dead.
 (After a minute, it will stabilize to be 20-25% slower.)
+```sh
+kubectl get pods
+# ErrImagePull
+```
 
 ------------------------------------------------------------
 ------------------------------------------------------------
