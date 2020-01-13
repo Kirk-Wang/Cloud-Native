@@ -2192,7 +2192,7 @@ kubectl get deploy -o json | jq ".items[] | {name:.metadata.name} + .spec.strate
 * As of Kubernetes 1.8, we can do rolling updates with:
  `deployments`, `daemonsets`, `statefulsets`
 * Editing one of these resources will automatically result in a rolling update
-* 
+* Rolling updates can be monitored with the `kubectl rollout` subcommand
 
 
 
