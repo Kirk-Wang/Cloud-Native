@@ -2352,6 +2352,18 @@ deployment.kubernetes.io/revision-history
 * We could easily reconstruct the full list with a script
 (if we wanted to!)
 
+### Rolling back to an older version
+* `kubectl rollout undo` can work with a revision number
+
+Exercise
+* Roll back to the "known good" deployment version:
+```sh
+kubectl rollout undo deployment worker --to-revision=1
+```
+* Check the web UI or the list of pods
+
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
