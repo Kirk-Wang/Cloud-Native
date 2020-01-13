@@ -2251,8 +2251,13 @@ but the total number of pods being rolled out is allowed to be 25+25=50%
 
 ### The nitty-gritty details
 * We start with 10 pods running for the `worker` deployment
-* Current settings: Max
-
+* Current settings: MaxUnavailable=25% and MaxSurge=25%
+* When we start the rollout:
+  * two replicas are taken down(as per MaxUnavailable=25%)
+  * two others are created(with the new version) to replace them
+  * three others are created(with the new version) per MaxSurge=25%)
+* Now we have 8 replicas up and running, and 5 being depoyed
+* Our rollout is stuck at this point!
 
 ------------------------------------------------------------
 ------------------------------------------------------------
