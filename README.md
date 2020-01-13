@@ -2181,7 +2181,19 @@ kubectl delete -f just-a-pod.yaml
 * Recall how we build custom reports with `kubectl` and `jq`:
 
 Exercise
+* Show the rollout plan for our deployments:
+```sh
+kubectl apply -f https://k8smastery.com/dockercoins.yaml
+
+kubectl get deploy -o json | jq ".items[] | {name:.metadata.name} + .spec.strategy.rollingUpdate" 
+```
+
+### Rolling updates in practice
+* As of Kubernetes 1.8, we can do rolling updates with:
+ `deployments`, `daemonsets`, `statefulsets`
+* Editing one of these resources will automatically result in a rolling update
 * 
+
 
 
 ------------------------------------------------------------
