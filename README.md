@@ -2128,6 +2128,19 @@ kubectl apply -f web.yaml --server-dry-run --validate=false -o yaml
 (unless the cluster state changes by the time the YAML is actually applied)
 * Validating or mutating hooks that have side effects can also be an issue
 
+### `kubectl diff`
+* Kubernetes 1.13 also introduced `kubectl diff`
+* `kubectl diff` does a server-side dry run, and shows differences
+
+Exercise
+* Try `kubectl diff` on a simple Pod YAML:
+```sh
+curl -o https://k8smastery.com/just-a-pod.yaml
+kubectl apply -f just-a-pod.yaml
+# edit the image ta to :1.17
+kubectl diff -f just-a-pod.yaml
+```
+Note: we don't need to specify `--validate=false` here.
 
 
 ------------------------------------------------------------
