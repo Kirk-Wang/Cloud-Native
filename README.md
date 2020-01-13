@@ -2119,7 +2119,6 @@ Exercise
 kubectl apply -f web.yaml --server-dry-run --validate=false -o yaml
 ```
 * The resulting YAML doesn't have the `replicas` field anymore.
-
 * Instead, it has the fields expected in a DaemonSet
 
 ### Advantages of server-side dry run
