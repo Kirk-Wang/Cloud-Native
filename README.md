@@ -2135,13 +2135,21 @@ kubectl apply -f web.yaml --server-dry-run --validate=false -o yaml
 Exercise
 * Try `kubectl diff` on a simple Pod YAML:
 ```sh
-curl -o https://k8smastery.com/just-a-pod.yaml
+curl -O https://k8smastery.com/just-a-pod.yaml
 kubectl apply -f just-a-pod.yaml
 # edit the image ta to :1.17
 kubectl diff -f just-a-pod.yaml
 ```
 Note: we don't need to specify `--validate=false` here.
 
+### Cleanup
+Let's cleanup before we start the next lecture!
+
+Exercise
+* remove our "hello" pod:
+```sh
+kubectl delete -f just-a-pod.yaml
+```
 
 ------------------------------------------------------------
 ------------------------------------------------------------
