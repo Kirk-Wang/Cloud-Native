@@ -2285,6 +2285,11 @@ kubectl rollout status deploy worker
 # deployment "worker" successfully rolled out
 ```
 
+### Rolling back to an older version
+* We reverted to `v0.2`
+* But this version still has a performance problem
+* How can we get back to the previous version?
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
