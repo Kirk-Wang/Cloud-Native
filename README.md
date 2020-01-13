@@ -2272,7 +2272,18 @@ kubectl describe deploy worker
 ```
 
 ### Recovering from a bad rollout
-* 
+* We could push some `v0.3` image
+(the pod retry logic will eventually catch it and the rollout will proceed)
+* Or we could invoke a manual rollback
+
+Exercise
+* Cancel the deployment and wait for the dust to settle:
+```sh
+kubectl rollout undo deploy worker
+# deployment.extensions/worker rolled back
+kubectl rollout status deploy worker
+# deployment "worker" successfully rolled out
+```
 
 ------------------------------------------------------------
 ------------------------------------------------------------
