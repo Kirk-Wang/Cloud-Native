@@ -2110,7 +2110,26 @@ The resulting YAML doesn't represent a valid DaemonSet.
 
 ### Server-side dry run
 * Since Kubernetes 1.13, we can use server-side dry run and diffs
-* 
+* Server-side dry run will do all the work, but not persist to etcd
+  * (all validation and mutation hooks will be executed)
+
+Exercise
+* Try the same YAML files as earlier,with server-side dry run:
+```sh
+kubectl apply -f web.yaml --server-dry-run --validate=false -o yaml
+```
+* The resulting YAML doesn't have the `replicas` field anymore.
+
+* Instead, it has the fields expected in a DaemonSet
+
+### Advantages of server-side dry run
+* The YAML is verified much more extensively
+* The only step that is skipped is "write to etcd"
+* YAML that passes server-side dry run should apply successfully
+(unless the cluster state changes by the time the YAML is actually applied)
+* Validating or mutating hooks that have side effects can also be an issue
+
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
