@@ -2209,7 +2209,9 @@ kubectl set image deploy worker worker=dockercoins/worker:v0.2
 That rollout should be pretty quick. What shows in the web UI?
 
 ### Give it some time
-
+* At first, it looks like nothing is happening(the graph remains at the same level)
+* According to `kubectl get deploy -w`, the `deployment` was updated really quickly
+* 
 
 ------------------------------------------------------------
 ------------------------------------------------------------
