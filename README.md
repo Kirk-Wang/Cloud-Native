@@ -2159,6 +2159,13 @@ kubectl delete -f just-a-pod.yaml
   * if something goes wrong,
 * With rolling updates, when a Deployment is updated, it happens progressively
 * The Deployment controls multiple ReplicaSets
+* Each ReplicaSet is a group of identical Pods
+(with the same image, arguments, parameters)
+* During the rolling update, we have at least two ReplicaSets:
+  * the "new" set(corresponding to the "target" version)
+  * at least one "old" set
+* We can have multiple "old" sets
+(if we start another update before the first one is done)
 
 
 
