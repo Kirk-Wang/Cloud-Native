@@ -2151,6 +2151,13 @@ Exercise
 kubectl delete -f just-a-pod.yaml
 ```
 
+### Rolling updates
+* By default(without rolling updates), when a scaled resource is updated:
+  * new pods are created
+  * old pods are terminated
+  * ...all at the same time
+  * if something goes wrong,
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
