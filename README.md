@@ -2575,6 +2575,9 @@ Do not fail liveness probes for problems that are external to the container
 * In the case of DockerCoins, we don't know yet!
 * Let's pick liveness
 
+### Do we have HTTP endpoints that we can use？
+* Each of the 3 web services(hasher, rng, webui) has a trivial route on `/`
+
 
 
 ------------------------------------------------------------
