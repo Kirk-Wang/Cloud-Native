@@ -2619,6 +2619,29 @@ git clone https://github.com/bretfisher/kubercoins
 cd kubercoins
 ```
 
+### A simple HTTP liveness probe
+
+This is what our liveness probe should look like:
+```yml
+containers:
+- name: ...
+image: ...
+livenessProbe:
+  httpGet:
+    path: /
+    port: 80
+  initialDelaySeconds: 30
+  periodSeconds: 5
+```
+This will give 30 seconds to the service to start.(Way more than necessary!)
+
+It will run the probe every 5 seconds.
+
+It will use the default timeout(1 second).
+
+It will use the default failure threshold(3 failed attempts = dead).
+
+It will use the default success threshold(1 successful attempt = alive).
 
 
 
