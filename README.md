@@ -2577,6 +2577,11 @@ Do not fail liveness probes for problems that are external to the container
 
 ### Do we have HTTP endpoints that we can use？
 * Each of the 3 web services(hasher, rng, webui) has a trivial route on `/`
+* These routes:
+  * don't seem to perform anything complex or expensive
+  * don't seem to call other services
+* Perfect!
+(See next slides for individual details)
 
 
 
