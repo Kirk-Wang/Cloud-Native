@@ -2604,8 +2604,20 @@ app.get('/', function (req, res) {
 })
 ```
 
-### 
+### Retrieving DockerCoins manifests
+* I've split up the previous `dockercoins.yaml` into one-resource-per-file
+* This works with the `apply` command, and is easier for humans to manage
+* Clone them locally so we can add healthchecks and re-apply
 
+Exercise
+* Clone that repository:
+```sh
+git clone https://github.com/bretfisher/kubercoins
+```
+* Change directory to the repository:
+```sh
+cd kubercoins
+```
 
 
 
