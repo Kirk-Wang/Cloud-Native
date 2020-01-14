@@ -2533,6 +2533,15 @@ spec:
 If the Redis process becomes unresponsive, it will be killed.
 
 ### Should probes check container Dependencies?
+* A HTTP/TCP probe can't check an external dependency
+* But a HTTP URL could kick off code to validate a remote dependency
+* If a web server depends on a database to function, and the database is down: 
+  * the web server's liveness probe should succeed
+  * the web server's readiness probe should fail
+* Same thing for any hard dependency(without which the container can't work)
+
+Do not fail liveness probes for problems that are external to the container
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
