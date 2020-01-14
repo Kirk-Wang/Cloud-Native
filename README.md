@@ -2583,6 +2583,18 @@ Do not fail liveness probes for problems that are external to the container
 * Perfect!
 (See next slides for individual details)
 
+hasher.rb
+```rb
+get '/' do
+  "HASHER running on #{Socket.gethostname}\n"
+end
+```
+
+rng.py
+```py
+
+```
+
 
 
 
