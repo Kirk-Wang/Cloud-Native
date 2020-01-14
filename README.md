@@ -2561,6 +2561,10 @@ Do not fail liveness probes for problems that are external to the container
 * Do they depend on additional services?
 (this can be particularly tricky)
 
+### Adding healthchecks to an app
+* Let's add healthchecks to DockerCoins!
+* We will examine the questions of the previous slide
+* Then we will review each component individually to add healthchecks
 
 ------------------------------------------------------------
 ------------------------------------------------------------
