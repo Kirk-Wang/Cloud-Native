@@ -2406,6 +2406,18 @@ kubectl rollout status deployment worker
 kubectl get deploy -o json worker | jq "{name: .metadata.name} + .spec.strategy.rollingUpdate"
 ```
 
+### Healthchecks
+* Healthchecks are key to providing built-in lifecycle automation
+* Healthchecks are probes that apply to containers(not to pods)
+* Kubernetes will take action on containers that fail healthchecks
+* Each container can have three(optional) probes:
+  * liveness = is this container dead or alive?(most important probe)
+  * readiness = is this container ready to serve traffic?(only needed if a service)
+  * startup = is this container still starting up?(alpha in 1.16)
+* Different probe handlers  are available(HTTP, TCP, program execution)
+* They don't replace a full monitoring solution
+* Let's see the difference and how to use them!
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
