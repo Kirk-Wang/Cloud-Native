@@ -2644,6 +2644,22 @@ It will use the default failure threshold(3 failed attempts = dead).
 It will use the default success threshold(1 successful attempt = alive).
 
 
+### Adding the liveness probe
+* Let's add the liveness probe, then deploy DockerCoins
+* Remember if you don't have DockerCoins running, this will create
+* If you already have DockerCoins running, this will update `rng`
+
+Exercise
+* Edit `rng-deployment.yaml` and add the liveness probe
+```sh
+vim rng-deployment.yaml
+```
+* Load the YAML for all the resources of DockerCoins
+```sh
+kubectl apply -f .
+```
+
+
 
 
 ------------------------------------------------------------
