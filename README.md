@@ -2592,7 +2592,9 @@ end
 
 rng.py
 ```py
-
+@app.route("/")
+def index():
+  return "RNG running on {}\n".format(hostname)
 ```
 
 
