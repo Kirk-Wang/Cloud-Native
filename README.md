@@ -2423,7 +2423,9 @@ kubectl get deploy -o json worker | jq "{name: .metadata.name} + .spec.strategy.
 * A dead container cannot come back to life
 * If the liveness probe fails, the container is killed
 (to make really sure that it's really dead; no zombies or undeads!)
-* 
+* What happens next depends on the pod's `restartPolicy`:
+  * `Never`: the container is not restarted
+  * `OnFailure` or `Always`: the container is restarted
 
 ------------------------------------------------------------
 ------------------------------------------------------------
