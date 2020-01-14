@@ -2567,7 +2567,13 @@ Do not fail liveness probes for problems that are external to the container
 * Then we will review each component individually to add healthchecks
 
 ### Liveness, readiness, or both?
-* 
+* To answer that question, we need to see the app run for a while
+* Do we get temporary, recoverable glitches?
+  * -> then sue liveness
+* Or do we get hard lock-ups requiring a restart?
+  * -> then use liveness
+* In the case of DockerCoins, we don't know yet!
+* Let's pick liveness
 
 ------------------------------------------------------------
 ------------------------------------------------------------
