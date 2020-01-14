@@ -2566,6 +2566,9 @@ Do not fail liveness probes for problems that are external to the container
 * We will examine the questions of the previous slide
 * Then we will review each component individually to add healthchecks
 
+### Liveness, readiness, or both?
+* 
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
