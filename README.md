@@ -2552,6 +2552,10 @@ Do not fail liveness probes for problems that are external to the container
   * check the timestamp of that file from an exec probe
 * Writing logs(and checking them from the probe) also works
 
+### Questions to ask before adding healthchecks
+* Do we want liveness, readiness, both?
+(sometimes, we can use the same check, but with different failture thresholds)
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
