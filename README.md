@@ -2384,6 +2384,14 @@ spec:
   minReadySeconds: 10
 ```
 
+### Applying changes through a YAML patch
+* We could use `kubectl edit deployment worker`
+* But we could also use `kubectl patch` with the exact YAML shown before
+* Apply our changes and wait for them to take effect:
+```sh
+
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
