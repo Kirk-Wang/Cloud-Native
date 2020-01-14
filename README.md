@@ -2443,6 +2443,15 @@ kubectl get deploy -o json worker | jq "{name: .metadata.name} + .spec.strategy.
   * if the pod is memeber of a service, it is temporarily removed
   * it is re-added as soon as the readiness probe passes again
 
+### When to use a readiness probe
+* To indicate failure due to an external cause
+ * database is down or unreachable
+ * mandatory auth or other backend service unavailable
+* To indicate temporary failure or unavailability
+  * application can only service N parallel connections
+  * runtime is busy doing garbage collection or ini
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
