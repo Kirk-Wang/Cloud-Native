@@ -2597,6 +2597,13 @@ def index():
   return "RNG running on {}\n".format(hostname)
 ```
 
+webui.js
+```js
+app.get('/', function (req, res) {
+  res.redirect('/index.html')
+})
+```
+
 
 
 
