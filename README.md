@@ -2427,6 +2427,22 @@ kubectl get deploy -o json worker | jq "{name: .metadata.name} + .spec.strategy.
   * `Never`: the container is not restarted
   * `OnFailure` or `Always`: the container is restarted
 
+### When to use a liveness probe
+* To indicate failures that can't be recovered
+  * deadlocks(causing all requests to time out)
+  * internal corruption(causing all requests to error)
+* Anything where our incident response would be "just restart/reboot it"
+ * Do not use liveness probes for problems that can't be fixed by a restart
+* Otherwise we just restart our pods for no reason, creating useless load
+
+### Readiness probe
+* Indicates if the container is ready to serve traffic
+* If a container becomes "unready" it might be ready again soon
+* If the readiness probe fails:
+  * the container is not killed
+  * if the pod is memeber of a service, it is temporarily removed
+  * it is re-added as soon as the readiness probe passes again
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
