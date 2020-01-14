@@ -2481,6 +2481,17 @@ kubectl get deploy -o json worker | jq "{name: .metadata.name} + .spec.strategy.
   * a command is executed in the container
   * exit status of zero indicates success
 
+### Timing and thresholds
+* Probes are executed at intervals of `periodSeconds`(default: 10)
+* The timeout for a probe is set with `timeoutSeconds`(default: 1)
+
+If a probe takes longer than that,it is considered as a FAIL
+* A probe is considered successful after `successThreshold` successes(default: 1)
+* A probe is considered failing after `failureThreshold` failures (default: 3)
+* A probe can have an `initialDelaySeconds` parameter(default: 0)
+* Kubernetes will wait that amount of time before running the probe for the first time
+(this is important to avoid killing services that take a long time to start)
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
