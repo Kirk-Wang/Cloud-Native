@@ -2451,6 +2451,20 @@ kubectl get deploy -o json worker | jq "{name: .metadata.name} + .spec.strategy.
   * application can only service N parallel connections
   * runtime is busy doing garbage collection or ini
 
+### Startup probe
+* Kubernetes 1.16 introduces a third tye of probe: `startupProbe`
+(it is in `alpha` in Kubernetes 1.16)
+* It can be used to indicate "container not ready yet"
+  * process is still starting
+  * loading external data, priming caches
+* Before Kubernetes 1.16, we had to use the `initialDelaySeconds` parameter
+(available for both liveness and readiness probes)
+* `initialDelaySeconds` is a rigid delay(always wait X before running probes)
+* `startupProbe` works better when a container start time can vary a lot
+
+
+
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
