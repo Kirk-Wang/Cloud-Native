@@ -2544,7 +2544,13 @@ Do not fail liveness probes for problems that are external to the container
 
 ### Healthchecks for workers
 (In that context, worker = process that doesn't accept connections)
-* Readiness isn't useful
+* Readiness isn't useful(because workers aren't backends for a service)
+* Liveness may help us restart a broken worker, but how can we check it?
+* Embedding an HTTP server is a(potentially expensive) option
+* Using a "lease" file can be relatively easy:
+  * touch a file during each iteration of the main loop
+  * check the timestamp of that file from an exec probe
+* Writing logs(and checking them from the probe) also works
 
 ------------------------------------------------------------
 ------------------------------------------------------------
