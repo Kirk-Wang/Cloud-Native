@@ -2362,7 +2362,9 @@ kubectl rollout undo deployment worker --to-revision=1
 ```
 * Check the web UI or the list of pods
 
-
+### Changing rollout parameters
+* What if we wanted to, all at once:
+  * 
 
 ------------------------------------------------------------
 ------------------------------------------------------------
