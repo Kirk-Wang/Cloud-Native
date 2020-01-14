@@ -2555,6 +2555,12 @@ Do not fail liveness probes for problems that are external to the container
 ### Questions to ask before adding healthchecks
 * Do we want liveness, readiness, both?
 (sometimes, we can use the same check, but with different failture thresholds)
+* Do we have existing HTTP endpoints that we can use?
+* Do we need to add new endpoints, or perhaps use something else?
+* Are our healthchecks likely to use resources and/or slow down the app?
+* Do they depend on additional services?
+(this can be particularly tricky)
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
