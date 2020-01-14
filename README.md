@@ -2471,6 +2471,16 @@ kubectl get deploy -o json worker | jq "{name: .metadata.name} + .spec.strategy.
 (thus improving response times across the board)
 * If a probe is not defined, it's as if there was an "always successful" probe
 
+### Different types of probe handlers
+* HTTP request
+  * specify URL of the request(and optional headers)
+  * any status code between 200 and 399 indicates success
+* TCP connection
+  * the probe succeeds if the TCP port is open
+* arbitrary exec
+  * a command is executed in the container
+  * exit status of zero indicates success
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
