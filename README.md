@@ -2532,6 +2532,8 @@ spec:
 
 If the Redis process becomes unresponsive, it will be killed.
 
+### Should probes check container Dependencies?
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
