@@ -2513,6 +2513,23 @@ spec:
 
 If the backend serves an error, or takes longer than 1s, 3 times in a row,it gets killed.
 
+Example: exec probe
+
+Here is a pod template for a Redis server:
+```yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis-with-liveness
+spec:
+  containers:
+  - name: redis
+    image: redis
+    livenessProbe:
+      exec:
+        command: ["redis-cli", "ping"]
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
