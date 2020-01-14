@@ -2418,6 +2418,13 @@ kubectl get deploy -o json worker | jq "{name: .metadata.name} + .spec.strategy.
 * They don't replace a full monitoring solution
 * Let's see the difference and how to use them!
 
+### Liveness probe
+* Indicates if the container is dead or alive
+* A dead container cannot come back to life
+* If the liveness probe fails, the container is killed
+(to make really sure that it's really dead; no zombies or undeads!)
+* 
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
