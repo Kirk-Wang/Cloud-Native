@@ -2492,6 +2492,27 @@ If a probe takes longer than that,it is considered as a FAIL
 * Kubernetes will wait that amount of time before running the probe for the first time
 (this is important to avoid killing services that take a long time to start)
 
+### Example:HTTP probe
+Here is a pod template for the `rng` web service of the DockerCoins app:
+```yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rng-with-liveness
+spec:
+  containers:
+  - name: rng
+    image: dockercoins/rng:v0.1
+    livenessProbe:
+      httpGet:
+        path: /
+        port: 80
+      initialDelaySeconds: 10
+      periodSeconds: 1
+```
+
+If the backend serves an error, or takes longer than 1s, 3 times in a row,it gets killed.
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
