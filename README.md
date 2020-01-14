@@ -2462,9 +2462,14 @@ kubectl get deploy -o json worker | jq "{name: .metadata.name} + .spec.strategy.
 * `initialDelaySeconds` is a rigid delay(always wait X before running probes)
 * `startupProbe` works better when a container start time can vary a lot
 
-
-
-
+### Benefits of using probes
+* Rolling updates proceed when containers are actually ready
+(as opposed to merely started)
+* Containers in a broken state get killed and restarted
+(instead of serving errors or timeouts)
+* Unavailable backends get removed from load balancer rotation
+(thus improving response times across the board)
+* If a probe is not defined, it's as if there was an "always successful" probe
 
 ------------------------------------------------------------
 ------------------------------------------------------------
