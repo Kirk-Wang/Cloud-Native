@@ -2389,7 +2389,7 @@ spec:
 * But we could also use `kubectl patch` with the exact YAML shown before
 * Apply our changes and wait for them to take effect:
 ```sh
-kubectl patch deployment worker -p *
+kubectl patch deployment worker -p "
 spec:
   template:
     spec:
@@ -2401,7 +2401,7 @@ spec:
       maxUnavailable: 0
       maxSurge: 1
   minReadySeconds: 10
-
+"
 kubectl rollout status deployment worker
 kubectl get deploy -o json worker | jq "{name: .metadata.name} + .spec.strategy.rollingUpdate"
 ```
