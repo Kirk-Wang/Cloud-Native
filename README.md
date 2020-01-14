@@ -2542,6 +2542,9 @@ If the Redis process becomes unresponsive, it will be killed.
 
 Do not fail liveness probes for problems that are external to the container
 
+### Healthchecks for workers
+(In that context, worker = process that doesn't accept connections)
+* Readiness isn't useful
 
 ------------------------------------------------------------
 ------------------------------------------------------------
