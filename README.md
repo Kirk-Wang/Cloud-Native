@@ -2685,6 +2685,8 @@ kubectl get events -w
 kubectl get pods -w
 ```
 
+### Generating traffic
+
 
 
 ------------------------------------------------------------
