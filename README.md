@@ -2722,7 +2722,10 @@ kubectl get pods -w
 * During the restart, there is less capacity available
 * ...Meaning that the other backends are likely to timeout as well
 * ...Eventually causing all backends to be restarted
-* 
+* ...And each fresh backend gets restarted, too
+* This goes on until load goes down, or we add capacity
+
+This wouldn't be a good healthcheck in a real application!
 
 
 
