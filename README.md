@@ -2764,6 +2764,30 @@ due to external pressure
 * Discussion of this in Video - 10 Ways to Shoot Yourself in the Foot 
 with Kubernetes, Will Surprise You
 
+### Tini and redis ping in a liveness probe
+1. Add `tini` to your own custom redis image
+2. Change the kubercoins YAML to use your own image
+3. Create a liveness probe in kuberoins YAML
+4. Use `exec` handeler and run `tini -s -- redis-cli ping`
+5. Example repo here: `github.com/BretFisher/redis-tini`
+
+```yml
+containers:
+- name: redis
+  image: custom-redis-image
+  livenessProbe:
+    exec:
+      command:
+      - /tini
+      - -s
+      - --
+      - redis-cli
+      - ping
+    initialDelaySeconds: 30
+    periodSeconds: 5
+```
+
+
 
 
 ------------------------------------------------------------
