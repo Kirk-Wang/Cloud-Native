@@ -2874,7 +2874,7 @@ env:
   * or through environment variables
 * The value of these environment variables is computed when the container is started
 * Remember: environment variables won't(can't) change after container start
-* 
+* Let's see a few concrete examples!
 
 ------------------------------------------------------------
 ------------------------------------------------------------
