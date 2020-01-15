@@ -2718,7 +2718,8 @@ kubectl get pods -w
 ### Discussion
 * Above a given threshold, the liveness probe starts failing
   * (about 10 concurrent requests per backend should be plenty enough)
-* When 
+* When the liveness probe fails 3 times in a row, the container is restarted
+* During the restart, there is less capacity available
 
 ------------------------------------------------------------
 ------------------------------------------------------------
