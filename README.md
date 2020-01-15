@@ -2994,6 +2994,22 @@ kubectl create cm my-app-config \
 * We will provide a simple HAProxy configuration
 * It listens on port 80, and load balances connections between IBM and Google
 
+### Creating the ConfigMap
+Exercise
+* Download our simple HAProxy config:
+```sh
+curl -O https://k8smastery.com/haproxy.cfg
+```
+* Create a ConfigMap named `haproxy` and holding the configuration file:
+```sh
+kubectl create configmap haproxy --from-file=haproxy.cfg
+```
+* Check what our ConfigMap looks like:
+```sh
+kubectl get configmap haproxy -o yaml
+```
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
