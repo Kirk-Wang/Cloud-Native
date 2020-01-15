@@ -3113,6 +3113,21 @@ IP=$(kubectl get pod registry -o json | jq -r .status.podIP)
 curl $IP/v2/_catalog
 ```
 
+### Passwords, tokens, sensitive information
+* For sensitive information, there is another special resource: Secrets
+* Secrets and Configmaps work almost the same way
+(we'll expose the differences on the next slide)
+* The intent is different, though:
+```
+"You should use secrets for things which are actually
+ secret like API keys, credentials, etc.and use config map
+ for not-secret configuration data."
+"In the future there will likely be some differentiators
+ for secrets like rotation or support for backing the
+ secret API w/HSMs, etc."
+```
+(Source: the author of both features)
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
