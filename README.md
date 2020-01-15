@@ -2978,6 +2978,15 @@ kubectl create cm my-app-config \
   --from-env-file=app.conf
 ```
 
+### Exposing ConfigMaps to containers
+* ConfigMaps can be exposed as plain files in the filesystem of a container
+  * this is achieved by declaring a volume and mounting it in the container
+  * this is particularly effective for ConfigMaps containing whole files
+* ConfigMaps can be exposed as environment variables in the container
+  * this is achieved with the Downward API
+  * this is particularly effective for ConfigMaps containing individual parameters
+* Let's see how to do both!
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
