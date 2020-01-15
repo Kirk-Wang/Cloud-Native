@@ -2962,6 +2962,22 @@ kubectl create configmap my-app-config --from-file=app.conf=app-prod.conf
 kubectl create configmap my-app-config --from-file=config.d/
 ```
 
+### ConfigMaps storing individual parameters
+* In this case, each key/value pair corresponds to a parameter
+* Key = name of the parameter
+* Value = value of the parameter
+* Examples:
+```sh
+# Create a ConfigMap with two keys
+kubectl create cm my-app-config \
+  --from-literal=foreground=red \
+  --from-literal=foreground=blue
+
+# Create a ConfigMap from a file containing key=val pairs
+kubectl create cm my-app-config \
+  --from-env-file=app.conf
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
