@@ -2891,6 +2891,8 @@ curl api-backend
 curl api-backend.$MY_POD_NAMESPACE.svc.cluster.local
 ```
 
+### Exposing the pod's IP address
+
 ```yaml
 - name: MY_POD_IP
   valueFrom:
@@ -2899,6 +2901,16 @@ curl api-backend.$MY_POD_NAMESPACE.svc.cluster.local
 ```
 * Useful if we need to know our IP address
 (we could also read it from `eth0`, but this is more solid)
+
+### Exposing the container's resource limits
+```yaml
+- name: MY_MEM_LIMIT
+  valueFrom:
+    resouceFieldRef:
+      containerName: test-container
+      resource: limits.memory
+```
+* Useful for runtimes where memory is garbage collected
 
 ------------------------------------------------------------
 ------------------------------------------------------------
