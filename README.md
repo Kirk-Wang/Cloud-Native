@@ -2864,7 +2864,7 @@ env:
 ```
 `value` must be a string! Make sure that numbers and fancy strings are quoted
 
-🤔Why this weired ``
+🤔Why this weired `{name: xxx, value: yyy}` scheme?It will be revealed soon!
 
 
 
