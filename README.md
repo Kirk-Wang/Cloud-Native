@@ -2745,6 +2745,9 @@ due to external pressure
 * When using exec probes, we should make sure that we have a zombie reaper 
 🤔🤔Wait,what?
 * When a process terminates, its parent must call `wait()`/`waitpid()`
+(this is how the parent process retrieves the child's exit status)
+* In the meantime, the process is in zombie state
+(the process state will show as `z` in `ps`, `top`...)
 
 ------------------------------------------------------------
 ------------------------------------------------------------
