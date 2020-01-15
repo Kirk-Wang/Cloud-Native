@@ -2741,6 +2741,10 @@ due to external pressure
 (it's not useful to remove a backend from rotation when it's the only one)
 * We could use an exec probe running `redis-cli ping`
 
+### Exec probes and zombies
+* When using exec probes, we should make sure that we have a zombie reaper 
+🤔🤔Wait,what?
+* When a process terminates, its parent must call `wait()`/`waitpid()`
 
 ------------------------------------------------------------
 ------------------------------------------------------------
