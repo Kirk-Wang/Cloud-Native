@@ -3058,6 +3058,12 @@ curl $IP
 We should see connections served by Google, and others served by IBM.
 (Each server sends us a redirect page. Look at the URL that they send us to!)
 
+### Exposing ConfigMaps with the Downward API
+* We are going to run a Docker registry on a custom port
+* By default, the registry listens on port 5000
+* This can be changed by setting environment variable `REGISTRY_HTTP_ADDR`
+* We are going to store the port number in a ConfigMap
+* Then we will expose that ConfigMap as a container environment variable
 
 ------------------------------------------------------------
 ------------------------------------------------------------
