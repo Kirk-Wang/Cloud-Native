@@ -2787,7 +2787,14 @@ containers:
     periodSeconds: 5
 ```
 
+### Cleanup
+Let's cleanup before we start the next lecture!
 
+Exercise
+* remove our DockerCoin resources(for now):
+```sh
+kubectl delete -f https://k8smastery.com/dockercoins.yaml
+```
 
 
 ------------------------------------------------------------
