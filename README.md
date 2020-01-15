@@ -2796,6 +2796,26 @@ Exercise
 kubectl delete -f https://k8smastery.com/dockercoins.yaml
 ```
 
+### Managing configuration
+* Some application need to be configured(obviously!)
+* There are many ways for our code to pick up configuration:
+  * command-line arguments
+  * environment variables
+  * configuration files
+  * configuration servers(getting configuration from a database, an API...)
+  * ... and more(because programmers can be very creative!)
+* How can we do these things with containers and Kubernetes?
+
+### Passing configuration to containers
+* There are many ways to pass configuration to code running in a container:
+  * baking it into a custom image
+  * command-line arguments
+  * environment variables
+  * injecting configuration files
+  * exposing it over the Kubernetes API
+  * configuration servers
+* Let's review these different strategies!
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
