@@ -2659,6 +2659,12 @@ vim rng-deployment.yaml
 kubectl apply -f .
 ```
 
+### Testing the liveness probe
+* The rng service needs 100ms to process a request
+(because it is single-threaded and sleeps 0.1s in each request)
+* The probe timeout is set to 1 second
+* If we send more than 10 requests per second per backend,it will break
+* Let's generate traffic and see what happens!
 
 
 
