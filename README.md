@@ -2946,8 +2946,21 @@ curl api-backend.$MY_POD_NAMESPACE.svc.cluster.local
 Note: to hold sensitive information, we can use "Secrets", which are another typ of.. resource behaving very much like ConfigMaps.
 We'll cover them just after!
 
-
-
+### ConfigMaps storing entire files
+* In this case, each key/value pair corresponds to a configuration file
+* Key = name of the file
+* Value = content of the file
+* There can be one key/value pair, or as many as necessary
+(for complex apps with multiple configuration files)
+* Examples:
+```sh
+# Create a ConfigMap with a single key, "app.conf"
+kubectl create configmap my-app-config --from-file=app.conf
+# Create a ConfigMap with a single key, "app.conf" but another file
+kubectl create configmap my-app-config --from-file=app.conf=app-prod.conf
+# Create a ConfigMap with multiple keys (one per fiel in the config.d directory)
+kubectl create configmap my-app-config --from-file=config.d/
+```
 
 ------------------------------------------------------------
 ------------------------------------------------------------
