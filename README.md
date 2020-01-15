@@ -2917,6 +2917,11 @@ curl api-backend.$MY_POD_NAMESPACE.svc.cluster.local
 * Note: recent versions of the JVM can do this automatically
 (see `JDK-8146115`) and `this blog post` for detailed examples
 
+### More about the Downward API
+* This documentation page tells more about these environment variables
+* And `this one` explains the other way to use the Downward API
+(through files that get created in the container filesystem)
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
