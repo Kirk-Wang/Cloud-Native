@@ -3009,6 +3009,55 @@ kubectl create configmap haproxy --from-file=haproxy.cfg
 kubectl get configmap haproxy -o yaml
 ```
 
+### Using the ConfigMap
+* We are going to use the following pod definition:
+```yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: haproxy
+spec:
+  volumes:
+  - name: config
+    configMap:
+      name: haproxy
+  containers:
+  - name: haproxy
+    image: haproxy
+    volumeMounts:
+    - name: config
+      mountPath: /usr/local/etc/haproxy/
+```
+### Using the ConfigMap
+* Apply the resource definition from the previous slide
+
+Exercise
+* Create the HAProxy pod:
+```sh
+kubectl apply -f https://k8smastery.com/haproxy.yaml
+```
+* Check the IP address allocated to the pod, inside `shpod`:
+```sh
+kubectl attach --namespace=shpod -ti shpod
+kubectl get pod haproxy -o wide
+IP=$(kubectl get pod haproxy -o json | jq -r .status.podIP)
+```
+
+### Testing our load balancer
+* The load balancer will send:
+  * half of the connections to Google
+  * the other half to IBM
+
+Exercise
+* Access the load balancer a few times:
+```sh
+curl $IP
+curl $IP
+curl $IP
+```
+We should see connections served by Google, and others served by IBM.
+(Each server sends us a redirect page. Look at the URL that they send us to!)
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
