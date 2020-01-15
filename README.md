@@ -2933,6 +2933,19 @@ curl api-backend.$MY_POD_NAMESPACE.svc.cluster.local
 * ...But should you?
 (Do it if you really need to, we're not judging! Bu we'll see better ways.)
 
+### Injecting configuration files with ConfigMaps
+* Sometimes, there is no way around it: we need to inject a full config file
+* Kubernetes provides a mechanism for that purpose: `ConfigMaps`
+* A ConfigMap is a Kubernetes resource that exits in a namespace
+* Conceptually, it's a key/value map
+(values are arbitrary strings)
+* We can think about them in(at least) two different ways:
+  * as holding entire configuration file(s)
+  * as holding individual configuration parameters
+
+Note: to hold sensitive information, we can use "Secrets", which are another typ of.. resource behaving very much like ConfigMaps.
+We'll cover them just after!
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
