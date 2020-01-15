@@ -2840,7 +2840,12 @@ args:
 * The options can be passed directly to the program that we run...
 ...or to a wrapper script that will use them to e.g. generate a config file
 
-
+### Command-line arguments, pros の cons
+* Works great when options are passed directly to the running program
+(otherwise, a wrapper script can work around the issue)
+* Works great when there aren't too many parameters
+(to avoid a 20-lines `args` array)
+* 
 
 
 
