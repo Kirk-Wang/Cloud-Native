@@ -2707,12 +2707,18 @@ e.g.
 kubectl get svc rng
 # kubectl apply -f https://k8smastery.com/shpod.yaml
 kubectl attach --namespace=shpod -ti shpod
+ab -c 10 -n 1000 http://10.101.25.252/1
 
 # t2
 kubectl get events -w
 # t3
 kubectl get pods -w
 ```
+
+### Discussion
+* Above a given threshold, the liveness probe starts failing
+  * (about 10 concurrent requests per backend should be plenty enough)
+* When 
 
 ------------------------------------------------------------
 ------------------------------------------------------------
