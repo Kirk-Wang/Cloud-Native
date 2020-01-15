@@ -2666,6 +2666,12 @@ kubectl apply -f .
 * If we send more than 10 requests per second per backend,it will break
 * Let's generate traffic and see what happens!
 
+Exercise
+* Get the ClusterIP address of the rng service:
+```sh
+kubectl get svc rng
+```
+
 
 
 ------------------------------------------------------------
