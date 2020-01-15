@@ -2727,6 +2727,10 @@ kubectl get pods -w
 
 This wouldn't be a good healthcheck in a real application!
 
+### Better healthchecks
+* We need to make sure that the healthcheck doesn't trip when performance degrades
+due to external pressure
+
 
 
 ------------------------------------------------------------
