@@ -2845,7 +2845,10 @@ args:
 (otherwise, a wrapper script can work around the issue)
 * Works great when there aren't too many parameters
 (to avoid a 20-lines `args` array)
-* 
+* Requires documentation and/or understanding of the underlying program
+("which parameters and flags do I need, again?")
+* Well-suited for mandatory parameters(without default values)
+* Not ideal when we need to pass a real configuration file anyway
 
 
 
