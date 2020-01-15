@@ -2850,6 +2850,21 @@ args:
 * Well-suited for mandatory parameters(without default values)
 * Not ideal when we need to pass a real configuration file anyway
 
+### Environment variables
+* Pass options through the `env` map in the container specification
+* Example:
+```yaml
+env:
+- name: ADMIN_PORT
+  value: "8080"
+- name: ADMIN_AUTH
+  value: Basic
+- name: ADMIN_CRED
+  value: "admin:0pensesame!"
+```
+`value` must be a string! Make sure that numbers and fancy strings are quoted
+
+🤔
 
 
 
