@@ -2816,6 +2816,18 @@ kubectl delete -f https://k8smastery.com/dockercoins.yaml
   * configuration servers
 * Let's review these different strategies!
 
+### Baking custom images
+* Put the configuration in the image
+(it can be in a configuration file, but also `ENV` or `CMD` actions)
+* It's easy! It's simple!
+* Unfortunately, it also has downsides:
+  * multiplication of images
+  * different images for dev, staging, prod ...
+  * minor reconfigurations require a whole build/push/pull cycle
+* `Avoid doing` it unless you don't have the time to figure out other options
+
+
+
 
 
 
