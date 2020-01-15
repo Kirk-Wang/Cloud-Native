@@ -3065,6 +3065,37 @@ We should see connections served by Google, and others served by IBM.
 * We are going to store the port number in a ConfigMap
 * Then we will expose that ConfigMap as a container environment variable
 
+### Creating the ConfigMap
+
+Exercise
+* Our ConfigMap will have a single key,`http.addr`:
+```sh
+kubectl create configmap registry --from-literal=http.addr=0.0.0.0:80
+```
+* Check our ConfigMap:
+```sh
+kubectl get configmap registry -o yaml
+```
+
+### Using the ConfigMap
+* We are going to use the following pod definition:
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: registry
+spec:
+  containers:
+  - name: registry
+    image: registry
+    env:
+    - name: REGISTRY_HTTP_ADDR
+      valueFrom:
+        configMapKeyRef:
+          name: registry
+          key: http.addr
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
