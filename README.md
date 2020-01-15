@@ -3136,6 +3136,15 @@ curl $IP/v2/_catalog
 * With RBAC, we can authorize a user to access ConfigMaps, but not Secrets
 (since they are two different kinds of resources)
 
+### Cleanup
+Let's cleanup before we start the next lecture!
+
+Exercise
+* remove our pods:
+```sh
+kubectl delete pod/haproxy pod/registry
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
