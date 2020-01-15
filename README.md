@@ -2826,6 +2826,19 @@ kubectl delete -f https://k8smastery.com/dockercoins.yaml
   * minor reconfigurations require a whole build/push/pull cycle
 * `Avoid doing` it unless you don't have the time to figure out other options
 
+### Command-line arguments
+* Pass options to `args` array in the container specification
+* Example(source):
+```sh
+args:
+  - "--data-dir=/var/lib/etcd"
+  - "--advertise-client-urls=http://127.0.0.1:2379"
+  - "--listen-client-urls=http://127.0.0.1:2379"
+  - "--listen-peer-urls=http://127.0.0.1:2380"
+  - "--name=etcd"
+```
+* The options can be passed directly to the program that we run...
+...or to a wrapper script that will use them to e.g. generate a config file
 
 
 
