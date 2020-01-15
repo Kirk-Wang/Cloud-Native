@@ -2752,6 +2752,20 @@ due to external pressure
 * PID 1 has the responsibility of reaping these processes when they terminate
 * OK, but how does that affect us?
 
+### PID 1 in containers
+* On ordinary systems, PID 1(`/sbin/init`) has logic to reap porcesses
+* In containers, PID 1 is typically our application process
+(e.g. Apache, the JVM, NGINX, Redix...)
+* These do not take care of reaping orphans
+* If we use exec probes, we need to add a process reaper
+* We can add tini to our images
+* Or share the PID namespace between containers of a pod
+  * (and have gcr.io/pause take care of the reaping)
+* Discussion of this in Video - 10 Ways to Shoot Yourself in the Foot 
+with Kubernetes, Will Surprise You
+
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
