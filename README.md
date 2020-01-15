@@ -2876,6 +2876,21 @@ env:
 * Remember: environment variables won't(can't) change after container start
 * Let's see a few concrete examples!
 
+### Exposing the pod's namespace
+```yaml
+- name: MY_POD_NAMESPACE
+  valueFrom:
+    fileRef:
+      fieldPath: metadata.namespace
+```
+* Useful to generate FQDN of services
+(in some contexts, a short name is not enough)
+* For instance, the two commands should be equivalent:
+```sh
+curl api-backend
+curl api-backend.$MY_POD_NAMESPACE.svc.cluster.local
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
