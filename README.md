@@ -2720,6 +2720,11 @@ kubectl get pods -w
   * (about 10 concurrent requests per backend should be plenty enough)
 * When the liveness probe fails 3 times in a row, the container is restarted
 * During the restart, there is less capacity available
+* ...Meaning that the other backends are likely to timeout as well
+* ...Eventually causing all backends to be restarted
+* 
+
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
