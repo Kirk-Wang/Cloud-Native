@@ -2686,7 +2686,19 @@ kubectl get pods -w
 ```
 
 ### Generating traffic
+* Let's use `ab` (Apache Bench) to send concurrent requests to rng
 
+Exercise
+* In yet another window, generate traffic using `shpod`:
+```sh
+kubectl attach --namespace=shpod -ti shpod
+ab -c 10 -n 1000 http://<ClusterIP>/1
+```
+* Experiment with higher values of `-c` and see what happens
+
+* The `-c` parameter indicates the number of concurrent requests
+* The final `/1` is important to generate actual traffic
+(otherwise we would use the ping endpoint, which doesn't sleep 0.1s per request)
 
 
 ------------------------------------------------------------
