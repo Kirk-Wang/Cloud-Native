@@ -2730,6 +2730,11 @@ This wouldn't be a good healthcheck in a real application!
 ### Better healthchecks
 * We need to make sure that the healthcheck doesn't trip when performance degrades
 due to external pressure
+* Using a readiness check would have fewer effects
+  * (but it would still be an imperfect solution)
+* A possible combination:
+  * readiness check with a short timeout / low failure threshold
+  * liveness check with a longer timeout / higher failure threshold
 
 
 
