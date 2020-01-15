@@ -3128,6 +3128,14 @@ curl $IP/v2/_catalog
 ```
 (Source: the author of both features)
 
+### Differences between ConfigMaps and Secrets
+* Secrets are base64-encoded when shown with `kubectl get secrets -o yaml`
+  * keep in mind that this is just encoding, not encryption
+  * it is very easy to automatically extract and decode secrets
+* Secrets can be encrypted at rest
+* With RBAC, we can authorize a user to access ConfigMaps, but not Secrets
+(since they are two different kinds of resources)
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
