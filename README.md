@@ -2922,6 +2922,18 @@ curl api-backend.$MY_POD_NAMESPACE.svc.cluster.local
 * And `this one` explains the other way to use the Downward API
 (through files that get created in the container filesystem)
 
+### Environment variables, pros and cons
+* Works great when the running program expects these variables
+* Works great for optional parameters with reasonable defaults
+(since the container image can provide these defaults)
+* Sort of auto-documented
+(we can see which environment variables are defined in the image, and their values)
+* Can be (ab)used with longer values...
+* ...You can put an entire Tomcat configuration file in an environment...
+* ...But should you?
+(Do it if you really need to, we're not judging! Bu we'll see better ways.)
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
