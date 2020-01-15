@@ -2872,6 +2872,8 @@ env:
 * The Downward API allows exposing pod or container information
   * either through special files(we won't show that for now)
   * or through environment variables
+* The value of these environment variables is computed when the container is started
+* Remember: environment variables won't(can't) change after container start
 * 
 
 ------------------------------------------------------------
