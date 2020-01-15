@@ -2748,6 +2748,9 @@ due to external pressure
 (this is how the parent process retrieves the child's exit status)
 * In the meantime, the process is in zombie state
 (the process state will show as `z` in `ps`, `top`...)
+* When a process is killed, its children are orphaned and attached to PID 1
+* PID 1 has the responsibility of reaping these processes when they terminate
+* OK, but how does that affect us?
 
 ------------------------------------------------------------
 ------------------------------------------------------------
