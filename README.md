@@ -2672,6 +2672,19 @@ Exercise
 kubectl get svc rng
 ```
 
+### Monitoring the rng service
+* Each command below will show us what's happening on a different level
+
+Exercise
+* In one window, monitor cluster events:
+```sh
+kubectl get events -w
+```
+* In another window, monitor pods status:
+```sh
+kubectl get pods -w
+```
+
 
 
 ------------------------------------------------------------
