@@ -2736,6 +2736,10 @@ due to external pressure
   * readiness check with a short timeout / low failure threshold
   * liveness check with a longer timeout / higher failure threshold
 
+### Healthchecks for redis
+* A liveness probe is enough 
+(it's not useful to remove a backend from rotation when it's the only one)
+* We could use an exec probe running `redis-cli ping`
 
 
 ------------------------------------------------------------
