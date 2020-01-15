@@ -2987,6 +2987,13 @@ kubectl create cm my-app-config \
   * this is particularly effective for ConfigMaps containing individual parameters
 * Let's see how to do both!
 
+### Passing a configuration file with a ConfigMap
+* We will start a load balancer powered by HAProxy
+* We will use the official haproxy image
+* It expects to find its configuration in `/usr/local/etc/haproxy/haproxy.cfg`
+* We will provide a simple HAProxy configuration
+* It listens on port 80, and load balances connections between IBM and Google
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
