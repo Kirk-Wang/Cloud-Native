@@ -2911,6 +2911,11 @@ curl api-backend.$MY_POD_NAMESPACE.svc.cluster.local
       resource: limits.memory
 ```
 * Useful for runtimes where memory is garbage collected
+* Example: the JVM
+(the memory available to the JVM should be set with the `-Xmx` flag)
+* Best practice:set a memory limit, and pass it to the runtime
+* Note: recent versions of the JVM can do this automatically
+(see JDK-8146115) and this blog post for detailed examples
 
 ------------------------------------------------------------
 ------------------------------------------------------------
