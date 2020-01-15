@@ -2701,6 +2701,19 @@ ab -c 10 -n 1000 http://<ClusterIP>/1
 (otherwise we would use the ping endpoint, which doesn't sleep 0.1s per request)
 
 
+e.g.
+```sh
+# t1
+kubectl get svc rng
+# kubectl apply -f https://k8smastery.com/shpod.yaml
+kubectl attach --namespace=shpod -ti shpod
+
+# t2
+kubectl get events -w
+# t3
+kubectl get pods -w
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
