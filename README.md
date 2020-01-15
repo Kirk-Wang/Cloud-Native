@@ -2891,6 +2891,15 @@ curl api-backend
 curl api-backend.$MY_POD_NAMESPACE.svc.cluster.local
 ```
 
+```yaml
+- name: MY_POD_IP
+  valueFrom:
+    fieldRef:
+      fieldPath: status.podIP
+```
+* Useful if we need to know our IP address
+(we could also read it from `eth0`, but this is more solid)
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
