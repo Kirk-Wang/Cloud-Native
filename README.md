@@ -3095,6 +3095,23 @@ spec:
           name: registry
           key: http.addr
 ```
+* The resource definition from the previous slide:
+
+Exercise
+* Create the registry pod:
+```sh
+kubectl apply -f https://k8smastery.com/registry.yaml
+```
+* Check the IP address allocated to the pod
+```sh
+kubectl attach --namespace=shpod -ti shpod
+kubectl get pod registry -o wide
+IP=$(kubectl get pod registry -o json | jq -r .status.podIP)
+```
+* Confirm that the registry is available on port 80:
+```sh
+curl $IP/v2/_catalog
+```
 
 ------------------------------------------------------------
 ------------------------------------------------------------
