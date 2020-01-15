@@ -2866,7 +2866,13 @@ env:
 
 🤔Why this weired `{name: xxx, value: yyy}` scheme?It will be revealed soon!
 
-
+### The Downward API
+* In the previous example, environment variables have fixed values
+* We can also use a mechanism called the Downward API
+* The Downward API allows exposing pod or container information
+  * either through special files(we won't show that for now)
+  * or through environment variables
+* 
 
 ------------------------------------------------------------
 ------------------------------------------------------------
