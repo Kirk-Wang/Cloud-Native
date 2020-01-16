@@ -158,7 +158,8 @@ docker container stats --help
 docker container stats
 ```
 
-
+### Getting a Shell Inside Containers
+* `docker container run -it` - start new container interactively
 
 --------------------------------------------------------------
 --------------------------------------------------------------
