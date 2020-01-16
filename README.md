@@ -247,6 +247,18 @@ docker network disconnect 21c7d8642536 b3f503669e05
 docker container inspect b3f503669e05
 ```
 
+### Docker Networks: Default Security
+* Create your apps so frontend/backend sit on same Docker network
+* Their inter-communication never leaves host
+* All externally exposed ports closed by default
+* You must manually expose via `-p`, which is better default security!
+* This gets even better later with Swarm and Overlay networks
+
+### Docker Networks: DNS
+* Understand how DNS is the key to easy inter-container comms
+* See how it works by default with custom networks
+* Learn how to use `--link` to enable DNS on default bridge network
+
 
 
 --------------------------------------------------------------
