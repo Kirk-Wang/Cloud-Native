@@ -128,6 +128,12 @@ docker container ls
 
 curl localhost
 curl localhost:8080
+ 
+docker container stop nginx httpd mysql
+docker container stop # tap completion
+
+docker container ls -a
+docker container rm # tap completion again
 ```
 
 
