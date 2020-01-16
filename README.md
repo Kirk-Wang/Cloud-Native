@@ -121,6 +121,10 @@ docker container logs db
 # find & copy-> GENERATED ROOT PASSWORD: Aekia1fiighaengeethe0eihai2ailij
 
 docker container run -d --name webserver -p 8080:80 httpd
+docker ps
+
+docker container run -d --name proxy -p 80:80 nginx
+docker container ls
 ```
 
 
