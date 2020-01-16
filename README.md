@@ -115,6 +115,9 @@ watching this video
 docs.docker.com, etc. will help this stuff stick in your brain better
 then just watching me do it! 
 
+```sh
+docker container run -d -p 3306:3306 --name db -e MYSQL_RANDOM_ROOT_PASSWORD=yes mysql
+```
 
 
 
