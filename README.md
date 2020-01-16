@@ -235,6 +235,11 @@ docker network ls
 docker network inspect bridge
 
 docker network create my_app_net
+docker network ls
+
+docker network create --help
+docker container run -d --name new_nginx --network my_app_net nginx
+docker network inspect my_app_net
 ```
 
 
