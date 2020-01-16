@@ -160,6 +160,7 @@ docker container stats
 
 ### Getting a Shell Inside Containers
 * `docker container run -it` - start new container interactively
+* `docker container exec -it` - run additional command in existing container
 
 --------------------------------------------------------------
 --------------------------------------------------------------
