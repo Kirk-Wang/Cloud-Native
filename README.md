@@ -183,6 +183,13 @@ exit
 
 docker container exec --help
 docker container exec -it mysql bash
+ps aux
+exit
+docker container ls
+
+docker pull alpine
+docker container run -it alpine sh
+apk
 ```
 
 
