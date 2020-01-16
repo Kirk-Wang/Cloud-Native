@@ -136,8 +136,13 @@ docker container ls -a
 docker container rm # tap completion again
 
 docker container rm 4f444c35ebf7 8f9ccb6b0553 0827cf019e82 bb7958b14a40
+
+docker ps -a
+docker image ls
 ```
 
+### What's Going On In Containers
+* 
 
 
 --------------------------------------------------------------
