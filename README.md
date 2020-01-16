@@ -33,6 +33,12 @@
 
 ```sh
 docker container run --publish 80:80 nginx
+# ctrl + c
+# docker container run --publish 8080:80 nginx
+# docker container run --publish 8080:80 --detach nginx
+# docker container ls
+# docker container stop 690
+# docker container ls -a
 ```
 
 ### docker container run --publish 80:80 nginx
@@ -45,6 +51,14 @@ Note you'll get a "bind" error if the left number [host port]
 is being used by anthing else, even another container.
 You can use any port you want on the left, like 8080:80
 or 8888:80,then use localhost:8888 when testing
+```
+
+```sh
+docker container run --publish 80:80 --detach --name webhost nginx
+docker container ls -a
+docker container logs webhost
+docker container top webhost
+docker container --help
 ```
 
 --------------------------------------------------------------
