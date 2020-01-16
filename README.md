@@ -85,6 +85,10 @@ docker container run --publish 8080:80 --name webhost -d nginx:1.11 nginx -T
 
 ```sh
 docker run --name mongo -d mongo
+docker ps
+docker top mongo
+ps aux
+docker stop mongo
 ```
 
 --------------------------------------------------------------
