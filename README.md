@@ -153,6 +153,9 @@ docker container ls
 docker container top mysql
 docker container top nginx
 docker container inspect mysql
+
+docker container stats --help
+docker container stats
 ```
 
 --------------------------------------------------------------
