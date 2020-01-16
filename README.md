@@ -23,6 +23,18 @@
 * [Turnkey * Containers](https://bitnami.com/containers#turnkey-containers)
 * [k8s-for-docker-desktop](https://github.com/AliyunContainerService/k8s-for-docker-desktop)
 
+### Image vs. Container
+* An Image is the application we want to run
+* A Container is an instance of that image running as a process
+* You can have many containers running off the same image
+* In this lecture our image will be the Nginx web server
+* Docker's default image "registry" is called Docker Hub
+  * (hub.docker.com)
+
+```sh
+docker container run --publish 80:80 nginx
+```
+
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
