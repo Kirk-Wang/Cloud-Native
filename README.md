@@ -1,14 +1,4 @@
 # Cloud-Native-And-DevOps
-
-[CNCF Cloud Native Interactive Landscape](http://landscape.cncf.io/)
-
-Bitnami containers
-
-Bitnami containers give you the latest stable versions of your application stacks, allowing you to focus on coding rather than updating dependencies or outdated libraries.
-
-[Development Containers](https://bitnami.com/containers) | [Turnkey Containers](https://bitnami.com/containers#turnkey-containers) | [k8s-for-docker-desktop](https://github.com/AliyunContainerService/k8s-for-docker-desktop)
-
-
 # @@@@🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔@@@@
 
 #### OVERVIEW
@@ -28,6 +18,10 @@ Bitnami containers give you the latest stable versions of your application stack
 * File Reviews
 * References Galore
 
+* [CNCF Cloud Native Interactive Landscape](http://landscape.cncf.io/)
+* [Development Containers](https://bitnami.com/containers)
+* [Turnkey * Containers](https://bitnami.com/containers#turnkey-containers)
+* [k8s-for-docker-desktop](https://github.com/AliyunContainerService/k8s-for-docker-desktop)
 
 --------------------------------------------------------------
 --------------------------------------------------------------
