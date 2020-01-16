@@ -142,8 +142,13 @@ docker image ls
 ```
 
 ### What's Going On In Containers
-* 
+* docker container top `- process list in one container`
+* docker container inspect `- details of one container config`
+* docker container stats `- performance stats for all containers`
 
+```sh
+docker container run -d --name nginx nginx
+```
 
 --------------------------------------------------------------
 --------------------------------------------------------------
