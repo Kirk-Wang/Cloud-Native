@@ -117,6 +117,10 @@ then just watching me do it!
 
 ```sh
 docker container run -d -p 3306:3306 --name db -e MYSQL_RANDOM_ROOT_PASSWORD=yes mysql
+docker container logs db
+# find & copy-> GENERATED ROOT PASSWORD: Aekia1fiighaengeethe0eihai2ailij
+
+docker container run -d --name webserver -p 8080:80 httpd
 ```
 
 
