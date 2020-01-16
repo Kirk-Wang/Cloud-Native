@@ -169,6 +169,15 @@ exit
 docker container ls -a
 
 docker container run -it --name ubuntu ubuntu
+apt-get update
+apt install -y curl
+curl baidu.com
+exit
+
+docker container ls -a
+
+docker container start --help
+docker container start -ai ubuntu
 ```
 
 
