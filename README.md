@@ -167,6 +167,8 @@ docker container stats
 docker container run -it --name proxy nginx bash
 exit
 docker container ls -a
+
+docker container run -it --name ubuntu ubuntu
 ```
 
 
