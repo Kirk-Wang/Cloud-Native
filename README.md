@@ -105,6 +105,19 @@ docker top mongo
 * Use `docker container logs` on mysql to find the random password it created on startup
 * Clean it all up with `docker container stop` and `docker container rm`
 (both can accept multiple names or ID's)
+* Use `docker container ls` to ensure everything is correct before and after cleanup
+
+### Assignment Reminder
+* This lecture is ANSWERS to previous assignment
+* Try the previous lecture (Assignment details) first on your own before
+watching this video
+* Forcing yourself to figure this assignment out by sudying commands,
+docs.docker.com, etc. will help this stuff stick in your brain better
+then just watching me do it! 
+
+
+
+
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
