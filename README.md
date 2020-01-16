@@ -192,6 +192,13 @@ docker container run -it alpine sh
 apk
 ```
 
+### Docker Networks: Concepts
+* Review of `docker container run -p`
+* For local dev/testing, networks usually "just work"
+* Quick port check with `docker container port <container>`
+* Learn concepts of Docker Networking
+* Understand how network packets move around Docker
+
 
 --------------------------------------------------------------
 --------------------------------------------------------------
