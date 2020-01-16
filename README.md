@@ -35,6 +35,18 @@
 docker container run --publish 80:80 nginx
 ```
 
+### docker container run --publish 80:80 nginx
+1. Downloaded image 'nginx' from Docker Hub
+2. Started a new container from that image
+3. Opened port 80 on the host IP
+4. Routes that traffic to the container IP, port 80
+```
+Note you'll get a "bind" error if the left number [host port]
+is being used by anthing else, even another container.
+You can use any port you want on the left, like 8080:80
+or 8888:80,then use localhost:8888 when testing
+```
+
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
