@@ -161,6 +161,14 @@ docker container stats
 ### Getting a Shell Inside Containers
 * `docker container run -it` - start new container interactively
 * `docker container exec -it` - run additional command in existing container
+* Different Linux distros in containers
+
+```sh
+docker container run -it --name proxy nginx bash
+exit
+docker container ls -a
+```
+
 
 --------------------------------------------------------------
 --------------------------------------------------------------
