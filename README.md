@@ -178,6 +178,11 @@ docker container ls -a
 
 docker container start --help
 docker container start -ai ubuntu
+curl google.com
+exit
+
+docker container exec --help
+docker container exec -it mysql bash
 ```
 
 
