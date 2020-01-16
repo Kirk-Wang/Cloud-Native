@@ -103,7 +103,8 @@ docker top mongo
 * When running `mysql`, use the `--env` option(or `-e`) to pass in 
 `MYSQL_RANDOM_ROOT_PASSWORD=yes`
 * Use `docker container logs` on mysql to find the random password it created on startup
-
+* Clean it all up with `docker container stop` and `docker container rm`
+(both can accept multiple names or ID's)
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
