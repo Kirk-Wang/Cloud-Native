@@ -125,6 +125,9 @@ docker ps
 
 docker container run -d --name proxy -p 80:80 nginx
 docker container ls
+
+curl localhost
+curl localhost:8080
 ```
 
 
