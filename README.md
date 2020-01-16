@@ -230,6 +230,12 @@ ifconfig en0
 * Attach a network to container `docker network connect`
 * Detach a network from container `docker network disconnect`
 
+```sh
+docker network ls
+docker network inspect bridge
+
+docker network create my_app_net
+```
 
 
 
