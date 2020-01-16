@@ -1,5 +1,4 @@
 # Cloud-Native-And-DevOps
-# @@@@🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔@@@@
 
 #### OVERVIEW
 
@@ -18,6 +17,7 @@
 * File Reviews
 * References Galore
 
+### @@@@🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔@@@@
 * [CNCF Cloud Native Interactive Landscape](http://landscape.cncf.io/)
 * [Development Containers](https://bitnami.com/containers)
 * [Turnkey * Containers](https://bitnami.com/containers#turnkey-containers)
