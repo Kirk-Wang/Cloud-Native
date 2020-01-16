@@ -207,6 +207,15 @@ apk
   * network "my_web_app" for mysql and php/apache containers
   * network "my_api" for mongo and nodejs containers
 
+### Docker Networks Cont.
+* "Batteries Included, But Removable"
+  * Defaults work well in many cases, but easy to swap out parts to customize it
+* Make new virtual networks
+* Attach containers to more then one virual network(or none)
+* Skip virual networks and use host IP(--net=host)
+* Use different Docker network drivers to gain new abilities
+* and much more...
+
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
