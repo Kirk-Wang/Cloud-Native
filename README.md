@@ -61,6 +61,24 @@ docker container top webhost
 docker container --help
 ```
 
+### What happens in 'docker container run'
+1. Looks for that image locally in image cache, doesn't find anything
+2. Then looks in remote image repository(defaults to Docker Hub)
+3. Downloads the latest version(nginx:latest by default)
+4. Creates new container based on that image and prepares to start
+5. Give it a virtual IP on a private network inside docker engine
+6. Opens up port 80 on host and forwards to port 80 in container
+7. Starts container by using the CMD in the image Dockerfile
+
+### Example Of Changing The Default
+```sh
+docker container run --publish 8080:80 --name webhost -d nginx:1.11 nginx -T
+# 8080 -> change host listening port
+# 1.11 -> change version of image
+# nginx -T -> change CMD run on start
+```
+
+
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
