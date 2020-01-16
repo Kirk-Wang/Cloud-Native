@@ -78,7 +78,14 @@ docker container run --publish 8080:80 --name webhost -d nginx:1.11 nginx -T
 # nginx -T -> change CMD run on start
 ```
 
+### Containers aren't Mini-VM's
+* They are just processes
+* Limited to what resources they can access
+* Exit when process stops
 
+```sh
+docker run --name mongo -d mongo
+```
 
 --------------------------------------------------------------
 --------------------------------------------------------------
