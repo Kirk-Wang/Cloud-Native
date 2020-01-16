@@ -216,6 +216,23 @@ apk
 * Use different Docker network drivers to gain new abilities
 * and much more...
 
+```sh
+docker container run -p 80:80 --name webhost -d nginx
+docker container port webhost
+docker container inspect --format '{{ .NetworkSettings.IPAddress }}' webhost
+ifconfig en0
+```
+
+### Docker Networks: CLI Management
+* Show networks `docker network ls`
+* Inspect a network `docker network inspect`
+* Create a network `docker network create --driver`
+* Attach a network to container `docker network connect`
+* Detach a network from container `docker network disconnect`
+
+
+
+
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
