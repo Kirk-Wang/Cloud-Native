@@ -89,6 +89,10 @@ docker ps
 docker top mongo
 ps aux
 docker stop mongo
+ps aux | grep mongo
+docker start mongo
+docker ps
+docker top mongo
 ```
 
 --------------------------------------------------------------
