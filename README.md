@@ -362,6 +362,13 @@ docker container rm -f kind_darwin fervent_jackson
 * `history` and `inspect` commands
 * copy on write
 
+```sh
+docker image ls
+docker history nginx:latest
+# Oops that's old command format
+docker history mysql
+```
+
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
