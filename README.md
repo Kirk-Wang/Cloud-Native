@@ -261,6 +261,8 @@ docker container inspect b3f503669e05
 ```sh
 docker container ls
 docker network inspect my_app_net
+
+docker container run -d --name my_nginx --network my_app_net nginx
 ```
 
 
