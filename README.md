@@ -319,6 +319,12 @@ containers list for the same DNS name
 docker network create dude
 docker container run -d --net dude --net-alias search elasticsearch:2
 # --net-alias and --network-alias both work
+docker container run --rm --net dude alpine nslookup search
+docker container run --rm --net dude centos curl -s search:9200
+docker container run --rm --net dude centos curl -s search:9200
+docker container run --rm --net dude centos curl -s search:9200
+docker container run --rm --net dude centos curl -s search:9200
+### Test DNS Round Robin
 ```
 
 --------------------------------------------------------------
