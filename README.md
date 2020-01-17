@@ -279,6 +279,9 @@ docker container exec -it my_nginx ping new_nginx
 * Understand basics of what a Linux distributions is like Ubuntu and CentOS
 * Know how to run a container🐻
 
+### Assignment: CLI App Testing
+* 
+
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
