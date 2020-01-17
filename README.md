@@ -274,6 +274,10 @@ docker container exec -it my_nginx ping new_nginx
 * You're using custom networks right?
 * This gets way easier with Docker Compose in future Section
 
+### Assignment Requirements: CLI App Testing
+* Know how to use `-it` to get shell in container
+* Understand basics of what a Linux distributions is like Ubuntu and CentOS
+* Know how to run a container🐻
 
 --------------------------------------------------------------
 --------------------------------------------------------------
