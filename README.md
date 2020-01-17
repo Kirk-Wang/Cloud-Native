@@ -356,7 +356,11 @@ docker container rm -f kind_darwin fervent_jackson
 * How to discern "good" public images
 * Using different base images like Debian or Alpine
 
-
+### This Lecture:
+* Image layers
+* union file system
+* `history` and `inspect` commands
+* copy on write
 
 --------------------------------------------------------------
 --------------------------------------------------------------
