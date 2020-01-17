@@ -285,7 +285,9 @@ docker container exec -it my_nginx ping new_nginx
  `ubuntu:14.04`, using `-it`
 * Learn the `docker container --rm` option so you can save cleanup
 * Ensoure `curl` is installed and on latest version for that distro
-  * 
+  * ubuntu: `apt-get update && apt-get install curl`
+  * centos: `yum update curl`
+* Check `curl --version`
 
 --------------------------------------------------------------
 --------------------------------------------------------------
