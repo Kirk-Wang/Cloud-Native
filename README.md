@@ -258,7 +258,10 @@ docker container inspect b3f503669e05
 * Understand how DNS is the key to easy inter-container comms
 * See how it works by default with custom networks
 * Learn how to use `--link` to enable DNS on default bridge network
-
+```sh
+docker container ls
+docker network inspect my_app_net
+```
 
 
 --------------------------------------------------------------
