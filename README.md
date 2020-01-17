@@ -326,6 +326,7 @@ docker container run --rm --net dude centos curl -s search:9200
 docker container run --rm --net dude centos curl -s search:9200
 ### Test DNS Round Robin
 docker container ls
+docker container rm -f kind_darwin fervent_jackson
 ```
 
 --------------------------------------------------------------
