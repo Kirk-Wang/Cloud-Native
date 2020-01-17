@@ -345,6 +345,19 @@ docker container rm -f kind_darwin fervent_jackson
 * Small as one file(your app binary) like a golang static binary
 * Big as a Ubuntu distro with apt, and Apache, PHP, and more installed
 
+### This Lecture:
+* Basics of Docker Hub(hub.docker.com)
+* Find Official and other good public images
+* Download images and basics of image tags
+
+### This Lecture: Review
+* Docker Hub, "the apt package system for Containers"
+* Official images and how to use them
+* How to discern "good" public images
+* Using different base images like Debian or Alpine
+
+
+
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
