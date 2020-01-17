@@ -371,6 +371,7 @@ docker history mysql
 docker image inspect
 # docker inspect (old way)
 # returns JSON metadata about the image
+docker image inspect nginx
 ```
 
 --------------------------------------------------------------
