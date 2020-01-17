@@ -289,6 +289,15 @@ docker container exec -it my_nginx ping new_nginx
   * centos: `yum update curl`
 * Check `curl --version`
 
+```sh
+#t1
+docker container run --rm -it centos:7 bash
+yum update curl
+
+#t2
+docker ps -a
+```
+
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
