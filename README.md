@@ -298,7 +298,14 @@ yum update curl -y
 docker ps -a
 docker container run --rm -it ubuntu:14.04 bash
 apt-get update && apt-get install -y curl
+curl --version
 ```
+
+### Assignment Requirements: DNS RR Test
+* Know how to use -it go get shell in container
+* Understand basics of what a Linux distribution is like Ubuntu and CentOS
+* Know how to run a container 
+* Understand basics of DNS records
 
 --------------------------------------------------------------
 --------------------------------------------------------------
