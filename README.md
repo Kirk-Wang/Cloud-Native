@@ -367,6 +367,10 @@ docker image ls
 docker history nginx:latest
 # Oops that's old command format
 docker history mysql
+
+docker image inspect
+# docker inspect (old way)
+# returns JSON metadata about the image
 ```
 
 --------------------------------------------------------------
