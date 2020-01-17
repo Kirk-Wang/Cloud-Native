@@ -292,10 +292,12 @@ docker container exec -it my_nginx ping new_nginx
 ```sh
 #t1
 docker container run --rm -it centos:7 bash
-yum update curl
+yum update curl -y 
 
 #t2
 docker ps -a
+docker container run --rm -it ubuntu:14.04 bash
+apt-get update && apt-get install -y curl
 ```
 
 --------------------------------------------------------------
