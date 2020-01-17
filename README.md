@@ -263,7 +263,16 @@ docker container ls
 docker network inspect my_app_net
 
 docker container run -d --name my_nginx --network my_app_net nginx
+docker network inspect my_app_net
+
+docker container exec -it my_nginx ping new_nginx
 ```
+
+### Docker Networks: DNS
+* Containers shouldn't rely on IP's for inter-communication
+* DNS for friendly names is built-in if you use custom networks
+* You're using custom networks right?
+* This gets way easier with Docker Compose in future Section
 
 
 --------------------------------------------------------------
