@@ -477,6 +477,10 @@ CMD [ "tini", "--", "node", "./bin/www" ]
 # - in the end you should be using FROM, RUN, WORKDIR, COPY, EXPOSE, and CMD commands
 ```
 
+```sh
+docker build -t testnode .
+```
+
 
 --------------------------------------------------------------
 --------------------------------------------------------------
