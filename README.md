@@ -381,6 +381,11 @@ docker image inspect nginx
 * A container is just a single read/write layer on top of image
 * `docker image history` and `inspect` commands can teach us
 
+### This Lecture: Requirements
+* Know what container and images are
+* Understand image layer basics
+* Understand Docker Hub basics
+
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
