@@ -404,6 +404,8 @@ docker login
 cat ~/.docker/config.json
 docker image push lotteryjs/nginx
 docker image tag lotteryjs/nginx lotteryjs/nginx:testing
+docker image ls
+docker image push lotteryjs/nginx:testing
 ```
 
 --------------------------------------------------------------
