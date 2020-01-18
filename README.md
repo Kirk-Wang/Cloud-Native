@@ -408,6 +408,14 @@ docker image ls
 docker image push lotteryjs/nginx:testing
 ```
 
+### This Lecture: Review
+* Properly tagging images
+* Tagging images for upload to Docker Hub
+* How tagging is related to image ID
+* The Latest Tag
+* Logging into Docker Hub from docker cli
+* How to create private Docker Hub images
+
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
