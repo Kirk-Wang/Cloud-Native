@@ -479,6 +479,7 @@ CMD [ "tini", "--", "node", "./bin/www" ]
 
 ```sh
 docker build -t testnode .
+docker container run  --rm -p 80:3000 testnode
 ```
 
 
