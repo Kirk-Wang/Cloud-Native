@@ -483,6 +483,10 @@ docker container run  --rm -p 80:3000 testnode
 docker images
 docker tag --help
 docker tag testnode lotteryjs/testing-node
+docker push --help
+docker push lotteryjs/testing-node
+docker image rm lotteryjs/testing-node
+docker container run --rm -p 80:3000 lotteryjs/testing-node
 ```
 
 
