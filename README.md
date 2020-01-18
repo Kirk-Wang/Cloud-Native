@@ -399,6 +399,10 @@ docker pull mysql/mysql-server
 docker pull nginx:mainline
 docker image tag nginx lotteryjs/nginx
 docker image tag --help
+docker image ls
+docker login
+cat ~/.docker/config.json
+docker image push lotteryjs/nginx
 ```
 
 --------------------------------------------------------------
