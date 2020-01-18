@@ -416,6 +416,21 @@ docker image push lotteryjs/nginx:testing
 * Logging into Docker Hub from docker cli
 * How to create private Docker Hub images
 
+e.g. docker build -f some-dockerfile
+
+```sh
+cd dockerfile-sample-1
+docker image build -t customnginx .
+```
+
+```sh
+cd dockerfile-sample-2
+ll
+vim Dockerfile
+docker container run -p 80:80 --rm nginx
+docker image build -t nginx-with-html .
+```
+
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
