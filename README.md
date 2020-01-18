@@ -386,6 +386,11 @@ docker image inspect nginx
 * Understand image layer basics
 * Understand Docker Hub basics
 
+### This Lecture:
+* All about image tags
+* How to upload to Docker Hub
+* Image ID vs. Tag
+
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
