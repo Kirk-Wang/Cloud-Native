@@ -393,6 +393,12 @@ docker image inspect nginx
 
 ```sh
 docker image tag --help
+docker image ls
+
+docker pull mysql/mysql-server
+docker pull nginx:mainline
+docker image tag nginx lotteryjs/nginx
+docker image tag --help
 ```
 
 --------------------------------------------------------------
