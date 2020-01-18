@@ -429,6 +429,11 @@ ll
 vim Dockerfile
 docker container run -p 80:80 --rm nginx
 docker image build -t nginx-with-html .
+docker container run -p 80:80 --rm nginx-with-html
+docker image ls
+docker image tag --help
+docker image tag nginx-with-html:latest lotteryjs/nginx-with-html:latest
+docker image ls
 ```
 
 --------------------------------------------------------------
