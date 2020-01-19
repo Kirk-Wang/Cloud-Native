@@ -606,7 +606,15 @@ docker run -p 80:4000 -v $(pwd):/site bretfisher/jekyll-serve
 ```
 
 ### Docker Compose
-* Why: 
+* Why: configure relationships between containers
+* Why: save our docker container run settings in easy-to-read file
+* Why: create one-liner developer environment startups
+* Comprised of 2 separate but related things
+* 1. YAML-formatted file that describes our solution options for:
+  * containers
+  * networks
+  * volumes
+* 2. A CLI tool `docker-compose` used for local dev/test automation with those YAML files
 
 --------------------------------------------------------------
 --------------------------------------------------------------
