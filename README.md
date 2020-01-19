@@ -550,6 +550,13 @@ docker volume create --help
 * `... run -v /Users/bret/stuff:/path/container` (mac/linux)
 * `... run -v //c/Users/bret/stuff:/path/container` (windows)
 
+```sh
+cat dockerfile-sample-2
+ll
+pcat Dockerfile
+docker container run -d --name nginx -p 80:80 -v $(pwd):/usr/share/nginx/html nginx
+```
+
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
