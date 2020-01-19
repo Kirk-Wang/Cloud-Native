@@ -669,6 +669,16 @@ docker pull drupal
 docker image inspect drupal
 ```
 
+```yaml
+```
+
+
+```sh
+docker-compose down -v
+# Remove named volumes declared in the `volumes`
+# section of the Compose file and anonymous volumes
+# attached to containers.
+```
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
