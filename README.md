@@ -555,6 +555,7 @@ cat dockerfile-sample-2
 ll
 pcat Dockerfile
 docker container run -d --name nginx -p 80:80 -v $(pwd):/usr/share/nginx/html nginx
+docker container run -d --name nginx2 -p 8080:80 nginx
 ```
 
 --------------------------------------------------------------
