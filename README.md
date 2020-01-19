@@ -700,6 +700,13 @@ docker-compose down -v
 # section of the Compose file and anonymous volumes
 # attached to containers.
 ```
+
+### Using Compose to Build
+* Compose can also build your custom images
+* Will build them with `docker-compose up` if not found in cache
+* Also rebuild with `docker-compose build`
+* Great for complex builds that have lots of vars or build args
+
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
