@@ -510,6 +510,12 @@ docker container run --rm -p 80:3000 lotteryjs/testing-node
 ### Persistent Data: Volumes
 * VOLUME command in Dockerfile
 
+```sh
+docker pull mysql
+# Note you might want to do a `docker volume prune` to
+# cleanup unused volumes and make it easier to see what
+# you're doing here
+```
 
 
 
