@@ -812,6 +812,7 @@ volumes:
 ```sh
 docker info
 # find->> Swarm: inactive
+docker swarm init
 ```
 
 --------------------------------------------------------------
