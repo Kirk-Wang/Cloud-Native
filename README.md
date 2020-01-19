@@ -578,6 +578,15 @@ echo "is it me you're looking for" > testme.txt
 * Check logs to validate
 * (this only works with patch versions, most SQL DB's require manual commands
 to upgrade DB's to major/minor versions,i.e. it's DB limitation not a container one)
+```sh
+docker container run -d --name psql -v psql:/var/lib/postgresql/data postgres:9.6.1
+docker container logs -f psql
+docker container stop psql
+docker container run -d --name psql2 -v psql:/var/lib/postgresql/data postgres:9.6.2
+docker container ps -a
+docker volume ls
+docker container logs psql2
+```
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
