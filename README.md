@@ -663,6 +663,9 @@ Docker Hub is your friend
 * Tip: Drupal assumes DB is `localhost`, but it's service name
 * Extra Credit: Use volumes to store Drupal unique data
 
+```sh
+cd compose-assignment-2
+```
 
 --------------------------------------------------------------
 --------------------------------------------------------------
