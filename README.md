@@ -643,6 +643,8 @@ cd compose-sample-2
 ls -la
 cat docker-compose.yml
 docker-compose up
+# browser -> http://localhost
+docker-compose up -d
 ```
 
 
