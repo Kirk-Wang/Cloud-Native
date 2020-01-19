@@ -707,6 +707,11 @@ docker-compose down -v
 * Also rebuild with `docker-compose build`
 * Great for complex builds that have lots of vars or build args
 
+```sh
+cd compose-sample-3/
+docker-compose up
+# localhost
+```
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
