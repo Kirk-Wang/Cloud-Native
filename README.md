@@ -713,6 +713,7 @@ docker-compose up
 # localhost
 docker-compose down
 docker image ls
+docker-compose down --help
 ```
 --------------------------------------------------------------
 --------------------------------------------------------------
