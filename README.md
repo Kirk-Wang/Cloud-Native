@@ -644,7 +644,10 @@ ls -la
 cat docker-compose.yml
 docker-compose up
 # browser -> http://localhost
+# ctrl + c
 docker-compose up -d
+docker-compose logs
+docker-compose --help
 ```
 
 
