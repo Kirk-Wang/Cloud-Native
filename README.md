@@ -731,6 +731,9 @@ docker-compose down --rmi local
 * Use the `drupal` image along with the `postgres` image as before
 * Use `README.md` in that dir for details
 
+```sh
+cd compose-assignment-2
+```
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
