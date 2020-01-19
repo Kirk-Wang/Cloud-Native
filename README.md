@@ -640,7 +640,8 @@ then "new developer onboarding" would be:
   * docker-compose up
 ```sh
 cd compose-sample-2
-
+ls -la
+cat docker-compose.yml
 ```
 
 
