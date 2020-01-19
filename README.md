@@ -638,6 +638,10 @@ cd compose-sample-2
 then "new developer onboarding" would be:
   * git clone github.com/some/software
   * docker-compose up
+```sh
+cd compose-sample-2
+
+```
 
 
 --------------------------------------------------------------
