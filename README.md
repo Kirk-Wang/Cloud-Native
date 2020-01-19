@@ -507,6 +507,13 @@ docker container run --rm -p 80:3000 lotteryjs/testing-node
 * Bind Mounts: link container path to host path
 
 
+### Persistent Data: Volumes
+* VOLUME command in Dockerfile
+
+
+
+
+
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
