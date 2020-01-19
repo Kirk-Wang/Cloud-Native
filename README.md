@@ -650,6 +650,7 @@ docker-compose logs
 docker-compose --help
 docker-compose ps
 docker-compose top
+docker-compose down
 ```
 
 
