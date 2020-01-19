@@ -665,6 +665,8 @@ Docker Hub is your friend
 
 ```sh
 cd compose-assignment-2
+docker pull drupal
+docker image inspect drupal
 ```
 
 --------------------------------------------------------------
