@@ -664,12 +664,33 @@ Docker Hub is your friend
 * Extra Credit: Use volumes to store Drupal unique data
 
 ```sh
-cd compose-assignment-2
 docker pull drupal
 docker image inspect drupal
 ```
 
 ```yaml
+version: '2'
+
+services:
+  drupal:
+    image: drupal:8.2
+    ports:
+      - "8080:80"
+    volumes:
+      - drupal-modules:/var/www/html/modules
+      - drupal-profiles:/var/www/html/profiles       
+      - drupal-sites:/var/www/html/sites      
+      - drupal-themes:/var/www/html/themes
+  postgres:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_PASSWORD=mypasswd
+
+volumes:
+  drupal-modules:
+  drupal-profiles:
+  drupal-sites:
+  drupal-themes:
 ```
 
 
