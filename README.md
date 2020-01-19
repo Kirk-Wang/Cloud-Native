@@ -648,6 +648,8 @@ docker-compose up
 docker-compose up -d
 docker-compose logs
 docker-compose --help
+docker-compose ps
+docker-compose top
 ```
 
 
