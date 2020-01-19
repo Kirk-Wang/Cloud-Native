@@ -718,6 +718,8 @@ docker image rm nginx-custom
 docker image ls
 # remove -> image: nginx-custom
 docker-compose up -d
+docker image ls
+docker-compose down --rmi local
 ```
 --------------------------------------------------------------
 --------------------------------------------------------------
