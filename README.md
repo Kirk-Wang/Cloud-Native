@@ -617,7 +617,11 @@ docker run -p 80:4000 -v $(pwd):/site bretfisher/jekyll-serve
 * 2. A CLI tool `docker-compose` used for local dev/test automation with those YAML files
 
 ### docker-compose.yml
-
+* Compose YAML format has it's own versions: 1, 2, 2.1, 3, 3.1
+* YAML file can be used with `docker-compose` command for local docker automation or...
+* With `docker` directly in production with Swarm(as of v1.13)
+* `docker-compose --help`
+* `docker-compose.yml` is de
 
 
 --------------------------------------------------------------
