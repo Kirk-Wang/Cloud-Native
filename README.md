@@ -624,6 +624,10 @@ docker run -p 80:4000 -v $(pwd):/site bretfisher/jekyll-serve
 * `docker-compose.yml` is default filename, but any can be used with
 `docker-compose -f`
 
+```sh
+cd compose-sample-2
+```
+
 
 --------------------------------------------------------------
 --------------------------------------------------------------
