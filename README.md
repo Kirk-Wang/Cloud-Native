@@ -621,7 +621,8 @@ docker run -p 80:4000 -v $(pwd):/site bretfisher/jekyll-serve
 * YAML file can be used with `docker-compose` command for local docker automation or...
 * With `docker` directly in production with Swarm(as of v1.13)
 * `docker-compose --help`
-* `docker-compose.yml` is de
+* `docker-compose.yml` is default filename, but any can be used with
+`docker-compose -f`
 
 
 --------------------------------------------------------------
