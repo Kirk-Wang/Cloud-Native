@@ -721,6 +721,16 @@ docker-compose up -d
 docker image ls
 docker-compose down --rmi local
 ```
+
+### Assignment: Build and Run Compose
+* "Building custom `drupal` image for local testing"
+* Compose isn't just for developers. Testing apps si easy/fun!
+* Maybe your learning Drupal admin, or are a software tester
+* Start with Compose file from previous assignment
+* Make your `Dockerfile` and `docker-compose.yml` in dir `compose-assignment-2`
+* Use the `drupal` image along with the `postgres` image as before
+* Use `README.md` in that dir for details
+
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
