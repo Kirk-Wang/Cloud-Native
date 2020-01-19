@@ -489,7 +489,12 @@ docker image rm lotteryjs/testing-node
 docker container run --rm -p 80:3000 lotteryjs/testing-node
 ```
 
-
+### Section Overview
+* Defining the problem of persistent data
+* Key concepts with containers: immutable, ephemeral
+* Learning and using Data Volumes
+* Learning and using Bind Mounts
+* Assignments
 
 
 
