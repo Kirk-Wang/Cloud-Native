@@ -714,6 +714,7 @@ docker-compose up
 docker-compose down
 docker image ls
 docker-compose down --help
+docker image rm nginx-custom
 ```
 --------------------------------------------------------------
 --------------------------------------------------------------
