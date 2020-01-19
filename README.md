@@ -518,6 +518,19 @@ docker pull mysql
 docker image inspect mysql
 docker container run -d --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=True mysql
 docker container inspect mysql
+docker volume inspect bd2dd9f5ecabc7d9bd6779436b8fdbee1426613601e24ef7d94ef77b497b7c1c
+docker container run -d --name mysql2 -e MYSQL_ALLOW_EMPTY_PASSWORD=True mysql
+docker volume ls
+docker container stop mysql
+docker container stop mysql2
+docker container ls
+docker container ls -a
+docker volume ls
+docker container rm mysql mysql2
+docker volume ls
+docker container run -d --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=True -v mysql-db:/var/lib/mysql  mysql
+docker volume ls
+docker volume inspect mysql-db
 ```
 
 
