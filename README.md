@@ -711,6 +711,8 @@ docker-compose down -v
 cd compose-sample-3/
 docker-compose up
 # localhost
+docker-compose down
+docker image ls
 ```
 --------------------------------------------------------------
 --------------------------------------------------------------
