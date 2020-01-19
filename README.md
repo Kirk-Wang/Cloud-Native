@@ -715,6 +715,9 @@ docker-compose down
 docker image ls
 docker-compose down --help
 docker image rm nginx-custom
+docker image ls
+# remove -> image: nginx-custom
+docker-compose up -d
 ```
 --------------------------------------------------------------
 --------------------------------------------------------------
