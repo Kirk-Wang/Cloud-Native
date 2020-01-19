@@ -556,6 +556,17 @@ ll
 pcat Dockerfile
 docker container run -d --name nginx -p 80:80 -v $(pwd):/usr/share/nginx/html nginx
 docker container run -d --name nginx2 -p 8080:80 nginx
+ll
+# t2
+docker container exec -it nginx bash
+cd /usr/share/nginx/html
+ls -al
+# t1
+touch testme.txt
+# t2
+ls -al
+# t1
+echo "is it me you're looking for" > testme.txt
 ```
 
 --------------------------------------------------------------
