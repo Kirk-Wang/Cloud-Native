@@ -832,6 +832,8 @@ docker swarm help
 docker service help
 docker service create alpine ping 8.8.8.8
 docker service ls
+docker service ps pensive_galois
+docker service update v4tllmm0whqa --replicas 3
 ```
 
 --------------------------------------------------------------
