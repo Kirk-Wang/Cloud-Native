@@ -828,6 +828,8 @@ docker swarm init
 ```sh
 docker node ls
 docker node help
+docker swarm help
+docker service help
 ```
 
 --------------------------------------------------------------
