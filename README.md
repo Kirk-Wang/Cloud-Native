@@ -1017,6 +1017,7 @@ docker service create --name worker --network frontend --network backend <image>
 docker service create --name db --network backend --mount type=volume,source=db-data,target=/var/lib/postgresql/data postgres:9.4
 
 docker service create --name result --network backend -p 5001:80
+docker service ls
 ```
 
 ### Stacks: Production Grade Compose
