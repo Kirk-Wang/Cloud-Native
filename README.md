@@ -835,6 +835,8 @@ docker service ls
 docker service ps pensive_galois
 docker service update v4tllmm0whqa --replicas 3
 docker service ps pensive_galois
+docker update --help
+docker service update --help
 ```
 
 --------------------------------------------------------------
