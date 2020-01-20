@@ -787,6 +787,18 @@ volumes:
 
 ```
 
+
+### Your First Swarm Service
+
+[Docker Swarm Docs](https://docs.docker.com/swarm/)
+
+[Play with Docker](https://labs.play-with-docker.com/)
+* Templates
+  * 3 Managers and 2 Workers
+```sh
+docker service create --name hello --replicas 3 --detach=false --publish 8080:80 nginx
+```
+
 ### Containers Everywhere = New Problems
 * How do we automate container lifecycle?
 * How can we easily scale out/in/up/down?
@@ -809,12 +821,6 @@ volumes:
   * docker stack
   * docker secret
 
-```sh
-docker info
-# find->> Swarm: inactive
-docker swarm init
-```
-
 ### docker swarm init: What Just Happened?
 * Lots of PKI and security automation
   * Root Signing Certificate created  for our Swarm
@@ -825,37 +831,271 @@ docker swarm init
   * No need for another key/value system to hold orchestration/secrets
   * Replicates logs amongst Managers via mutual TLS in "control plane" 
 
+### Create Your First Service and Scale It Locally
+
 ```sh
+docker swarm init
 docker node ls
+# ...MANAGER STATUS
+# ...Leader
 docker node help
 docker swarm help
 docker service help
+
 docker service create alpine ping 8.8.8.8
 docker service ls
-docker service ps pensive_galois
-docker service update v4tllmm0whqa --replicas 3
-docker service ps pensive_galois
+docker service ps <NAME(service)>
+docker container ls
+docker service update <ID(service)> --replicas 3
+docker service ls
+docker service ps <NAME(service)>
+
 docker update --help
 docker service update --help
-docker container ls
-docker container rm -f pensive_galois.1.yn8gcg88zjnk4seojmwvw2qw8
-docker service ls
-#delay 3s
-docker service ls
-docker service ps pensive_galois
 
-docker service rm pensive_galois
+docker container ls
+docker container rm -f <name>.1.<ID>
+docker service ls
+
+docker service ps <NAME(service)>
+
+docker service rm <NAME(service)>
 docker service ls
 docker container ls
 ```
 
---------------------------------------------------------------
---------------------------------------------------------------
---------------------------------------------------------------
---------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+### Creating 3-Node Swarm: Host Options
+* A.`play-with-docker.com`
+  * Only needs a browser, but resets after 4 hours
+* B.docker-machine + VirtualBox
+  * Free and runs locally,but requires a machine with 8GB memory
+* C.Digital Ocean + Docker install
+  * Most like a production setup, but cost $5-10/node/month while learning
+  * Use my referral code in section resources to get $10 free
+* D.Roll your own
+  * docker-machine can provision machines for Amazon, Azure, DO, Google, etc.
+  * Install docker anywhere with `get.docker.com`
+
+**play-with-docker.com**
+```sh
+# node1
+# create 3 new instances
+docker info
+ping node2
+```
+
+**docker-machine + VirtualBox**
+```sh
+docker-machine create node1
+docker-machine ssh node1
+exit
+docker-machine env node1
+eval $(docker-machine env node1)
+docker info # node1
+
+docker-machine env --unset
+eval $(docker-machine env --unset)
+docker info
+```
+
+**DO**
+
+```sh
+# curl -fsSL https://get.docker.com -o get-docker.sh
+# sh get-docker.sh
+
+# root@node1
+docker swarm init
+docker swarm init --advertise-addr <IP address>
+# docker swarm init --advertise-addr=192.168.99.100
+
+#I'm going to copy the swarm join command and go over to node2 and add it in.
+# root@node2
+docker swarm join --token SWMTKN-1-1bn2hsyhjwqn4wztjqd7moftumffk4vwd2e88azwj7u7bg0q6m-c91v8sc6vpsyxw4zsqmrmg4ji 192.168.99.100:2377
+# This node joined a swarm as a worker.
+docker node ls
+#Error response from daemon: This node is not a swarm manager. Worker nodes can't be used to view or modify cluster state. Please run this command on a manager node or promote the current node to a manager.
+
+# go back to node1
+# docker node ls
+docker node update --role manager node2
+
+# for node3, let's add it as a manager by default.
+# We need to go back to our original command of docker swarm, and then we need to get the join-token.
+# go back to node1
+docker swarm join-token manager
+# docker swarm join --token SWMTKN-1-1bn2hsyhjwqn4wztjqd7moftumffk4vwd2e88azwj7u7bg0q6m-dzz4pcg9inzkt9wnft4hskaxn 192.168.99.100:2377
+# I'm going to copy this, paste it into node3
+
+# node3
+docker swarm join --token SWMTKN-1-1bn2hsyhjwqn4wztjqd7moftumffk4vwd2e88azwj7u7bg0q6m-dzz4pcg9inzkt9wnft4hskaxn 192.168.99.100:2377
+# This node joined a swarm as a manager.
+
+# Back on node1
+docker node ls
+docker service create --replicas 3 alpine ping 8.8.8.8
+docker node ps
+docker service ps <service name>
+```
+
+### Overlay Multi-Host Networking
+* Just choose `--driver overlay` when creating network
+* For container-to-container traffic inside a single Swarm
+* Optional IPSec(AES) encryption on network creation
+* Each service can be connected to multiple networks
+  * (e.g. front-end, back-end)
+
+```sh
+# root@node1
+docker network create --driver overlay mydrupal
+docker network ls
+
+# https://github.com/bitnami/bitnami-docker-postgresql
+docker service create --name psql --network mydrupal -e POSTGRESQL_POSTGRES_PASSWORD=mypass -e POSTGRESQL_DATABASE=progres postgres
+docker service ls
+docker service ps psql
+docker logs psql.1.terabjvf7wkt5j769t04tld02
+
+docker service create --name drupal --network mydrupal -p 80:80 drupal
+docker service ls
+docker service ps drupal #drupal is actrually running on Node2.
+
+docker service inspect drupal #VIP
+```
+
+### Routing Mesh
+
+[Use swarm mode routing mesh](https://docs.docker.com/engine/swarm/ingress/)
+
+![service ingress image](https://docs.docker.com/engine/swarm/images/ingress-routing-mesh.png)
+
+![ingress with external load balancer image](https://docs.docker.com/engine/swarm/images/ingress-lb.png)
+
+* Routes ingress(incoming) packets for a Service to proper Task
+* Spans All nodes in Swarm
+* Uses IPVS from Linux Kernel
+* Load balances Swarm Services across their Tasks
+* Two ways this works:
+* Container-to-container in a Overlay network(uses VIP)
+* External traffic incoming to published ports(all nodes listen)
+
+```sh
+docker service create --name search --replicas 3 -p 9200:9200 elasticsearch:2
+docker service ps search
+curl localhost:9200
+curl localhost:9200
+curl localhost:9200
+```
+
+### Routing Mesh Cont.
+* This is stateless load balancing
+* This LB is at OSI Layer 3(TCP), not Layer 4(DNS)
+* Both limitation can be overcome with:
+* Niginx or HAProxy LB proxy, or:
+* Docker Enterprise Edition, which comes with built-in L4 web proxy
+
+
+
+### Stacks: Production Grade Compose
+* In 1.13 Docker adds a new layer of abstraction to Swarm called Stacks
+* Stacks accept Compose files as their declarative definition for services, networks, and volumes
+* We use `docker stack deploy` ranther then docker service create
+* Stacks managers all those objects for us, including overlay network per stack. Adds stack name to start of their name
+* New `deploy:` key in Compose file. Can't do `build:`
+* Compose now ignores `deploy:`, Swarm ignores `build:`
+* `docker-compose` cli not needed on Swarm server
+
+```sh
+docker stack deploy -c example-voting-app-stack.yml voteapp
+
+docker stack --help
+
+docker stack ls
+
+docker stack services voteapp
+
+docker stack ps voteapp
+
+docker network ls
+# overlay
+
+docker stack deploy -c example-voting-app-stack.yml voteapp #update
+```
+
+### Secrets Storage
+* Easiest "secure" solution for storing secrets in Swarm
+* What is a Secret?
+  * Usernames and passwords
+  * TLS certificates and keys
+  * SSH keys
+  * Any data you would prefer not be "on front page of news"
+* Supports generic strings or binary content up to 500Kb in size
+* Doesn't require apps to be rewritten
+
+### Secrets Storage Cont.
+* As of Docker 1.13.0 Swarm Raft DB is encrypted on disk
+* Only stored on disk on Manager nodes
+* Default is Managers and Workers "control plane" is TLS + Mutual Auth
+* Secrets are first stored in Swarm, then assigned to a Service(s)
+* Only containers in assigned Services(s) can see them
+* They look lik files in container but are actually in-memory fs
+* `/run/secrets/<secret_name>` or `/run/secrets/<secret_alias>`
+* Local docker-compose can use file-based secrets, but not secure
+
+```sh
+docker secret create psql_user psql_user.txt
+echo "myDBpassWORD" | docker secret create psql_pass -
+
+docker secret ls
+docker secret inspect psql_user
+
+docker service create --name psql --secret psql_user --secret psql_pass -e POSTGRES_PASSWORD_FILE=/run/secrets/psql_pass -e POSTGRES_USER_FILE=/run/secrets/psql_user postgres
+
+docker service ps psql
+docker exec -it <container name> bash
+cat /run/secrets/psql_user
+# mysqluser -> it worked
+
+docker service ps psql
+docker service update --secret-rm
+```
+
+```sh
+docker stack deploy -c docker-compose.yml mydb
+docker secret ls
+
+docker stack rm mydb
+```
+
+### Using Secrets With Local Docker Compose
+```sh
+ll
+#docker-compose.yml
+#psql_password.txt
+#psql_user.txt
+docker node ls
+docker-compose up -d
+docker-compose exec psql cat /run/secrets/psql_user
+#dbuser
+```
+
+### Full App Lifecycle With Compose
+* Live The Dream！
+* Single set of Compose files for:
+* Local `docker-compose up` development environment
+* Remote `docker-compose up` CI environment
+* Remote `docker stack deploy` production environment
+
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+
 
 ## Kubernetes features (1.16)
 
@@ -4005,313 +4245,6 @@ kubectl delete pod/haproxy pod/registry
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
-
-
-### Your First Swarm Service
-
-[Docker Swarm Docs](https://docs.docker.com/swarm/)
-
-[Play with Docker](https://labs.play-with-docker.com/)
-* Templates
-  * 3 Managers and 2 Workers
-```sh
-docker service create --name hello --replicas 3 --detach=false --publish 8080:80 nginx
-```
-
-### Containers Everywhere = New Problems
-* How do we automate container lifecycle?
-* How can we easily scale out/in/up/down?
-* How can we ensure our containers are re-created if they fail?
-* How can we replace containers are-created if they fail?
-* How can we control/track where containers get started?
-* How can we create cross-node virtual networks?
-* How can we ensure only trusted servers run our containers?
-* How can we store secrets, keys, passwords and get them to the right container(and only that container)?
-
-### Swarm Mode:Built-In Orchestration
-* Swarm Mode is a clustering solution built inside Docker
-* Not related to Swarm "classic" for pre-1.12 versions
-* Added in 1.12(Summer 2016)via SwarmKit toolkit
-* Enhanced in 1.13(January 2017) via Stacks and Secrets
-* Not enabled by default, new commands once enabled
-  * docker swarm
-  * docker node
-  * docker service
-  * docker stack
-  * docker secret
-
-### docker swarm init: What Just Happened?
-* Lots of PKI and security automation
-  * Root Signing Certificate created  for our Swarm
-  * Certificate is issued for first Manager node
-  * Join tokens are created
-* Raft database created to store root CA, configs and secrets
-  * Encrypted by default on disk(1.13+)
-  * No need for another key/value system to hold orchestration/secrets
-  * Replicates logs amongst Managers via mutual TLS in "control plane" 
-
-### Create Your First Service and Scale It Locally
-
-```sh
-docker swarm init
-docker node ls
-# ...MANAGER STATUS
-# ...Leader
-docker node help
-docker swarm help
-docker service help
-
-docker service create alpine ping 8.8.8.8
-docker service ls
-docker service ps <NAME(service)>
-docker container ls
-docker service update <ID(service)> --replicas 3
-docker service ls
-docker service ps <NAME(service)>
-
-docker update --help
-docker service update --help
-
-docker container ls
-docker container rm -f <name>.1.<ID>
-docker service ls
-
-docker service ps <NAME(service)>
-
-docker service rm <NAME(service)>
-docker service ls
-docker container ls
-```
-
-### Creating 3-Node Swarm: Host Options
-* A.`play-with-docker.com`
-  * Only needs a browser, but resets after 4 hours
-* B.docker-machine + VirtualBox
-  * Free and runs locally,but requires a machine with 8GB memory
-* C.Digital Ocean + Docker install
-  * Most like a production setup, but cost $5-10/node/month while learning
-  * Use my referral code in section resources to get $10 free
-* D.Roll your own
-  * docker-machine can provision machines for Amazon, Azure, DO, Google, etc.
-  * Install docker anywhere with `get.docker.com`
-
-**play-with-docker.com**
-```sh
-# node1
-# create 3 new instances
-docker info
-ping node2
-```
-
-**docker-machine + VirtualBox**
-```sh
-docker-machine create node1
-docker-machine ssh node1
-exit
-docker-machine env node1
-eval $(docker-machine env node1)
-docker info # node1
-
-docker-machine env --unset
-eval $(docker-machine env --unset)
-docker info
-```
-
-**DO**
-
-```sh
-# curl -fsSL https://get.docker.com -o get-docker.sh
-# sh get-docker.sh
-
-# root@node1
-docker swarm init
-docker swarm init --advertise-addr <IP address>
-# docker swarm init --advertise-addr=192.168.99.100
-
-#I'm going to copy the swarm join command and go over to node2 and add it in.
-# root@node2
-docker swarm join --token SWMTKN-1-1bn2hsyhjwqn4wztjqd7moftumffk4vwd2e88azwj7u7bg0q6m-c91v8sc6vpsyxw4zsqmrmg4ji 192.168.99.100:2377
-# This node joined a swarm as a worker.
-docker node ls
-#Error response from daemon: This node is not a swarm manager. Worker nodes can't be used to view or modify cluster state. Please run this command on a manager node or promote the current node to a manager.
-
-# go back to node1
-# docker node ls
-docker node update --role manager node2
-
-# for node3, let's add it as a manager by default.
-# We need to go back to our original command of docker swarm, and then we need to get the join-token.
-# go back to node1
-docker swarm join-token manager
-# docker swarm join --token SWMTKN-1-1bn2hsyhjwqn4wztjqd7moftumffk4vwd2e88azwj7u7bg0q6m-dzz4pcg9inzkt9wnft4hskaxn 192.168.99.100:2377
-# I'm going to copy this, paste it into node3
-
-# node3
-docker swarm join --token SWMTKN-1-1bn2hsyhjwqn4wztjqd7moftumffk4vwd2e88azwj7u7bg0q6m-dzz4pcg9inzkt9wnft4hskaxn 192.168.99.100:2377
-# This node joined a swarm as a manager.
-
-# Back on node1
-docker node ls
-docker service create --replicas 3 alpine ping 8.8.8.8
-docker node ps
-docker service ps <service name>
-```
-
-### Overlay Multi-Host Networking
-* Just choose `--driver overlay` when creating network
-* For container-to-container traffic inside a single Swarm
-* Optional IPSec(AES) encryption on network creation
-* Each service can be connected to multiple networks
-  * (e.g. front-end, back-end)
-
-```sh
-# root@node1
-docker network create --driver overlay mydrupal
-docker network ls
-
-# https://github.com/bitnami/bitnami-docker-postgresql
-docker service create --name psql --network mydrupal -e POSTGRESQL_POSTGRES_PASSWORD=mypass -e POSTGRESQL_DATABASE=progres postgres
-docker service ls
-docker service ps psql
-docker logs psql.1.terabjvf7wkt5j769t04tld02
-
-docker service create --name drupal --network mydrupal -p 80:80 drupal
-docker service ls
-docker service ps drupal #drupal is actrually running on Node2.
-
-docker service inspect drupal #VIP
-```
-
-### Routing Mesh
-
-[Use swarm mode routing mesh](https://docs.docker.com/engine/swarm/ingress/)
-
-![service ingress image](https://docs.docker.com/engine/swarm/images/ingress-routing-mesh.png)
-
-![ingress with external load balancer image](https://docs.docker.com/engine/swarm/images/ingress-lb.png)
-
-* Routes ingress(incoming) packets for a Service to proper Task
-* Spans All nodes in Swarm
-* Uses IPVS from Linux Kernel
-* Load balances Swarm Services across their Tasks
-* Two ways this works:
-* Container-to-container in a Overlay network(uses VIP)
-* External traffic incoming to published ports(all nodes listen)
-
-```sh
-docker service create --name search --replicas 3 -p 9200:9200 elasticsearch:2
-docker service ps search
-curl localhost:9200
-curl localhost:9200
-curl localhost:9200
-```
-
-### Routing Mesh Cont.
-* This is stateless load balancing
-* This LB is at OSI Layer 3(TCP), not Layer 4(DNS)
-* Both limitation can be overcome with:
-* Niginx or HAProxy LB proxy, or:
-* Docker Enterprise Edition, which comes with built-in L4 web proxy
-
-### Stacks: Production Grade Compose
-* In 1.13 Docker adds a new layer of abstraction to Swarm called Stacks
-* Stacks accept Compose files as their declarative definition for services, networks, and volumes
-* We use `docker stack deploy` ranther then docker service create
-* Stacks managers all those objects for us, including overlay network per stack. Adds stack name to start of their name
-* New `deploy:` key in Compose file. Can't do `build:`
-* Compose now ignores `deploy:`, Swarm ignores `build:`
-* `docker-compose` cli not needed on Swarm server
-
-```sh
-docker stack deploy -c example-voting-app-stack.yml voteapp
-
-docker stack --help
-
-docker stack ls
-
-docker stack services voteapp
-
-docker stack ps voteapp
-
-docker network ls
-# overlay
-
-docker stack deploy -c example-voting-app-stack.yml voteapp #update
-```
-
-### Secrets Storage
-* Easiest "secure" solution for storing secrets in Swarm
-* What is a Secret?
-  * Usernames and passwords
-  * TLS certificates and keys
-  * SSH keys
-  * Any data you would prefer not be "on front page of news"
-* Supports generic strings or binary content up to 500Kb in size
-* Doesn't require apps to be rewritten
-
-### Secrets Storage Cont.
-* As of Docker 1.13.0 Swarm Raft DB is encrypted on disk
-* Only stored on disk on Manager nodes
-* Default is Managers and Workers "control plane" is TLS + Mutual Auth
-* Secrets are first stored in Swarm, then assigned to a Service(s)
-* Only containers in assigned Services(s) can see them
-* They look lik files in container but are actually in-memory fs
-* `/run/secrets/<secret_name>` or `/run/secrets/<secret_alias>`
-* Local docker-compose can use file-based secrets, but not secure
-
-```sh
-docker secret create psql_user psql_user.txt
-echo "myDBpassWORD" | docker secret create psql_pass -
-
-docker secret ls
-docker secret inspect psql_user
-
-docker service create --name psql --secret psql_user --secret psql_pass -e POSTGRES_PASSWORD_FILE=/run/secrets/psql_pass -e POSTGRES_USER_FILE=/run/secrets/psql_user postgres
-
-docker service ps psql
-docker exec -it <container name> bash
-cat /run/secrets/psql_user
-# mysqluser -> it worked
-
-docker service ps psql
-docker service update --secret-rm
-```
-
-```sh
-docker stack deploy -c docker-compose.yml mydb
-docker secret ls
-
-docker stack rm mydb
-```
-
-### Using Secrets With Local Docker Compose
-```sh
-ll
-#docker-compose.yml
-#psql_password.txt
-#psql_user.txt
-docker node ls
-docker-compose up -d
-docker-compose exec psql cat /run/secrets/psql_user
-#dbuser
-```
-
-### Full App Lifecycle With Compose
-* Live The Dream！
-* Single set of Compose files for:
-* Local `docker-compose up` development environment
-* Remote `docker-compose up` CI environment
-* Remote `docker stack deploy` production environment
-
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
 
 
 ### Check Our Tools
