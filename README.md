@@ -787,7 +787,6 @@ volumes:
 
 ```
 
-
 ### Your First Swarm Service
 
 [Docker Swarm Docs](https://docs.docker.com/swarm/)
@@ -994,7 +993,13 @@ curl localhost:9200
 * Niginx or HAProxy LB proxy, or:
 * Docker Enterprise Edition, which comes with built-in L4 web proxy
 
-
+### Assignment: Create Multi-Service App
+* Using Docker's Distributed Voting App
+* use `swarm-app-1` directory in our course repo for requirements
+* 1 volume, 2 networks, and 5 services needed
+* Create the commands needed, spin up services, and test app
+* Everything is using Docker Hub images, so no data needed on Swarm
+* Like many computer things, this is 1/2 art form and 1/2 science
 
 ### Stacks: Production Grade Compose
 * In 1.13 Docker adds a new layer of abstraction to Swarm called Stacks
