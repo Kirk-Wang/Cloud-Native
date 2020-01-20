@@ -1020,6 +1020,10 @@ docker service create --name result --network backend -p 5001:80
 
 docker service ls
 docker service ps result
+docker service ps redis
+docker service ps db
+docker service ps vote
+docker service ps worker
 ```
 
 ### Stacks: Production Grade Compose
