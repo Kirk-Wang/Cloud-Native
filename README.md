@@ -837,6 +837,12 @@ docker service update v4tllmm0whqa --replicas 3
 docker service ps pensive_galois
 docker update --help
 docker service update --help
+docker container ls
+docker container rm -f pensive_galois.1.yn8gcg88zjnk4seojmwvw2qw8
+docker service ls
+#delay 3s
+docker service ls
+docker service ps pensive_galois
 ```
 
 --------------------------------------------------------------
