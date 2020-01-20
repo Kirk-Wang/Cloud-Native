@@ -846,6 +846,7 @@ docker service ps pensive_galois
 
 docker service rm pensive_galois
 docker service ls
+docker container ls
 ```
 
 --------------------------------------------------------------
