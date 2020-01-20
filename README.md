@@ -815,6 +815,21 @@ docker info
 docker swarm init
 ```
 
+### docker swarm init: What Just Happened?
+* Lots of PKI and security automation
+  * Root Signing Certificate created  for our Swarm
+  * Certificate is issued for first Manager node
+  * Join tokens are created
+* Raft database created to store root CA, configs and secrets
+  * Encrypted by default on disk(1.13+)
+  * No need for another key/value system to hold orchestration/secrets
+  * Replicates logs amongst Managers via mutual TLS in "control plane" 
+
+```sh
+docker node ls
+docker node help
+```
+
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
