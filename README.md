@@ -1001,6 +1001,10 @@ curl localhost:9200
 * Everything is using Docker Hub images, so no data needed on Swarm
 * Like many computer things, this is 1/2 art form and 1/2 science
 
+```sh
+
+```
+
 ### Stacks: Production Grade Compose
 * In 1.13 Docker adds a new layer of abstraction to Swarm called Stacks
 * Stacks accept Compose files as their declarative definition for services, networks, and volumes
