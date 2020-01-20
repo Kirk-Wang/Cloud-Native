@@ -843,6 +843,9 @@ docker service ls
 #delay 3s
 docker service ls
 docker service ps pensive_galois
+
+docker service rm pensive_galois
+docker service ls
 ```
 
 --------------------------------------------------------------
