@@ -1008,9 +1008,9 @@ docker service ls
 docker network create -d overlay backend
 docker network create -d overlay frontend
 
-docker service create --name vote -p 80:80 --network frontend --replica 2 <image>
+docker service create --name vote -p 80:80 --network frontend --replicas 2 <image>
 
-docker service create --name redis --network frontend --replica 1 redis:3.2
+docker service create --name redis --network frontend --replicas 1 redis:3.2
 
 docker service create --name worker --network frontend --network backend <image>
 
