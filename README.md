@@ -1007,10 +1007,14 @@ docker ps -a
 docker service ls
 docker network create -d overlay backend
 docker network create -d overlay frontend
+
 docker service create --name vote -p 80:80 --network frontend --replica 2 <image>
+
 docker service create --name redis --network frontend --replica 1 redis:3.2
+
 docker service create --name worker --network frontend --network backend <image>
-docker service create --name db --network backend
+
+docker service create --name db --network backend --mount type=volume,source=db-data,target=/var/lib/postgresql/data postgres:9.4
 ```
 
 ### Stacks: Production Grade Compose
