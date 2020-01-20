@@ -1002,7 +1002,12 @@ curl localhost:9200
 * Like many computer things, this is 1/2 art form and 1/2 science
 
 ```sh
-
+docker node ls
+docker ps -a
+docker service ls
+docker network create -d overlay backend
+docker network create -d overlay frontend
+docker service create --name vote -p 80:80 --network frontend --replica 2 <image>
 ```
 
 ### Stacks: Production Grade Compose
