@@ -1024,6 +1024,8 @@ docker service ps redis
 docker service ps db
 docker service ps vote
 docker service ps worker
+cat /etc/docker/
+docker service logs worker
 ```
 
 ### Stacks: Production Grade Compose
