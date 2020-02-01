@@ -22,3 +22,5 @@ least: adj. 最小的；最少的（little的最高级）
 
 privilege: n. 特权；优待；基本权利
 
+efficiently adv. 有效地；效率高地（efficient的副词形式）
+
