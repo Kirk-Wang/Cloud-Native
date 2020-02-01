@@ -13,3 +13,12 @@ due to: adv. 由于；应归于
 assignment: n. 分配；任务；作业；功课
 
 permanently: adv. 永久地，长期不变地
+
+unless: conj. 除非；若非
+
+sort of: 有几分地；到某种程度；稍稍
+
+least: adj. 最小的；最少的（little的最高级）
+
+privilege: n. 特权；优待；基本权利
+
