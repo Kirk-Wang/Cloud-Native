@@ -24,3 +24,11 @@ privilege: n. 特权；优待；基本权利
 
 efficiently adv. 有效地；效率高地（efficient的副词形式）
 
+pick vi. 挑选；采摘；挖
+
+proper adj. 适当的；本身的；特有的；正派的
+
+matters n. 事项；事件；事态；情事（matter的复数）
+
+especially adv. 特别；尤其；格外
+
