@@ -32,3 +32,6 @@ matters n. 事项；事件；事态；情事（matter的复数）
 
 especially adv. 特别；尤其；格外
 
+consider vt. 考虑；认为；考虑到；细想
+
+
