@@ -34,4 +34,6 @@ especially adv. 特别；尤其；格外
 
 consider vt. 考虑；认为；考虑到；细想
 
+scenarios n. 情节；脚本；情景介绍（scenario的复数）
+
 
