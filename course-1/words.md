@@ -36,4 +36,7 @@ consider vt. 考虑；认为；考虑到；细想
 
 scenarios n. 情节；脚本；情景介绍（scenario的复数）
 
+obvious adj. 明显的；显著的；平淡无奇的
+
+
 
