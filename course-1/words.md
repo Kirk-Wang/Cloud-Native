@@ -38,5 +38,6 @@ scenarios n. 情节；脚本；情景介绍（scenario的复数）
 
 obvious adj. 明显的；显著的；平淡无奇的
 
+subtle adj. 微妙的；精细的；敏感的；狡猾的；稀薄的
 
 
