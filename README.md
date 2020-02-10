@@ -1,21 +1,7 @@
 # Cloud-Native-And-DevOps
 
-#### OVERVIEW
+[k8s-arch](./k8s-arch.png)
 
-* Getting Requirements
-* Docker Install
-* Container Basics
-* Image Basics
-* Docker Networking
-* Docker Volumes
-* Docker Compose
-* Orchestration
-* Docker Swarm
-* Kubernetes
-* Swarm vs. K8s
-* Q & A
-* File Reviews
-* References Galore
 
 ### @@@@🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔@@@@
 * [CNCF Cloud Native Interactive Landscape](http://landscape.cncf.io/)
