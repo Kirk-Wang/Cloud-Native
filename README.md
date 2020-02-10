@@ -1,1121 +1,14 @@
 # Cloud-Native-And-DevOps
 
-[k8s-arch](./k8s-arch.png)
-
-
 ### @@@@🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔@@@@
 * [CNCF Cloud Native Interactive Landscape](http://landscape.cncf.io/)
 * [Development Containers](https://bitnami.com/containers)
 * [Turnkey * Containers](https://bitnami.com/containers#turnkey-containers)
 * [k8s-for-docker-desktop](https://github.com/AliyunContainerService/k8s-for-docker-desktop)
 
-### Image vs. Container
-* An Image is the application we want to run
-* A Container is an instance of that image running as a process
-* You can have many containers running off the same image
-* In this lecture our image will be the Nginx web server
-* Docker's default image "registry" is called Docker Hub
-  * (hub.docker.com)
-
-```sh
-docker container run --publish 80:80 nginx
-# ctrl + c
-# docker container run --publish 8080:80 nginx
-# docker container run --publish 8080:80 --detach nginx
-# docker container ls
-# docker container stop 690
-# docker container ls -a
-```
-
-### docker container run --publish 80:80 nginx
-1. Downloaded image 'nginx' from Docker Hub
-2. Started a new container from that image
-3. Opened port 80 on the host IP
-4. Routes that traffic to the container IP, port 80
-```
-Note you'll get a "bind" error if the left number [host port]
-is being used by anthing else, even another container.
-You can use any port you want on the left, like 8080:80
-or 8888:80,then use localhost:8888 when testing
-```
-
-```sh
-docker container run --publish 80:80 --detach --name webhost nginx
-docker container ls -a
-docker container logs webhost
-docker container top webhost
-docker container --help
-```
-
-### What happens in 'docker container run'
-1. Looks for that image locally in image cache, doesn't find anything
-2. Then looks in remote image repository(defaults to Docker Hub)
-3. Downloads the latest version(nginx:latest by default)
-4. Creates new container based on that image and prepares to start
-5. Give it a virtual IP on a private network inside docker engine
-6. Opens up port 80 on host and forwards to port 80 in container
-7. Starts container by using the CMD in the image Dockerfile
-
-### Example Of Changing The Default
-```sh
-docker container run --publish 8080:80 --name webhost -d nginx:1.11 nginx -T
-# 8080 -> change host listening port
-# 1.11 -> change version of image
-# nginx -T -> change CMD run on start
-```
-
-### Containers aren't Mini-VM's
-* They are just processes
-* Limited to what resources they can access
-* Exit when process stops
-
-```sh
-docker run --name mongo -d mongo
-docker ps
-docker top mongo
-ps aux
-docker stop mongo
-ps aux | grep mongo
-docker start mongo
-docker ps
-docker top mongo
-```
-
-### Assignment: Manage Multiple Containers
-* docs.docker.com and `--help` are your friend
-* Run a `nginx`, a `mysql`, and a `httpd`(apache) server
-* Run all of the `--detach`(or `-d`), name them with `--name`
-* nginx should listen on `80:80`, httpd on `8080:80`, mysql on `3306:3306`
-* When running `mysql`, use the `--env` option(or `-e`) to pass in 
-`MYSQL_RANDOM_ROOT_PASSWORD=yes`
-* Use `docker container logs` on mysql to find the random password it created on startup
-* Clean it all up with `docker container stop` and `docker container rm`
-(both can accept multiple names or ID's)
-* Use `docker container ls` to ensure everything is correct before and after cleanup
-
-### Assignment Reminder
-* This lecture is ANSWERS to previous assignment
-* Try the previous lecture (Assignment details) first on your own before
-watching this video
-* Forcing yourself to figure this assignment out by sudying commands,
-docs.docker.com, etc. will help this stuff stick in your brain better
-then just watching me do it! 
-
-```sh
-docker container run -d -p 3306:3306 --name db -e MYSQL_RANDOM_ROOT_PASSWORD=yes mysql
-docker container logs db
-# find & copy-> GENERATED ROOT PASSWORD: Aekia1fiighaengeethe0eihai2ailij
-
-docker container run -d --name webserver -p 8080:80 httpd
-docker ps
-
-docker container run -d --name proxy -p 80:80 nginx
-docker container ls
-
-curl localhost
-curl localhost:8080
- 
-docker container stop nginx httpd mysql
-docker container stop # tap completion
-
-docker container ls -a
-docker container rm # tap completion again
-
-docker container rm 4f444c35ebf7 8f9ccb6b0553 0827cf019e82 bb7958b14a40
-
-docker ps -a
-docker image ls
-```
-
-### What's Going On In Containers
-* docker container top `- process list in one container`
-* docker container inspect `- details of one container config`
-* docker container stats `- performance stats for all containers`
-
-```sh
-docker container run -d --name nginx nginx
-docker container run -d --name mysql -e MYSQL_RANDOM_ROOT_PASSWORD=true mysql
-docker container ls
-docker container top mysql
-docker container top nginx
-docker container inspect mysql
-
-docker container stats --help
-docker container stats
-```
-
-### Getting a Shell Inside Containers
-* `docker container run -it` - start new container interactively
-* `docker container exec -it` - run additional command in existing container
-* Different Linux distros in containers
-
-```sh
-docker container run -it --name proxy nginx bash
-exit
-docker container ls -a
-
-docker container run -it --name ubuntu ubuntu
-apt-get update
-apt install -y curl
-curl baidu.com
-exit
-
-docker container ls -a
-
-docker container start --help
-docker container start -ai ubuntu
-curl google.com
-exit
-
-docker container exec --help
-docker container exec -it mysql bash
-ps aux
-exit
-docker container ls
-
-docker pull alpine
-docker container run -it alpine sh
-apk
-```
-
-### Docker Networks: Concepts
-* Review of `docker container run -p`
-* For local dev/testing, networks usually "just work"
-* Quick port check with `docker container port <container>`
-* Learn concepts of Docker Networking
-* Understand how network packets move around Docker
-
-### Docker Networks Defaults
-* Each container connected to a private virtual network "bridge"
-* Each virtual network routes through NAT firewall on host IP
-* All containers on a virtual network can talk to each other without -p
-* Best practice is to create a new virtual network for each app:
-  * network "my_web_app" for mysql and php/apache containers
-  * network "my_api" for mongo and nodejs containers
-
-### Docker Networks Cont.
-* "Batteries Included, But Removable"
-  * Defaults work well in many cases, but easy to swap out parts to customize it
-* Make new virtual networks
-* Attach containers to more then one virual network(or none)
-* Skip virual networks and use host IP(--net=host)
-* Use different Docker network drivers to gain new abilities
-* and much more...
-
-```sh
-docker container run -p 80:80 --name webhost -d nginx
-docker container port webhost
-docker container inspect --format '{{ .NetworkSettings.IPAddress }}' webhost
-ifconfig en0
-```
-
-### Docker Networks: CLI Management
-* Show networks `docker network ls`
-* Inspect a network `docker network inspect`
-* Create a network `docker network create --driver`
-* Attach a network to container `docker network connect`
-* Detach a network from container `docker network disconnect`
-
-```sh
-docker network ls
-docker network inspect bridge
-
-docker network create my_app_net
-docker network ls
-
-docker network create --help
-docker container run -d --name new_nginx --network my_app_net nginx
-docker network inspect my_app_net
-docker network connect 21c7d8642536 b3f503669e05
-docker container inspect b3f503669e05
-
-docker network disconnect 21c7d8642536 b3f503669e05
-docker container inspect b3f503669e05
-```
-
-### Docker Networks: Default Security
-* Create your apps so frontend/backend sit on same Docker network
-* Their inter-communication never leaves host
-* All externally exposed ports closed by default
-* You must manually expose via `-p`, which is better default security!
-* This gets even better later with Swarm and Overlay networks
-
-### Docker Networks: DNS
-* Understand how DNS is the key to easy inter-container comms
-* See how it works by default with custom networks
-* Learn how to use `--link` to enable DNS on default bridge network
-```sh
-docker container ls
-docker network inspect my_app_net
-
-docker container run -d --name my_nginx --network my_app_net nginx
-docker network inspect my_app_net
-
-docker container exec -it my_nginx ping new_nginx
-```
-
-### Docker Networks: DNS
-* Containers shouldn't rely on IP's for inter-communication
-* DNS for friendly names is built-in if you use custom networks
-* You're using custom networks right?
-* This gets way easier with Docker Compose in future Section
-
-### Assignment Requirements: CLI App Testing
-* Know how to use `-it` to get shell in container
-* Understand basics of what a Linux distributions is like Ubuntu and CentOS
-* Know how to run a container🐻
-
-### Assignment: CLI App Testing
-* Use different Linux distro containers to check `curl` cli tool version
-* Use two different terminal windows to start bash in both `centos:7` and
- `ubuntu:14.04`, using `-it`
-* Learn the `docker container --rm` option so you can save cleanup
-* Ensoure `curl` is installed and on latest version for that distro
-  * ubuntu: `apt-get update && apt-get install curl`
-  * centos: `yum update curl`
-* Check `curl --version`
-
-```sh
-#t1
-docker container run --rm -it centos:7 bash
-yum update curl -y 
-
-#t2
-docker ps -a
-docker container run --rm -it ubuntu:14.04 bash
-apt-get update && apt-get install -y curl
-curl --version
-```
-
-### Assignment Requirements: DNS RR Test
-* Know how to use -it go get shell in container
-* Understand basics of what a Linux distribution is like Ubuntu and CentOS
-* Know how to run a container 
-* Understand basics of DNS records
-
-### Assignment: DNS Round Robin Test
-* Ever since Docker Engine 1.11, we can have multiple containers on a created network respond to the same DNS address
-* Create a new virtual network(default bridge driver)
-* Create two containers from `elasticsearch:2` image
-* Research and use `-network-alias search` when creating them to give them an additional DNS name to respond to
-* Run `alpine nslookup search` with `--net` to see the two
-containers list for the same DNS name
-* Run `centos curl -s search:9200` with `--net` multiple times until you see both "name" fields show
-```sh
-docker network create dude
-docker container run -d --net dude --net-alias search elasticsearch:2
-# --net-alias and --network-alias both work
-docker container run --rm --net dude alpine nslookup search
-docker container run --rm --net dude centos curl -s search:9200
-docker container run --rm --net dude centos curl -s search:9200
-docker container run --rm --net dude centos curl -s search:9200
-docker container run --rm --net dude centos curl -s search:9200
-### Test DNS Round Robin
-docker container ls
-docker container rm -f kind_darwin fervent_jackson
-```
-
-### This Section:
-* All about images, the building blocks of containers
-* What's in an image (and what isn't)
-* Using Docker Hub registry
-* Managing our local image cache
-* Building our own images
-
-### What's In An Image (And What Isn't)
-* App binaries and dependencies 
-* Metadata about the image data and how to run the image
-* Official definition: "An Image is an ordered collection of root
-  filesystem changes and the corresponding execution parameters for use within a container runtime"
-* Not a complete OS. No kernel, kernel modules(e.g. drivers)
-* Small as one file(your app binary) like a golang static binary
-* Big as a Ubuntu distro with apt, and Apache, PHP, and more installed
-
-### This Lecture:
-* Basics of Docker Hub(hub.docker.com)
-* Find Official and other good public images
-* Download images and basics of image tags
-
-### This Lecture: Review
-* Docker Hub, "the apt package system for Containers"
-* Official images and how to use them
-* How to discern "good" public images
-* Using different base images like Debian or Alpine
-
-### This Lecture:
-* Image layers
-* union file system
-* `history` and `inspect` commands
-* copy on write
-
-```sh
-docker image ls
-docker history nginx:latest
-# Oops that's old command format
-docker history mysql
-
-docker image inspect
-# docker inspect (old way)
-# returns JSON metadata about the image
-docker image inspect nginx
-```
-
-### Image and Their Layers: Review
-* Images are made up of file system changes and metadata
-* Each layer is uniquely identified and only stored once on a host
-* This saves storage space on host and transfer time on push/pull
-* A container is just a single read/write layer on top of image
-* `docker image history` and `inspect` commands can teach us
-
-### This Lecture: Requirements
-* Know what container and images are
-* Understand image layer basics
-* Understand Docker Hub basics
-
-### This Lecture:
-* All about image tags
-* How to upload to Docker Hub
-* Image ID vs. Tag
-
-```sh
-docker image tag --help
-docker image ls
-
-docker pull mysql/mysql-server
-docker pull nginx:mainline
-docker image tag nginx lotteryjs/nginx
-docker image tag --help
-docker image ls
-docker login
-cat ~/.docker/config.json
-docker image push lotteryjs/nginx
-docker image tag lotteryjs/nginx lotteryjs/nginx:testing
-docker image ls
-docker image push lotteryjs/nginx:testing
-```
-
-### This Lecture: Review
-* Properly tagging images
-* Tagging images for upload to Docker Hub
-* How tagging is related to image ID
-* The Latest Tag
-* Logging into Docker Hub from docker cli
-* How to create private Docker Hub images
-
-e.g. docker build -f some-dockerfile
-
-```sh
-cd dockerfile-sample-1
-docker image build -t customnginx .
-```
-
-```sh
-cd dockerfile-sample-2
-ll
-vim Dockerfile
-docker container run -p 80:80 --rm nginx
-docker image build -t nginx-with-html .
-docker container run -p 80:80 --rm nginx-with-html
-docker image ls
-docker image tag --help
-docker image tag nginx-with-html:latest lotteryjs/nginx-with-html:latest
-docker image ls
-```
-
-### Assignment: Build Your Own Image
-* Dockerfiles are part process workflow and part art
-* Take existing Node.js app and Dockerize it
-* Make `Dockerfile`. Build it. Test it. Push it. (rm it). Run it.
-* Expect this to be iterative. Rarely do I get it right the first time.
-* Details in `dockerfile-assignment-1/Dockerfile`
-* Use the Alpine version of the official 'node' 6.x image
-* Expected result is web site at http://localhost
-* Tag and push to your Docker Hub account(free)
-* Remove your image from local cache, run again from Hub
-
-```sh
-cd dockerfile-assignment-1
-ll
-vim Dockerfile
-```
-
-```yaml
-# Instructions from the app developer
-# - you should use the 'node' official image, with the alpine 6.x branch
-FROM node:6-alpine
-# - this app listens on port 3000, but the container should launch on port 80
-  #  so it will respond to http://localhost:80 on your computer
-EXPOSE 3000
-# - then it should use alpine package manager to install tini: 'apk add --update tini'
-RUN apk add --update tini
-# - then it should create directory /usr/src/app for app files with 'mkdir -p /usr/src/app'
-RUN mkdir -p /usr/src/app
-# - Node uses a "package manager", so it needs to copy in package.json file
-WORKDIR /usr/src/app
-COPY package.json package.json
-# - then it needs to run 'npm install' to install dependencies from that file
-RUN npm install && npm cache clean
-# - to keep it clean and small, run 'npm cache clean --force' after above
-# - then it needs to copy in all files from current directory
-COPY . .
-# - then it needs to start container with command '/sbin/tini -- node ./bin/www'
-CMD [ "tini", "--", "node", "./bin/www" ]
-# - in the end you should be using FROM, RUN, WORKDIR, COPY, EXPOSE, and CMD commands
-```
-
-```sh
-docker build -t testnode .
-docker container run  --rm -p 80:3000 testnode
-docker images
-docker tag --help
-docker tag testnode lotteryjs/testing-node
-docker push --help
-docker push lotteryjs/testing-node
-docker image rm lotteryjs/testing-node
-docker container run --rm -p 80:3000 lotteryjs/testing-node
-```
-
-### Section Overview
-* Defining the problem of persistent data
-* Key concepts with containers: immutable, ephemeral
-* Learning and using Data Volumes
-* Learning and using Bind Mounts
-* Assignments
-
-### Container Lifetime & Persistent Data
-* Containers are usually immutable and ephemeral
-* "immutable infrastructure":only re-deploy containers, never change
-* This is the ideal scenario, but what about databases, or unique data?
-* Docker gives us features to ensure these "separation fo concerns"
-* This is known as "persistent data"
-* Two ways: Volumes and Bind Mounts
-* Volumes: make special location outside of container UFS
-* Bind Mounts: link container path to host path
-
-
-### Persistent Data: Volumes
-* VOLUME command in Dockerfile
-
-```sh
-docker pull mysql
-# Note you might want to do a `docker volume prune` to
-# cleanup unused volumes and make it easier to see what
-# you're doing here
-docker image inspect mysql
-docker container run -d --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=True mysql
-docker container inspect mysql
-docker volume inspect bd2dd9f5ecabc7d9bd6779436b8fdbee1426613601e24ef7d94ef77b497b7c1c
-docker container run -d --name mysql2 -e MYSQL_ALLOW_EMPTY_PASSWORD=True mysql
-docker volume ls
-docker container stop mysql
-docker container stop mysql2
-docker container ls
-docker container ls -a
-docker volume ls
-docker container rm mysql mysql2
-docker volume ls
-docker container run -d --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=True -v mysql-db:/var/lib/mysql  mysql
-docker volume ls
-docker volume inspect mysql-db
-docker container rm -f mysql
-docker container run -d --name mysql3 -e MYSQL_ALLOW_EMPTY_PASSWORD=True -v mysql-db:/var/lib/mysql  mysql
-docker volume ls
-docker container inspect mysql3
-```
-
-docker volume create
-* required to do this before "docker run" to use custom drivers and labels
-
-docker volume create --help
-
-### Persistent Data: Bind Mounting
-* Maps a host file or directory to a container file or directory
-* Basically just two locations pointing to the same file(s)
-* Again, skips UFS, and host files overwrite any in container
-* Can't use in Dockerfile, must be at `container run`
-* `... run -v /Users/bret/stuff:/path/container` (mac/linux)
-* `... run -v //c/Users/bret/stuff:/path/container` (windows)
-
-```sh
-cat dockerfile-sample-2
-ll
-pcat Dockerfile
-docker container run -d --name nginx -p 80:80 -v $(pwd):/usr/share/nginx/html nginx
-docker container run -d --name nginx2 -p 8080:80 nginx
-ll
-# t2
-docker container exec -it nginx bash
-cd /usr/share/nginx/html
-ls -al
-# t1
-touch testme.txt
-# t2
-ls -al
-# t1
-echo "is it me you're looking for" > testme.txt
-```
-
-### Assignment: Named Volumes
-* Database upgrade with containers
-* Create a `postgres` container with named volume psql-data using version `9.6.1`
-* Use Docker Hub to learn `VOLUME` path and versions needed to run it
-* Check logs, stop container
-* Create a new `postgre` container with same named volume using `9.6.2`
-* Check logs to validate
-* (this only works with patch versions, most SQL DB's require manual commands
-to upgrade DB's to major/minor versions,i.e. it's DB limitation not a container one)
-```sh
-docker container run -d --name psql -v psql:/var/lib/postgresql/data postgres:9.6.1
-docker container logs -f psql
-docker container stop psql
-docker container run -d --name psql2 -v psql:/var/lib/postgresql/data postgres:9.6.2
-docker container ps -a
-docker volume ls
-docker container logs psql2
-```
-
-### Assignment: Bind Mounts
-* Use a Jekyll "Static Site Generator" to start a local web server
-* Don't have to be web developer: this is example of bridging the gap
-between local file access and apps running in containers
-* source code is in the course repo under `bindmount-sample-1`
-* We edit files with editor on our host using native tools
-* Container detects changes with host files and updates web server
-* start container with `docker run -p 80:4000 -v $(pwd):/site bretfisher/jekyll-serve`
-* Refresh our browser to see changes
-* Change the file in `_posts\` and refresh browser to see changes
-
-```sh
-cd bindmount-sample-1
-ls -la
-docker run -p 80:4000 -v $(pwd):/site bretfisher/jekyll-serve
-```
-
-### Docker Compose
-* Why: configure relationships between containers
-* Why: save our docker container run settings in easy-to-read file
-* Why: create one-liner developer environment startups
-* Comprised of 2 separate but related things
-* 1. YAML-formatted file that describes our solution options for:
-  * containers
-  * networks
-  * volumes
-* 2. A CLI tool `docker-compose` used for local dev/test automation with those YAML files
-
-### docker-compose.yml
-* Compose YAML format has it's own versions: 1, 2, 2.1, 3, 3.1
-* YAML file can be used with `docker-compose` command for local docker automation or...
-* With `docker` directly in production with Swarm(as of v1.13)
-* `docker-compose --help`
-* `docker-compose.yml` is default filename, but any can be used with
-`docker-compose -f`
-
-```sh
-cd compose-sample-2
-```
-
-### docker-compose CLI
-* CLI tools comes with Docker for Windows/Mac, but separate download for Linux
-* Not a production-grade tool but ideal for local development and test
-* Two most common commands are
-  * docker-compose up # setup volumes/networks and start all containers
-  * docker-compose down # stop all containers and remove con/vol/net
-* If all your projects had a `Dockerfile` and `docker-compose.yml`
-then "new developer onboarding" would be:
-  * git clone github.com/some/software
-  * docker-compose up
-```sh
-cd compose-sample-2
-ls -la
-cat docker-compose.yml
-docker-compose up
-# browser -> http://localhost
-# ctrl + c
-docker-compose up -d
-docker-compose logs
-docker-compose --help
-docker-compose ps
-docker-compose top
-docker-compose down
-```
-
-### Assignment: Writing A Compose File
-* Build a basic compose file for a Drupal content management system website.
-Docker Hub is your friend
-* Use the `drupal` image along with the `postgres` image
-* Use `ports` to expose Drupal on 8080 so you can `localhost:8080`
-* Be sure to set `POSTGRES_PASSWORD` for postgres
-* Walk though Drupal setup via browser
-* Tip: Drupal assumes DB is `localhost`, but it's service name
-* Extra Credit: Use volumes to store Drupal unique data
-
-```sh
-docker pull drupal
-docker image inspect drupal
-```
-
-```yaml
-version: '2'
-
-services:
-  drupal:
-    image: drupal:8.2
-    ports:
-      - "8080:80"
-    volumes:
-      - drupal-modules:/var/www/html/modules
-      - drupal-profiles:/var/www/html/profiles       
-      - drupal-sites:/var/www/html/sites      
-      - drupal-themes:/var/www/html/themes
-  postgres:
-    image: postgres:9.6
-    environment:
-      - POSTGRES_PASSWORD=mypasswd
-
-volumes:
-  drupal-modules:
-  drupal-profiles:
-  drupal-sites:
-  drupal-themes:
-```
-
-
-```sh
-docker-compose down -v
-# Remove named volumes declared in the `volumes`
-# section of the Compose file and anonymous volumes
-# attached to containers.
-```
-
-### Using Compose to Build
-* Compose can also build your custom images
-* Will build them with `docker-compose up` if not found in cache
-* Also rebuild with `docker-compose build`
-* Great for complex builds that have lots of vars or build args
-
-```sh
-cd compose-sample-3/
-docker-compose up
-# localhost
-docker-compose down
-docker image ls
-docker-compose down --help
-docker image rm nginx-custom
-docker image ls
-# remove -> image: nginx-custom
-docker-compose up -d
-docker image ls
-docker-compose down --rmi local
-```
-
-### Assignment: Build and Run Compose
-* "Building custom `drupal` image for local testing"
-* Compose isn't just for developers. Testing apps si easy/fun!
-* Maybe your learning Drupal admin, or are a software tester
-* Start with Compose file from previous assignment
-* Make your `Dockerfile` and `docker-compose.yml` in dir `compose-assignment-2`
-* Use the `drupal` image along with the `postgres` image as before
-* Use `README.md` in that dir for details
-
-```sh
-cd compose-assignment-2
-```
-
-Dockerfile
-```dockerfile
-FROM drupal:8.6
-
-
-RUN apt-get update && apt-get install -y git \
-    && rm -rf /var/lib/apt/lists/*
-
-WORKDIR /var/www/html/themes
-
-RUN git clone --branch 8.x-3.x --single-branch --depth 1 https://git.drupal.org/project/bootstrap.git \
-    && chown -R www-data:www-data bootstrap
-
-WORKDIR /var/www/html
-```
-
-docker-compose.yml
-
-```yaml
-version: '2'
-# NOTE: move this answer file up a directory so it'll work
-
-services:
-
-  drupal:
-    container_name: drupal
-    image: custom-drupal
-    ports:
-      - "8080:80"
-    volumes:
-      - drupal-modules:/var/www/html/modules
-      - drupal-profiles:/var/www/html/profiles       
-      - drupal-sites:/var/www/html/sites      
-      - drupal-themes:/var/www/html/themes
- 
-  postgres:
-    container_name: postgres
-    image: postgres:9.6
-    environment:
-      - POSTGRES_PASSWORD=mypasswd
-    volumes:
-      - drupal-data:/var/lib/postgresql/data
-
-volumes:
-  drupal-data:
-  drupal-modules:
-  drupal-profiles:
-  drupal-sites:
-  drupal-themes:
-
-```
-
-### Your First Swarm Service
-
-[Docker Swarm Docs](https://docs.docker.com/swarm/)
-
-[Play with Docker](https://labs.play-with-docker.com/)
-* Templates
-  * 3 Managers and 2 Workers
-```sh
-docker service create --name hello --replicas 3 --detach=false --publish 8080:80 nginx
-```
-
-### Containers Everywhere = New Problems
-* How do we automate container lifecycle?
-* How can we easily scale out/in/up/down?
-* How can we ensure our containers are re-created if they fail?
-* How can we replace containers are-created if they fail?
-* How can we control/track where containers get started?
-* How can we create cross-node virtual networks?
-* How can we ensure only trusted servers run our containers?
-* How can we store secrets, keys, passwords and get them to the right container(and only that container)?
-
-### Swarm Mode:Built-In Orchestration
-* Swarm Mode is a clustering solution built inside Docker
-* Not related to Swarm "classic" for pre-1.12 versions
-* Added in 1.12(Summer 2016)via SwarmKit toolkit
-* Enhanced in 1.13(January 2017) via Stacks and Secrets
-* Not enabled by default, new commands once enabled
-  * docker swarm
-  * docker node
-  * docker service
-  * docker stack
-  * docker secret
-
-### docker swarm init: What Just Happened?
-* Lots of PKI and security automation
-  * Root Signing Certificate created  for our Swarm
-  * Certificate is issued for first Manager node
-  * Join tokens are created
-* Raft database created to store root CA, configs and secrets
-  * Encrypted by default on disk(1.13+)
-  * No need for another key/value system to hold orchestration/secrets
-  * Replicates logs amongst Managers via mutual TLS in "control plane" 
-
-### Create Your First Service and Scale It Locally
-
-```sh
-docker swarm init
-docker node ls
-# ...MANAGER STATUS
-# ...Leader
-docker node help
-docker swarm help
-docker service help
-
-docker service create alpine ping 8.8.8.8
-docker service ls
-docker service ps <NAME(service)>
-docker container ls
-docker service update <ID(service)> --replicas 3
-docker service ls
-docker service ps <NAME(service)>
-
-docker update --help
-docker service update --help
-
-docker container ls
-docker container rm -f <name>.1.<ID>
-docker service ls
-
-docker service ps <NAME(service)>
-
-docker service rm <NAME(service)>
-docker service ls
-docker container ls
-```
-
-### Creating 3-Node Swarm: Host Options
-* A.`play-with-docker.com`
-  * Only needs a browser, but resets after 4 hours
-* B.docker-machine + VirtualBox
-  * Free and runs locally,but requires a machine with 8GB memory
-* C.Digital Ocean + Docker install
-  * Most like a production setup, but cost $5-10/node/month while learning
-  * Use my referral code in section resources to get $10 free
-* D.Roll your own
-  * docker-machine can provision machines for Amazon, Azure, DO, Google, etc.
-  * Install docker anywhere with `get.docker.com`
-
-**play-with-docker.com**
-```sh
-# node1
-# create 3 new instances
-docker info
-ping node2
-```
-
-**docker-machine + VirtualBox**
-```sh
-docker-machine create node1
-docker-machine ssh node1
-exit
-docker-machine env node1
-eval $(docker-machine env node1)
-docker info # node1
-
-docker-machine env --unset
-eval $(docker-machine env --unset)
-docker info
-```
-
-**DO**
-
-```sh
-# curl -fsSL https://get.docker.com -o get-docker.sh
-# sh get-docker.sh
-
-# root@node1
-docker swarm init
-docker swarm init --advertise-addr <IP address>
-# docker swarm init --advertise-addr=192.168.99.100
-
-#I'm going to copy the swarm join command and go over to node2 and add it in.
-# root@node2
-docker swarm join --token SWMTKN-1-1bn2hsyhjwqn4wztjqd7moftumffk4vwd2e88azwj7u7bg0q6m-c91v8sc6vpsyxw4zsqmrmg4ji 192.168.99.100:2377
-# This node joined a swarm as a worker.
-docker node ls
-#Error response from daemon: This node is not a swarm manager. Worker nodes can't be used to view or modify cluster state. Please run this command on a manager node or promote the current node to a manager.
-
-# go back to node1
-# docker node ls
-docker node update --role manager node2
-
-# for node3, let's add it as a manager by default.
-# We need to go back to our original command of docker swarm, and then we need to get the join-token.
-# go back to node1
-docker swarm join-token manager
-# docker swarm join --token SWMTKN-1-1bn2hsyhjwqn4wztjqd7moftumffk4vwd2e88azwj7u7bg0q6m-dzz4pcg9inzkt9wnft4hskaxn 192.168.99.100:2377
-# I'm going to copy this, paste it into node3
-
-# node3
-docker swarm join --token SWMTKN-1-1bn2hsyhjwqn4wztjqd7moftumffk4vwd2e88azwj7u7bg0q6m-dzz4pcg9inzkt9wnft4hskaxn 192.168.99.100:2377
-# This node joined a swarm as a manager.
-
-# Back on node1
-docker node ls
-docker service create --replicas 3 alpine ping 8.8.8.8
-docker node ps
-docker service ps <service name>
-```
-
-### Overlay Multi-Host Networking
-* Just choose `--driver overlay` when creating network
-* For container-to-container traffic inside a single Swarm
-* Optional IPSec(AES) encryption on network creation
-* Each service can be connected to multiple networks
-  * (e.g. front-end, back-end)
-
-```sh
-# root@node1
-docker network create --driver overlay mydrupal
-docker network ls
-
-# https://github.com/bitnami/bitnami-docker-postgresql
-docker service create --name psql --network mydrupal -e POSTGRESQL_POSTGRES_PASSWORD=mypass -e POSTGRESQL_DATABASE=progres postgres
-docker service ls
-docker service ps psql
-docker logs psql.1.terabjvf7wkt5j769t04tld02
-
-docker service create --name drupal --network mydrupal -p 80:80 drupal
-docker service ls
-docker service ps drupal #drupal is actrually running on Node2.
-
-docker service inspect drupal #VIP
-```
-
-### Routing Mesh
-
-[Use swarm mode routing mesh](https://docs.docker.com/engine/swarm/ingress/)
-
-![service ingress image](https://docs.docker.com/engine/swarm/images/ingress-routing-mesh.png)
-
-![ingress with external load balancer image](https://docs.docker.com/engine/swarm/images/ingress-lb.png)
-
-* Routes ingress(incoming) packets for a Service to proper Task
-* Spans All nodes in Swarm
-* Uses IPVS from Linux Kernel
-* Load balances Swarm Services across their Tasks
-* Two ways this works:
-* Container-to-container in a Overlay network(uses VIP)
-* External traffic incoming to published ports(all nodes listen)
-
-```sh
-docker service create --name search --replicas 3 -p 9200:9200 elasticsearch:2
-docker service ps search
-curl localhost:9200
-curl localhost:9200
-curl localhost:9200
-```
-
-### Routing Mesh Cont.
-* This is stateless load balancing
-* This LB is at OSI Layer 3(TCP), not Layer 4(DNS)
-* Both limitation can be overcome with:
-* Niginx or HAProxy LB proxy, or:
-* Docker Enterprise Edition, which comes with built-in L4 web proxy
-
-### Assignment: Create Multi-Service App
-* Using Docker's Distributed Voting App
-* use `swarm-app-1` directory in our course repo for requirements
-* 1 volume, 2 networks, and 5 services needed
-* Create the commands needed, spin up services, and test app
-* Everything is using Docker Hub images, so no data needed on Swarm
-* Like many computer things, this is 1/2 art form and 1/2 science
-
-```sh
-docker node ls
-docker ps -a
-docker service ls
-docker network create -d overlay backend
-docker network create -d overlay frontend
-
-docker service create --name vote -p 80:80 --network frontend --replicas 2 <image>
-
-docker service create --name redis --network frontend --replicas 1 redis:3.2
-
-docker service create --name worker --network frontend --network backend <image>
-
-docker service create --name db --network backend --mount type=volume,source=db-data,target=/var/lib/postgresql/data postgres:9.4
-
-docker service create --name result --network backend -p 5001:80
-
-docker service ls
-docker service ps result
-docker service ps redis
-docker service ps db
-docker service ps vote
-docker service ps worker
-cat /etc/docker/
-docker service logs worker
-```
-
-### Stacks: Production Grade Compose
-* In 1.13 Docker adds a new layer of abstraction to Swarm called Stacks
-* Stacks accept Compose files as their declarative definition for services, networks, and volumes
-* We use `docker stack deploy` ranther then docker service create
-* Stacks managers all those objects for us, including overlay network per stack. Adds stack name to start of their name
-* New `deploy:` key in Compose file. Can't do `build:`
-* Compose now ignores `deploy:`, Swarm ignores `build:`
-* `docker-compose` cli not needed on Swarm server
-
-```sh
-docker stack deploy -c example-voting-app-stack.yml voteapp
-
-docker stack --help
-
-docker stack ls
-
-docker stack services voteapp
-
-docker stack ps voteapp
-
-docker network ls
-# overlay
-
-docker stack deploy -c example-voting-app-stack.yml voteapp #update
-```
-
-### Secrets Storage
-* Easiest "secure" solution for storing secrets in Swarm
-* What is a Secret?
-  * Usernames and passwords
-  * TLS certificates and keys
-  * SSH keys
-  * Any data you would prefer not be "on front page of news"
-* Supports generic strings or binary content up to 500Kb in size
-* Doesn't require apps to be rewritten
-
-### Secrets Storage Cont.
-* As of Docker 1.13.0 Swarm Raft DB is encrypted on disk
-* Only stored on disk on Manager nodes
-* Default is Managers and Workers "control plane" is TLS + Mutual Auth
-* Secrets are first stored in Swarm, then assigned to a Service(s)
-* Only containers in assigned Services(s) can see them
-* They look lik files in container but are actually in-memory fs
-* `/run/secrets/<secret_name>` or `/run/secrets/<secret_alias>`
-* Local docker-compose can use file-based secrets, but not secure
-
-```sh
-docker secret create psql_user psql_user.txt
-echo "myDBpassWORD" | docker secret create psql_pass -
-
-docker secret ls
-docker secret inspect psql_user
-
-docker service create --name psql --secret psql_user --secret psql_pass -e POSTGRES_PASSWORD_FILE=/run/secrets/psql_pass -e POSTGRES_USER_FILE=/run/secrets/psql_user postgres
-
-docker service ps psql
-docker exec -it <container name> bash
-cat /run/secrets/psql_user
-# mysqluser -> it worked
-
-docker service ps psql
-docker service update --secret-rm
-```
-
-```sh
-docker stack deploy -c docker-compose.yml mydb
-docker secret ls
-
-docker stack rm mydb
-```
-
-### Using Secrets With Local Docker Compose
-```sh
-ll
-#docker-compose.yml
-#psql_password.txt
-#psql_user.txt
-docker node ls
-docker-compose up -d
-docker-compose exec psql cat /run/secrets/psql_user
-#dbuser
-```
-
-### Full App Lifecycle With Compose
-* Live The Dream！
-* Single set of Compose files for:
-* Local `docker-compose up` development environment
-* Remote `docker-compose up` CI environment
-* Remote `docker stack deploy` production environment
-
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
-
-
 ## Kubernetes features (1.16)
+
+![k8s-arch](./k8s-arch.png)
 
 ### What and why of orchestration
 * There are many computing orchestrators
@@ -4263,6 +3156,1112 @@ kubectl delete pod/haproxy pod/registry
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
+
+
+### Image vs. Container
+* An Image is the application we want to run
+* A Container is an instance of that image running as a process
+* You can have many containers running off the same image
+* In this lecture our image will be the Nginx web server
+* Docker's default image "registry" is called Docker Hub
+  * (hub.docker.com)
+
+```sh
+docker container run --publish 80:80 nginx
+# ctrl + c
+# docker container run --publish 8080:80 nginx
+# docker container run --publish 8080:80 --detach nginx
+# docker container ls
+# docker container stop 690
+# docker container ls -a
+```
+
+### docker container run --publish 80:80 nginx
+1. Downloaded image 'nginx' from Docker Hub
+2. Started a new container from that image
+3. Opened port 80 on the host IP
+4. Routes that traffic to the container IP, port 80
+```
+Note you'll get a "bind" error if the left number [host port]
+is being used by anthing else, even another container.
+You can use any port you want on the left, like 8080:80
+or 8888:80,then use localhost:8888 when testing
+```
+
+```sh
+docker container run --publish 80:80 --detach --name webhost nginx
+docker container ls -a
+docker container logs webhost
+docker container top webhost
+docker container --help
+```
+
+### What happens in 'docker container run'
+1. Looks for that image locally in image cache, doesn't find anything
+2. Then looks in remote image repository(defaults to Docker Hub)
+3. Downloads the latest version(nginx:latest by default)
+4. Creates new container based on that image and prepares to start
+5. Give it a virtual IP on a private network inside docker engine
+6. Opens up port 80 on host and forwards to port 80 in container
+7. Starts container by using the CMD in the image Dockerfile
+
+### Example Of Changing The Default
+```sh
+docker container run --publish 8080:80 --name webhost -d nginx:1.11 nginx -T
+# 8080 -> change host listening port
+# 1.11 -> change version of image
+# nginx -T -> change CMD run on start
+```
+
+### Containers aren't Mini-VM's
+* They are just processes
+* Limited to what resources they can access
+* Exit when process stops
+
+```sh
+docker run --name mongo -d mongo
+docker ps
+docker top mongo
+ps aux
+docker stop mongo
+ps aux | grep mongo
+docker start mongo
+docker ps
+docker top mongo
+```
+
+### Assignment: Manage Multiple Containers
+* docs.docker.com and `--help` are your friend
+* Run a `nginx`, a `mysql`, and a `httpd`(apache) server
+* Run all of the `--detach`(or `-d`), name them with `--name`
+* nginx should listen on `80:80`, httpd on `8080:80`, mysql on `3306:3306`
+* When running `mysql`, use the `--env` option(or `-e`) to pass in 
+`MYSQL_RANDOM_ROOT_PASSWORD=yes`
+* Use `docker container logs` on mysql to find the random password it created on startup
+* Clean it all up with `docker container stop` and `docker container rm`
+(both can accept multiple names or ID's)
+* Use `docker container ls` to ensure everything is correct before and after cleanup
+
+### Assignment Reminder
+* This lecture is ANSWERS to previous assignment
+* Try the previous lecture (Assignment details) first on your own before
+watching this video
+* Forcing yourself to figure this assignment out by sudying commands,
+docs.docker.com, etc. will help this stuff stick in your brain better
+then just watching me do it! 
+
+```sh
+docker container run -d -p 3306:3306 --name db -e MYSQL_RANDOM_ROOT_PASSWORD=yes mysql
+docker container logs db
+# find & copy-> GENERATED ROOT PASSWORD: Aekia1fiighaengeethe0eihai2ailij
+
+docker container run -d --name webserver -p 8080:80 httpd
+docker ps
+
+docker container run -d --name proxy -p 80:80 nginx
+docker container ls
+
+curl localhost
+curl localhost:8080
+ 
+docker container stop nginx httpd mysql
+docker container stop # tap completion
+
+docker container ls -a
+docker container rm # tap completion again
+
+docker container rm 4f444c35ebf7 8f9ccb6b0553 0827cf019e82 bb7958b14a40
+
+docker ps -a
+docker image ls
+```
+
+### What's Going On In Containers
+* docker container top `- process list in one container`
+* docker container inspect `- details of one container config`
+* docker container stats `- performance stats for all containers`
+
+```sh
+docker container run -d --name nginx nginx
+docker container run -d --name mysql -e MYSQL_RANDOM_ROOT_PASSWORD=true mysql
+docker container ls
+docker container top mysql
+docker container top nginx
+docker container inspect mysql
+
+docker container stats --help
+docker container stats
+```
+
+### Getting a Shell Inside Containers
+* `docker container run -it` - start new container interactively
+* `docker container exec -it` - run additional command in existing container
+* Different Linux distros in containers
+
+```sh
+docker container run -it --name proxy nginx bash
+exit
+docker container ls -a
+
+docker container run -it --name ubuntu ubuntu
+apt-get update
+apt install -y curl
+curl baidu.com
+exit
+
+docker container ls -a
+
+docker container start --help
+docker container start -ai ubuntu
+curl google.com
+exit
+
+docker container exec --help
+docker container exec -it mysql bash
+ps aux
+exit
+docker container ls
+
+docker pull alpine
+docker container run -it alpine sh
+apk
+```
+
+### Docker Networks: Concepts
+* Review of `docker container run -p`
+* For local dev/testing, networks usually "just work"
+* Quick port check with `docker container port <container>`
+* Learn concepts of Docker Networking
+* Understand how network packets move around Docker
+
+### Docker Networks Defaults
+* Each container connected to a private virtual network "bridge"
+* Each virtual network routes through NAT firewall on host IP
+* All containers on a virtual network can talk to each other without -p
+* Best practice is to create a new virtual network for each app:
+  * network "my_web_app" for mysql and php/apache containers
+  * network "my_api" for mongo and nodejs containers
+
+### Docker Networks Cont.
+* "Batteries Included, But Removable"
+  * Defaults work well in many cases, but easy to swap out parts to customize it
+* Make new virtual networks
+* Attach containers to more then one virual network(or none)
+* Skip virual networks and use host IP(--net=host)
+* Use different Docker network drivers to gain new abilities
+* and much more...
+
+```sh
+docker container run -p 80:80 --name webhost -d nginx
+docker container port webhost
+docker container inspect --format '{{ .NetworkSettings.IPAddress }}' webhost
+ifconfig en0
+```
+
+### Docker Networks: CLI Management
+* Show networks `docker network ls`
+* Inspect a network `docker network inspect`
+* Create a network `docker network create --driver`
+* Attach a network to container `docker network connect`
+* Detach a network from container `docker network disconnect`
+
+```sh
+docker network ls
+docker network inspect bridge
+
+docker network create my_app_net
+docker network ls
+
+docker network create --help
+docker container run -d --name new_nginx --network my_app_net nginx
+docker network inspect my_app_net
+docker network connect 21c7d8642536 b3f503669e05
+docker container inspect b3f503669e05
+
+docker network disconnect 21c7d8642536 b3f503669e05
+docker container inspect b3f503669e05
+```
+
+### Docker Networks: Default Security
+* Create your apps so frontend/backend sit on same Docker network
+* Their inter-communication never leaves host
+* All externally exposed ports closed by default
+* You must manually expose via `-p`, which is better default security!
+* This gets even better later with Swarm and Overlay networks
+
+### Docker Networks: DNS
+* Understand how DNS is the key to easy inter-container comms
+* See how it works by default with custom networks
+* Learn how to use `--link` to enable DNS on default bridge network
+```sh
+docker container ls
+docker network inspect my_app_net
+
+docker container run -d --name my_nginx --network my_app_net nginx
+docker network inspect my_app_net
+
+docker container exec -it my_nginx ping new_nginx
+```
+
+### Docker Networks: DNS
+* Containers shouldn't rely on IP's for inter-communication
+* DNS for friendly names is built-in if you use custom networks
+* You're using custom networks right?
+* This gets way easier with Docker Compose in future Section
+
+### Assignment Requirements: CLI App Testing
+* Know how to use `-it` to get shell in container
+* Understand basics of what a Linux distributions is like Ubuntu and CentOS
+* Know how to run a container🐻
+
+### Assignment: CLI App Testing
+* Use different Linux distro containers to check `curl` cli tool version
+* Use two different terminal windows to start bash in both `centos:7` and
+ `ubuntu:14.04`, using `-it`
+* Learn the `docker container --rm` option so you can save cleanup
+* Ensoure `curl` is installed and on latest version for that distro
+  * ubuntu: `apt-get update && apt-get install curl`
+  * centos: `yum update curl`
+* Check `curl --version`
+
+```sh
+#t1
+docker container run --rm -it centos:7 bash
+yum update curl -y 
+
+#t2
+docker ps -a
+docker container run --rm -it ubuntu:14.04 bash
+apt-get update && apt-get install -y curl
+curl --version
+```
+
+### Assignment Requirements: DNS RR Test
+* Know how to use -it go get shell in container
+* Understand basics of what a Linux distribution is like Ubuntu and CentOS
+* Know how to run a container 
+* Understand basics of DNS records
+
+### Assignment: DNS Round Robin Test
+* Ever since Docker Engine 1.11, we can have multiple containers on a created network respond to the same DNS address
+* Create a new virtual network(default bridge driver)
+* Create two containers from `elasticsearch:2` image
+* Research and use `-network-alias search` when creating them to give them an additional DNS name to respond to
+* Run `alpine nslookup search` with `--net` to see the two
+containers list for the same DNS name
+* Run `centos curl -s search:9200` with `--net` multiple times until you see both "name" fields show
+```sh
+docker network create dude
+docker container run -d --net dude --net-alias search elasticsearch:2
+# --net-alias and --network-alias both work
+docker container run --rm --net dude alpine nslookup search
+docker container run --rm --net dude centos curl -s search:9200
+docker container run --rm --net dude centos curl -s search:9200
+docker container run --rm --net dude centos curl -s search:9200
+docker container run --rm --net dude centos curl -s search:9200
+### Test DNS Round Robin
+docker container ls
+docker container rm -f kind_darwin fervent_jackson
+```
+
+### This Section:
+* All about images, the building blocks of containers
+* What's in an image (and what isn't)
+* Using Docker Hub registry
+* Managing our local image cache
+* Building our own images
+
+### What's In An Image (And What Isn't)
+* App binaries and dependencies 
+* Metadata about the image data and how to run the image
+* Official definition: "An Image is an ordered collection of root
+  filesystem changes and the corresponding execution parameters for use within a container runtime"
+* Not a complete OS. No kernel, kernel modules(e.g. drivers)
+* Small as one file(your app binary) like a golang static binary
+* Big as a Ubuntu distro with apt, and Apache, PHP, and more installed
+
+### This Lecture:
+* Basics of Docker Hub(hub.docker.com)
+* Find Official and other good public images
+* Download images and basics of image tags
+
+### This Lecture: Review
+* Docker Hub, "the apt package system for Containers"
+* Official images and how to use them
+* How to discern "good" public images
+* Using different base images like Debian or Alpine
+
+### This Lecture:
+* Image layers
+* union file system
+* `history` and `inspect` commands
+* copy on write
+
+```sh
+docker image ls
+docker history nginx:latest
+# Oops that's old command format
+docker history mysql
+
+docker image inspect
+# docker inspect (old way)
+# returns JSON metadata about the image
+docker image inspect nginx
+```
+
+### Image and Their Layers: Review
+* Images are made up of file system changes and metadata
+* Each layer is uniquely identified and only stored once on a host
+* This saves storage space on host and transfer time on push/pull
+* A container is just a single read/write layer on top of image
+* `docker image history` and `inspect` commands can teach us
+
+### This Lecture: Requirements
+* Know what container and images are
+* Understand image layer basics
+* Understand Docker Hub basics
+
+### This Lecture:
+* All about image tags
+* How to upload to Docker Hub
+* Image ID vs. Tag
+
+```sh
+docker image tag --help
+docker image ls
+
+docker pull mysql/mysql-server
+docker pull nginx:mainline
+docker image tag nginx lotteryjs/nginx
+docker image tag --help
+docker image ls
+docker login
+cat ~/.docker/config.json
+docker image push lotteryjs/nginx
+docker image tag lotteryjs/nginx lotteryjs/nginx:testing
+docker image ls
+docker image push lotteryjs/nginx:testing
+```
+
+### This Lecture: Review
+* Properly tagging images
+* Tagging images for upload to Docker Hub
+* How tagging is related to image ID
+* The Latest Tag
+* Logging into Docker Hub from docker cli
+* How to create private Docker Hub images
+
+e.g. docker build -f some-dockerfile
+
+```sh
+cd dockerfile-sample-1
+docker image build -t customnginx .
+```
+
+```sh
+cd dockerfile-sample-2
+ll
+vim Dockerfile
+docker container run -p 80:80 --rm nginx
+docker image build -t nginx-with-html .
+docker container run -p 80:80 --rm nginx-with-html
+docker image ls
+docker image tag --help
+docker image tag nginx-with-html:latest lotteryjs/nginx-with-html:latest
+docker image ls
+```
+
+### Assignment: Build Your Own Image
+* Dockerfiles are part process workflow and part art
+* Take existing Node.js app and Dockerize it
+* Make `Dockerfile`. Build it. Test it. Push it. (rm it). Run it.
+* Expect this to be iterative. Rarely do I get it right the first time.
+* Details in `dockerfile-assignment-1/Dockerfile`
+* Use the Alpine version of the official 'node' 6.x image
+* Expected result is web site at http://localhost
+* Tag and push to your Docker Hub account(free)
+* Remove your image from local cache, run again from Hub
+
+```sh
+cd dockerfile-assignment-1
+ll
+vim Dockerfile
+```
+
+```yaml
+# Instructions from the app developer
+# - you should use the 'node' official image, with the alpine 6.x branch
+FROM node:6-alpine
+# - this app listens on port 3000, but the container should launch on port 80
+  #  so it will respond to http://localhost:80 on your computer
+EXPOSE 3000
+# - then it should use alpine package manager to install tini: 'apk add --update tini'
+RUN apk add --update tini
+# - then it should create directory /usr/src/app for app files with 'mkdir -p /usr/src/app'
+RUN mkdir -p /usr/src/app
+# - Node uses a "package manager", so it needs to copy in package.json file
+WORKDIR /usr/src/app
+COPY package.json package.json
+# - then it needs to run 'npm install' to install dependencies from that file
+RUN npm install && npm cache clean
+# - to keep it clean and small, run 'npm cache clean --force' after above
+# - then it needs to copy in all files from current directory
+COPY . .
+# - then it needs to start container with command '/sbin/tini -- node ./bin/www'
+CMD [ "tini", "--", "node", "./bin/www" ]
+# - in the end you should be using FROM, RUN, WORKDIR, COPY, EXPOSE, and CMD commands
+```
+
+```sh
+docker build -t testnode .
+docker container run  --rm -p 80:3000 testnode
+docker images
+docker tag --help
+docker tag testnode lotteryjs/testing-node
+docker push --help
+docker push lotteryjs/testing-node
+docker image rm lotteryjs/testing-node
+docker container run --rm -p 80:3000 lotteryjs/testing-node
+```
+
+### Section Overview
+* Defining the problem of persistent data
+* Key concepts with containers: immutable, ephemeral
+* Learning and using Data Volumes
+* Learning and using Bind Mounts
+* Assignments
+
+### Container Lifetime & Persistent Data
+* Containers are usually immutable and ephemeral
+* "immutable infrastructure":only re-deploy containers, never change
+* This is the ideal scenario, but what about databases, or unique data?
+* Docker gives us features to ensure these "separation fo concerns"
+* This is known as "persistent data"
+* Two ways: Volumes and Bind Mounts
+* Volumes: make special location outside of container UFS
+* Bind Mounts: link container path to host path
+
+
+### Persistent Data: Volumes
+* VOLUME command in Dockerfile
+
+```sh
+docker pull mysql
+# Note you might want to do a `docker volume prune` to
+# cleanup unused volumes and make it easier to see what
+# you're doing here
+docker image inspect mysql
+docker container run -d --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=True mysql
+docker container inspect mysql
+docker volume inspect bd2dd9f5ecabc7d9bd6779436b8fdbee1426613601e24ef7d94ef77b497b7c1c
+docker container run -d --name mysql2 -e MYSQL_ALLOW_EMPTY_PASSWORD=True mysql
+docker volume ls
+docker container stop mysql
+docker container stop mysql2
+docker container ls
+docker container ls -a
+docker volume ls
+docker container rm mysql mysql2
+docker volume ls
+docker container run -d --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=True -v mysql-db:/var/lib/mysql  mysql
+docker volume ls
+docker volume inspect mysql-db
+docker container rm -f mysql
+docker container run -d --name mysql3 -e MYSQL_ALLOW_EMPTY_PASSWORD=True -v mysql-db:/var/lib/mysql  mysql
+docker volume ls
+docker container inspect mysql3
+```
+
+docker volume create
+* required to do this before "docker run" to use custom drivers and labels
+
+docker volume create --help
+
+### Persistent Data: Bind Mounting
+* Maps a host file or directory to a container file or directory
+* Basically just two locations pointing to the same file(s)
+* Again, skips UFS, and host files overwrite any in container
+* Can't use in Dockerfile, must be at `container run`
+* `... run -v /Users/bret/stuff:/path/container` (mac/linux)
+* `... run -v //c/Users/bret/stuff:/path/container` (windows)
+
+```sh
+cat dockerfile-sample-2
+ll
+pcat Dockerfile
+docker container run -d --name nginx -p 80:80 -v $(pwd):/usr/share/nginx/html nginx
+docker container run -d --name nginx2 -p 8080:80 nginx
+ll
+# t2
+docker container exec -it nginx bash
+cd /usr/share/nginx/html
+ls -al
+# t1
+touch testme.txt
+# t2
+ls -al
+# t1
+echo "is it me you're looking for" > testme.txt
+```
+
+### Assignment: Named Volumes
+* Database upgrade with containers
+* Create a `postgres` container with named volume psql-data using version `9.6.1`
+* Use Docker Hub to learn `VOLUME` path and versions needed to run it
+* Check logs, stop container
+* Create a new `postgre` container with same named volume using `9.6.2`
+* Check logs to validate
+* (this only works with patch versions, most SQL DB's require manual commands
+to upgrade DB's to major/minor versions,i.e. it's DB limitation not a container one)
+```sh
+docker container run -d --name psql -v psql:/var/lib/postgresql/data postgres:9.6.1
+docker container logs -f psql
+docker container stop psql
+docker container run -d --name psql2 -v psql:/var/lib/postgresql/data postgres:9.6.2
+docker container ps -a
+docker volume ls
+docker container logs psql2
+```
+
+### Assignment: Bind Mounts
+* Use a Jekyll "Static Site Generator" to start a local web server
+* Don't have to be web developer: this is example of bridging the gap
+between local file access and apps running in containers
+* source code is in the course repo under `bindmount-sample-1`
+* We edit files with editor on our host using native tools
+* Container detects changes with host files and updates web server
+* start container with `docker run -p 80:4000 -v $(pwd):/site bretfisher/jekyll-serve`
+* Refresh our browser to see changes
+* Change the file in `_posts\` and refresh browser to see changes
+
+```sh
+cd bindmount-sample-1
+ls -la
+docker run -p 80:4000 -v $(pwd):/site bretfisher/jekyll-serve
+```
+
+### Docker Compose
+* Why: configure relationships between containers
+* Why: save our docker container run settings in easy-to-read file
+* Why: create one-liner developer environment startups
+* Comprised of 2 separate but related things
+* 1. YAML-formatted file that describes our solution options for:
+  * containers
+  * networks
+  * volumes
+* 2. A CLI tool `docker-compose` used for local dev/test automation with those YAML files
+
+### docker-compose.yml
+* Compose YAML format has it's own versions: 1, 2, 2.1, 3, 3.1
+* YAML file can be used with `docker-compose` command for local docker automation or...
+* With `docker` directly in production with Swarm(as of v1.13)
+* `docker-compose --help`
+* `docker-compose.yml` is default filename, but any can be used with
+`docker-compose -f`
+
+```sh
+cd compose-sample-2
+```
+
+### docker-compose CLI
+* CLI tools comes with Docker for Windows/Mac, but separate download for Linux
+* Not a production-grade tool but ideal for local development and test
+* Two most common commands are
+  * docker-compose up # setup volumes/networks and start all containers
+  * docker-compose down # stop all containers and remove con/vol/net
+* If all your projects had a `Dockerfile` and `docker-compose.yml`
+then "new developer onboarding" would be:
+  * git clone github.com/some/software
+  * docker-compose up
+```sh
+cd compose-sample-2
+ls -la
+cat docker-compose.yml
+docker-compose up
+# browser -> http://localhost
+# ctrl + c
+docker-compose up -d
+docker-compose logs
+docker-compose --help
+docker-compose ps
+docker-compose top
+docker-compose down
+```
+
+### Assignment: Writing A Compose File
+* Build a basic compose file for a Drupal content management system website.
+Docker Hub is your friend
+* Use the `drupal` image along with the `postgres` image
+* Use `ports` to expose Drupal on 8080 so you can `localhost:8080`
+* Be sure to set `POSTGRES_PASSWORD` for postgres
+* Walk though Drupal setup via browser
+* Tip: Drupal assumes DB is `localhost`, but it's service name
+* Extra Credit: Use volumes to store Drupal unique data
+
+```sh
+docker pull drupal
+docker image inspect drupal
+```
+
+```yaml
+version: '2'
+
+services:
+  drupal:
+    image: drupal:8.2
+    ports:
+      - "8080:80"
+    volumes:
+      - drupal-modules:/var/www/html/modules
+      - drupal-profiles:/var/www/html/profiles       
+      - drupal-sites:/var/www/html/sites      
+      - drupal-themes:/var/www/html/themes
+  postgres:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_PASSWORD=mypasswd
+
+volumes:
+  drupal-modules:
+  drupal-profiles:
+  drupal-sites:
+  drupal-themes:
+```
+
+
+```sh
+docker-compose down -v
+# Remove named volumes declared in the `volumes`
+# section of the Compose file and anonymous volumes
+# attached to containers.
+```
+
+### Using Compose to Build
+* Compose can also build your custom images
+* Will build them with `docker-compose up` if not found in cache
+* Also rebuild with `docker-compose build`
+* Great for complex builds that have lots of vars or build args
+
+```sh
+cd compose-sample-3/
+docker-compose up
+# localhost
+docker-compose down
+docker image ls
+docker-compose down --help
+docker image rm nginx-custom
+docker image ls
+# remove -> image: nginx-custom
+docker-compose up -d
+docker image ls
+docker-compose down --rmi local
+```
+
+### Assignment: Build and Run Compose
+* "Building custom `drupal` image for local testing"
+* Compose isn't just for developers. Testing apps si easy/fun!
+* Maybe your learning Drupal admin, or are a software tester
+* Start with Compose file from previous assignment
+* Make your `Dockerfile` and `docker-compose.yml` in dir `compose-assignment-2`
+* Use the `drupal` image along with the `postgres` image as before
+* Use `README.md` in that dir for details
+
+```sh
+cd compose-assignment-2
+```
+
+Dockerfile
+```dockerfile
+FROM drupal:8.6
+
+
+RUN apt-get update && apt-get install -y git \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /var/www/html/themes
+
+RUN git clone --branch 8.x-3.x --single-branch --depth 1 https://git.drupal.org/project/bootstrap.git \
+    && chown -R www-data:www-data bootstrap
+
+WORKDIR /var/www/html
+```
+
+docker-compose.yml
+
+```yaml
+version: '2'
+# NOTE: move this answer file up a directory so it'll work
+
+services:
+
+  drupal:
+    container_name: drupal
+    image: custom-drupal
+    ports:
+      - "8080:80"
+    volumes:
+      - drupal-modules:/var/www/html/modules
+      - drupal-profiles:/var/www/html/profiles       
+      - drupal-sites:/var/www/html/sites      
+      - drupal-themes:/var/www/html/themes
+ 
+  postgres:
+    container_name: postgres
+    image: postgres:9.6
+    environment:
+      - POSTGRES_PASSWORD=mypasswd
+    volumes:
+      - drupal-data:/var/lib/postgresql/data
+
+volumes:
+  drupal-data:
+  drupal-modules:
+  drupal-profiles:
+  drupal-sites:
+  drupal-themes:
+
+```
+
+### Your First Swarm Service
+
+[Docker Swarm Docs](https://docs.docker.com/swarm/)
+
+[Play with Docker](https://labs.play-with-docker.com/)
+* Templates
+  * 3 Managers and 2 Workers
+```sh
+docker service create --name hello --replicas 3 --detach=false --publish 8080:80 nginx
+```
+
+### Containers Everywhere = New Problems
+* How do we automate container lifecycle?
+* How can we easily scale out/in/up/down?
+* How can we ensure our containers are re-created if they fail?
+* How can we replace containers are-created if they fail?
+* How can we control/track where containers get started?
+* How can we create cross-node virtual networks?
+* How can we ensure only trusted servers run our containers?
+* How can we store secrets, keys, passwords and get them to the right container(and only that container)?
+
+### Swarm Mode:Built-In Orchestration
+* Swarm Mode is a clustering solution built inside Docker
+* Not related to Swarm "classic" for pre-1.12 versions
+* Added in 1.12(Summer 2016)via SwarmKit toolkit
+* Enhanced in 1.13(January 2017) via Stacks and Secrets
+* Not enabled by default, new commands once enabled
+  * docker swarm
+  * docker node
+  * docker service
+  * docker stack
+  * docker secret
+
+### docker swarm init: What Just Happened?
+* Lots of PKI and security automation
+  * Root Signing Certificate created  for our Swarm
+  * Certificate is issued for first Manager node
+  * Join tokens are created
+* Raft database created to store root CA, configs and secrets
+  * Encrypted by default on disk(1.13+)
+  * No need for another key/value system to hold orchestration/secrets
+  * Replicates logs amongst Managers via mutual TLS in "control plane" 
+
+### Create Your First Service and Scale It Locally
+
+```sh
+docker swarm init
+docker node ls
+# ...MANAGER STATUS
+# ...Leader
+docker node help
+docker swarm help
+docker service help
+
+docker service create alpine ping 8.8.8.8
+docker service ls
+docker service ps <NAME(service)>
+docker container ls
+docker service update <ID(service)> --replicas 3
+docker service ls
+docker service ps <NAME(service)>
+
+docker update --help
+docker service update --help
+
+docker container ls
+docker container rm -f <name>.1.<ID>
+docker service ls
+
+docker service ps <NAME(service)>
+
+docker service rm <NAME(service)>
+docker service ls
+docker container ls
+```
+
+### Creating 3-Node Swarm: Host Options
+* A.`play-with-docker.com`
+  * Only needs a browser, but resets after 4 hours
+* B.docker-machine + VirtualBox
+  * Free and runs locally,but requires a machine with 8GB memory
+* C.Digital Ocean + Docker install
+  * Most like a production setup, but cost $5-10/node/month while learning
+  * Use my referral code in section resources to get $10 free
+* D.Roll your own
+  * docker-machine can provision machines for Amazon, Azure, DO, Google, etc.
+  * Install docker anywhere with `get.docker.com`
+
+**play-with-docker.com**
+```sh
+# node1
+# create 3 new instances
+docker info
+ping node2
+```
+
+**docker-machine + VirtualBox**
+```sh
+docker-machine create node1
+docker-machine ssh node1
+exit
+docker-machine env node1
+eval $(docker-machine env node1)
+docker info # node1
+
+docker-machine env --unset
+eval $(docker-machine env --unset)
+docker info
+```
+
+**DO**
+
+```sh
+# curl -fsSL https://get.docker.com -o get-docker.sh
+# sh get-docker.sh
+
+# root@node1
+docker swarm init
+docker swarm init --advertise-addr <IP address>
+# docker swarm init --advertise-addr=192.168.99.100
+
+#I'm going to copy the swarm join command and go over to node2 and add it in.
+# root@node2
+docker swarm join --token SWMTKN-1-1bn2hsyhjwqn4wztjqd7moftumffk4vwd2e88azwj7u7bg0q6m-c91v8sc6vpsyxw4zsqmrmg4ji 192.168.99.100:2377
+# This node joined a swarm as a worker.
+docker node ls
+#Error response from daemon: This node is not a swarm manager. Worker nodes can't be used to view or modify cluster state. Please run this command on a manager node or promote the current node to a manager.
+
+# go back to node1
+# docker node ls
+docker node update --role manager node2
+
+# for node3, let's add it as a manager by default.
+# We need to go back to our original command of docker swarm, and then we need to get the join-token.
+# go back to node1
+docker swarm join-token manager
+# docker swarm join --token SWMTKN-1-1bn2hsyhjwqn4wztjqd7moftumffk4vwd2e88azwj7u7bg0q6m-dzz4pcg9inzkt9wnft4hskaxn 192.168.99.100:2377
+# I'm going to copy this, paste it into node3
+
+# node3
+docker swarm join --token SWMTKN-1-1bn2hsyhjwqn4wztjqd7moftumffk4vwd2e88azwj7u7bg0q6m-dzz4pcg9inzkt9wnft4hskaxn 192.168.99.100:2377
+# This node joined a swarm as a manager.
+
+# Back on node1
+docker node ls
+docker service create --replicas 3 alpine ping 8.8.8.8
+docker node ps
+docker service ps <service name>
+```
+
+### Overlay Multi-Host Networking
+* Just choose `--driver overlay` when creating network
+* For container-to-container traffic inside a single Swarm
+* Optional IPSec(AES) encryption on network creation
+* Each service can be connected to multiple networks
+  * (e.g. front-end, back-end)
+
+```sh
+# root@node1
+docker network create --driver overlay mydrupal
+docker network ls
+
+# https://github.com/bitnami/bitnami-docker-postgresql
+docker service create --name psql --network mydrupal -e POSTGRESQL_POSTGRES_PASSWORD=mypass -e POSTGRESQL_DATABASE=progres postgres
+docker service ls
+docker service ps psql
+docker logs psql.1.terabjvf7wkt5j769t04tld02
+
+docker service create --name drupal --network mydrupal -p 80:80 drupal
+docker service ls
+docker service ps drupal #drupal is actrually running on Node2.
+
+docker service inspect drupal #VIP
+```
+
+### Routing Mesh
+
+[Use swarm mode routing mesh](https://docs.docker.com/engine/swarm/ingress/)
+
+![service ingress image](https://docs.docker.com/engine/swarm/images/ingress-routing-mesh.png)
+
+![ingress with external load balancer image](https://docs.docker.com/engine/swarm/images/ingress-lb.png)
+
+* Routes ingress(incoming) packets for a Service to proper Task
+* Spans All nodes in Swarm
+* Uses IPVS from Linux Kernel
+* Load balances Swarm Services across their Tasks
+* Two ways this works:
+* Container-to-container in a Overlay network(uses VIP)
+* External traffic incoming to published ports(all nodes listen)
+
+```sh
+docker service create --name search --replicas 3 -p 9200:9200 elasticsearch:2
+docker service ps search
+curl localhost:9200
+curl localhost:9200
+curl localhost:9200
+```
+
+### Routing Mesh Cont.
+* This is stateless load balancing
+* This LB is at OSI Layer 3(TCP), not Layer 4(DNS)
+* Both limitation can be overcome with:
+* Niginx or HAProxy LB proxy, or:
+* Docker Enterprise Edition, which comes with built-in L4 web proxy
+
+### Assignment: Create Multi-Service App
+* Using Docker's Distributed Voting App
+* use `swarm-app-1` directory in our course repo for requirements
+* 1 volume, 2 networks, and 5 services needed
+* Create the commands needed, spin up services, and test app
+* Everything is using Docker Hub images, so no data needed on Swarm
+* Like many computer things, this is 1/2 art form and 1/2 science
+
+```sh
+docker node ls
+docker ps -a
+docker service ls
+docker network create -d overlay backend
+docker network create -d overlay frontend
+
+docker service create --name vote -p 80:80 --network frontend --replicas 2 <image>
+
+docker service create --name redis --network frontend --replicas 1 redis:3.2
+
+docker service create --name worker --network frontend --network backend <image>
+
+docker service create --name db --network backend --mount type=volume,source=db-data,target=/var/lib/postgresql/data postgres:9.4
+
+docker service create --name result --network backend -p 5001:80
+
+docker service ls
+docker service ps result
+docker service ps redis
+docker service ps db
+docker service ps vote
+docker service ps worker
+cat /etc/docker/
+docker service logs worker
+```
+
+### Stacks: Production Grade Compose
+* In 1.13 Docker adds a new layer of abstraction to Swarm called Stacks
+* Stacks accept Compose files as their declarative definition for services, networks, and volumes
+* We use `docker stack deploy` ranther then docker service create
+* Stacks managers all those objects for us, including overlay network per stack. Adds stack name to start of their name
+* New `deploy:` key in Compose file. Can't do `build:`
+* Compose now ignores `deploy:`, Swarm ignores `build:`
+* `docker-compose` cli not needed on Swarm server
+
+```sh
+docker stack deploy -c example-voting-app-stack.yml voteapp
+
+docker stack --help
+
+docker stack ls
+
+docker stack services voteapp
+
+docker stack ps voteapp
+
+docker network ls
+# overlay
+
+docker stack deploy -c example-voting-app-stack.yml voteapp #update
+```
+
+### Secrets Storage
+* Easiest "secure" solution for storing secrets in Swarm
+* What is a Secret?
+  * Usernames and passwords
+  * TLS certificates and keys
+  * SSH keys
+  * Any data you would prefer not be "on front page of news"
+* Supports generic strings or binary content up to 500Kb in size
+* Doesn't require apps to be rewritten
+
+### Secrets Storage Cont.
+* As of Docker 1.13.0 Swarm Raft DB is encrypted on disk
+* Only stored on disk on Manager nodes
+* Default is Managers and Workers "control plane" is TLS + Mutual Auth
+* Secrets are first stored in Swarm, then assigned to a Service(s)
+* Only containers in assigned Services(s) can see them
+* They look lik files in container but are actually in-memory fs
+* `/run/secrets/<secret_name>` or `/run/secrets/<secret_alias>`
+* Local docker-compose can use file-based secrets, but not secure
+
+```sh
+docker secret create psql_user psql_user.txt
+echo "myDBpassWORD" | docker secret create psql_pass -
+
+docker secret ls
+docker secret inspect psql_user
+
+docker service create --name psql --secret psql_user --secret psql_pass -e POSTGRES_PASSWORD_FILE=/run/secrets/psql_pass -e POSTGRES_USER_FILE=/run/secrets/psql_user postgres
+
+docker service ps psql
+docker exec -it <container name> bash
+cat /run/secrets/psql_user
+# mysqluser -> it worked
+
+docker service ps psql
+docker service update --secret-rm
+```
+
+```sh
+docker stack deploy -c docker-compose.yml mydb
+docker secret ls
+
+docker stack rm mydb
+```
+
+### Using Secrets With Local Docker Compose
+```sh
+ll
+#docker-compose.yml
+#psql_password.txt
+#psql_user.txt
+docker node ls
+docker-compose up -d
+docker-compose exec psql cat /run/secrets/psql_user
+#dbuser
+```
+
+### Full App Lifecycle With Compose
+* Live The Dream！
+* Single set of Compose files for:
+* Local `docker-compose up` development environment
+* Remote `docker-compose up` CI environment
+* Remote `docker stack deploy` production environment
+
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
 
 
 ### Check Our Tools
