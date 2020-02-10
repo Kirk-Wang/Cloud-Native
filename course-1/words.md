@@ -42,3 +42,6 @@ subtle adj. 微妙的；精细的；敏感的；狡猾的；稀薄的
 
 redundant adj.被裁减的;多余的;不需要的
 
+get the best out of: 发挥...最大功效；最有效地使用
+
+
