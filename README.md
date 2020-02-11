@@ -1204,7 +1204,7 @@ Exercise
 * To use something else than `index.docker.io`, we specify it in the image name
 * Examples:
 ```sh
-docker pulll gcr.io/google-containers/alpine-with-bash:1.0
+docker pull gcr.io/google-containers/alpine-with-bash:1.0
 docker build -t registry.mycompany.io:5000/myimage:awesome .
 docker push registry.mycompany.io:5000/myimage:awesome
 ```
