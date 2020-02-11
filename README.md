@@ -1318,6 +1318,10 @@ kubectl expose deploy/webui --type=NodePort --port=80
 kubectl get svc
 ```
 
+webui        NodePort    10.96.39.74     <none>        80:31900/TCP   9s
+
+e.g. ->> [http://localhost:31900](http://localhost:31900)
+
 ### Scaling our demo app
 * Our ultimate goal is to get more DockerCoins
   * (i.e. increase the number of loops per second shown on the web UI)
@@ -1358,6 +1362,8 @@ Exercise
 * Scale the `worker` Deployment to a bigger number:
 ```sh
 kubectl scale deployment worker --replicas=10
+# kubectl scale deployment rng --replicas=2
+# kubectl scale deployment hasher --replicas=2
 ```
 The graph will peak at 10 hashes/second.
 (We can add as many workers as we want: we will never go past 10 hashes/second.)
