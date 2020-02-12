@@ -1708,9 +1708,6 @@ Exercise
 * Get the list of pods matching selector `app=rng`:
 ```sh
 kubectl get pods -l app=rng
-
-kubectl edit service rng
-
 kubectl get pods --selector app=rng
 ```
 But...why do these pods(in particular, the new ones)have this `app=rng` label?
