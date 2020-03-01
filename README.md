@@ -3173,6 +3173,26 @@ kubectl delete pod/haproxy pod/registry
   (waiting for the `LoadBalancer` to be provisioned;then adding it to DNS)
 * We could build our own reverse proxy
 
+### Building a custom reverse proxy
+* There are many options available:
+  Apache, HAProxy, Envoy Proxy, Gloo, NGINX, Traefik,...
+* Most of these options require us to update/edit configuration files after each change
+* Some of them can pick up virtual hosts and backends from a configuration store
+* Wouldn't it be nice if this configuration could be managed with Kubernetes API?
+* Enter Ingress resources!
+
+
+### ingress vs. Ingress
+
+ingress
+* ingress definition: Going in, entering. The opposite of egress(leaving)
+* In networking terms, ingress refers to handling incomming connections
+* Could imply incoming to firewall, network, or in this case, a server cluter
+
+Ingress
+* Ingress(capital 1)in these slides means the Kubernetes Ingress resource
+* Specific to HTTP/S
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
