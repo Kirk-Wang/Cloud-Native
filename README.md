@@ -3152,6 +3152,17 @@ Exercise
 kubectl delete pod/haproxy pod/registry
 ```
 
+### Exposing HTTP services with Ingress resources
+* Services give us a way to access a pod or a set of pods
+* Services can be exposed to the outside world:
+  * with type `NodePort`(on a port > 30000)
+  * with type `LoadBalancer`(allocating an external load balancer)
+* What about HTTP services?
+  * how can we expose `webui`, `rng`, `hasher`?
+  * the Kubernetes dashboard?
+  * all on the same IP and port?
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
