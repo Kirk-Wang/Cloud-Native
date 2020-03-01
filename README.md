@@ -3206,6 +3206,15 @@ Ingress
   * and more
 
 ### Principle of operation
+* Step 1:deploy an Ingress controller
+  * Ingress controller = load balancing proxy + control loop
+  * the control loop watches over Ingress resources, and configures the LB accordingly
+  * these might be two separate processes(NGINX server + NGINX Ingress controller)
+  * or a single app that knows how to speak to Kubernetes API(Traefik)
+* Step 2: set up DNS(usually)
+  * associate external DNS entries with the load balancer or host address
+* Step 3: create Ingress resources for our Services resources
+  * 
 
 ------------------------------------------------------------
 ------------------------------------------------------------
