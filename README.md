@@ -3200,6 +3200,10 @@ Ingress
   * load balancing
   * SSL termination
   * name-based virtual hosting
+* Can also route to different services depending on:
+  * URI path(e.g `/api` -> `api-service`, `static`->assets-service)
+  * Client headers, including cookies(for A/B testing, canary deployment...)
+  * and more
 
 ------------------------------------------------------------
 ------------------------------------------------------------
