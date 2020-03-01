@@ -3148,7 +3148,7 @@ Let's cleanup before we start the next lecture!
 
 Exercise
 * remove our pods:
-```sh
+```sh 
 kubectl delete pod/haproxy pod/registry
 ```
 
@@ -3161,6 +3161,16 @@ kubectl delete pod/haproxy pod/registry
   * how can we expose `webui`, `rng`, `hasher`?
   * the Kubernetes dashboard?
   * all on the same IP and port?
+
+### Exposing HTTP services
+* If we use `NodePort` services, clients have to specify port numbers
+(i.e. http://xxxxx:31234 instead of just http://xxxxx)
+* `LoadBalancer` services are nice, but:
+  * they are not available in all environments
+  * they often carry an additional cost(e.g they provision an ELB)
+  * they often work at OSI Layer 4(IP+Port) and not Layer 7(HTTP/S)
+  * they require one extra step for DNS integration
+  (waiting for the `LoadBalancer` to be provisioned;then adding it to DNS)
 
 
 ------------------------------------------------------------
