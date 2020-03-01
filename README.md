@@ -3193,6 +3193,13 @@ Ingress
 * Ingress(capital 1)in these slides means the Kubernetes Ingress resource
 * Specific to HTTP/S
 
+### Ingress resources
+* Kubernetes API resource(`kubectl get ingress/ingresses/ing`)
+* Designed to expose HTTP services
+* Basic features:
+  * load balancing
+  * SSL termination
+  * name-based virtual hosting
 
 ------------------------------------------------------------
 ------------------------------------------------------------
