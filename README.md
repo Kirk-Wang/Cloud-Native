@@ -3171,6 +3171,7 @@ kubectl delete pod/haproxy pod/registry
   * they often work at OSI Layer 4(IP+Port) and not Layer 7(HTTP/S)
   * they require one extra step for DNS integration
   (waiting for the `LoadBalancer` to be provisioned;then adding it to DNS)
+* We could build our own reverse proxy
 
 
 ------------------------------------------------------------
