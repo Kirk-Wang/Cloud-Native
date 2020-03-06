@@ -1,9 +1,5 @@
 
 ### Vultr
 
-[ubuntu/#install-using-the-convenience-script](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-convenience-script)
+[Deploy Kubernetes with kubeadm](https://medium.com/faun/deploy-kubernetes-with-kubeadm-14d3b1972064)
 
-```sh
-curl -fsSL https://get.docker.com -o get-docker.sh
-sudo sh get-docker.sh
-```
