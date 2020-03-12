@@ -3247,6 +3247,29 @@ Ingress
 * All containers of that pod are sharing that network namespace
 (and therefore using the same IP address)
 
+
+### With `hostNetwork: true`
+* No network namespace gets created
+* The pod is using the network namespace of the host
+* It "sees" (and can use) the interfaces(and IP addresses) of the host(VM on macOS/Win)
+* The pod can receive outside traffic directly, on any port
+* Downside: with most network plugins, network polices won't work for that pod
+  * most network policies work at the IP address level
+  * filtering that pod = filtering traffic from the node
+
+### What you will use now
+* Docker Desktop
+  * no built-in ingress installer, we'll provide you YAML
+  * Ignores `hostNetwork`, but Service `type: LoadBalancer` works with `localhost`!
+* minikube
+  * has a built-in NGINX installer `minikube addons enable ingress`
+  * But, let's use YAML we provide for learning purposes
+  * `hostNetwork: true` enabled on pod works for minikube IP
+* MicroK8s:
+  * has a built-in NGINX installer `microk8s.enable ingress`
+  * let's use YAML we provide anyway for learning purposes
+  * `hostNetwork: true` enabled on pod works for MicroK8s host IP
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
