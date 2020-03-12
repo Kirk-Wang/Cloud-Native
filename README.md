@@ -3238,6 +3238,15 @@ Ingress
 * We could use a `NodePort` service
   * ...but that requires `changing the --service-node-port-range` flag in the API service
 * Last resort: the `hostNetwork` mode
+
+### Without `hostNetwork`
+* Normally, each pod gets its own network namespace
+(sometimes called sandbox or network sandbox)
+* An IP address is assigned to the pod
+* This IP address is routed/connected to the cluster network
+* All containers of that pod are sharing that network namespace
+(and therefore using the same IP address)
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
