@@ -3214,6 +3214,13 @@ Ingress
 * Step 2: set up DNS(usually)
   * associate external DNS entries with the load balancer or host address
 * Step 3: create Ingress resources for our Services resources
+  * these resources contain rules for handling HTTP/S connections
+  * the Ingress controller picks up these resources and configures the LB
+  * connections to the Ingress LB will be processed by the rules
+
+
+### Ingress in action: NGINX
+* We will deploy the NGINX Ingress controller first
   * 
 
 ------------------------------------------------------------
