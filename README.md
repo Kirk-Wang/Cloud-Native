@@ -3221,7 +3221,11 @@ Ingress
 
 ### Ingress in action: NGINX
 * We will deploy the NGINX Ingress controller first
-  * 
+  * this is a popular, yet arbitrary choice, the `docs` list over a dozen options
+* For DNS, we will use `nip.io`
+  * `*.127.0.0.1.nip.io` resolves to `127.0.0.1`
+  * we do this so we can use various FQDN's without editing our `hosts` file
+* We will create Ingress resources for various HTTP-based Services
 
 ------------------------------------------------------------
 ------------------------------------------------------------
