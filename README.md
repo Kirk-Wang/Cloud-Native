@@ -3227,6 +3227,17 @@ Ingress
   * we do this so we can use various FQDN's without editing our `hosts` file
 * We will create Ingress resources for various HTTP-based Services
 
+### Deploying pods listening on port 80
+* We want our Ingress load balancer to be available on port 80
+* We could do that with a `LoadBalancer` service
+  * ...but it requires support from the underlying infrastructure
+  * minikube and MicroK8s don't work with it
+  * ...but Docker Desktop supports it for `localhost`!
+* We could use pods specifying `hostPort: 80`
+  * ...but with most CNI plugins, this `doesn't work or requires additional setup`
+* We could use a `NodePort` service
+  * ...but that requires `changing the --service-node-port-range` flag in the API service
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
