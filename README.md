@@ -3237,7 +3237,7 @@ Ingress
   * ...but with most CNI plugins, this `doesn't work or requires additional setup`
 * We could use a `NodePort` service
   * ...but that requires `changing the --service-node-port-range` flag in the API service
-
+* Last resort: the `hostNetwork` mode
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
