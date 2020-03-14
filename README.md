@@ -3337,6 +3337,43 @@ cheddar.127.0.0.1.nip.io
 * Then we will create 3 ingress rules(one for each service)
 * We will route `<name-of-cheese>.A.B.C.D.nip.io` to the corresponding deployment
 
+
+### Running cheesy web servers
+
+Exercise
+* Run all three deployments:
+```sh
+kubectl create deployment cheddar --image=errm/cheese:cheddar
+kubectl create deployment silton --image=errm/cheese:stilton
+kubectl create deployment wensleydale --image=errm/cheese:wensleydale
+```
+* Create a service for each of them:
+```sh
+kubectl expose deployment cheddar --port=80
+kubectl expose deployment silton --port=80
+kubectl expose deployment wensleydale --port=80
+```
+
+### What does an ingress resource look like?
+
+Here is a minimal host-based ingress resource:
+```sh
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: cheddar
+spec:
+  rules:
+  - host: cheddar.A.B.C.D.nip.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: cheddar
+          servicePort: 80
+```
+(In 1.14 ingress moved from the extensions API to networking)
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
