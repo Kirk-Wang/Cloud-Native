@@ -3271,6 +3271,22 @@ Ingress
   * `hostNetwork: true` enabled on pod works for MicroK8s host IP
 
 
+### Running NGINX on our cluster
+* Now let's deploy the NGINX controller. Pick your distro:
+
+Exercise
+* Apply the YAML
+```sh
+# for Docker Desktop, create Service with LoadBalancer
+kubectl apply -f https://k8smastery.com/ic-nginx-lb.yaml
+# for minikube/MicroK8s, create Service with hostNetwork
+kubectl apply -f https:/k8smastery.com/ic-nginx-hn.yaml
+```
+* Check the pod Status
+```sh
+kubectl describe -n ingress-nginx deploy/nginx-ingress-controller
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
