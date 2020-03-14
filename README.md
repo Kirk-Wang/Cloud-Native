@@ -3449,6 +3449,13 @@ kubectl get ingress/stilton -o yaml
 * We will make a minor change to the `YAML provided by Traefik` to enable `hostNetwork` for MicroK8s/minikube
 * For Docker Desktop we'll add a `type: LoadBalancer` to the Service
 
+### Removing NGINX from our cluster
+* Before starting Traefik, let's remove the NGINX controller
+* This won't remove Services or Ingress resources
+* But it will make them unavailable from outside the cluster
+
+
+
 
 
 ------------------------------------------------------------
