@@ -3507,6 +3507,28 @@ Exercise
 * For those use `hostNetwork`, this could be a problem
 * The container won't start if anything is listening on `<host IP>:8080`
 * On MicroK8s, Kubernetes API runs on 8080 😂
+* For those using minikube, you can un-comment the YAML and re-apply
+* You could also edit the resource(s) and manually add the details, e.g.
+  * `kubectl edit -n kube-system ds/traefik-ingress-controller`
+
+
+### What about Traefik 2.x IngressRoute resources?
+* We've been using Traefik 2.x as the Ingress controller
+* Traefik released 2.0 in late 2019
+* Their documentation talks about IngressRoute resource
+* But IngressRoute is not a build-in resource of Kubernetes
+* Traefik 2.x now supports a custom CRD(Custom Resource Definition)
+* We'll explore why in a bit
+
+
+### Using multiple ingress controllers
+* You can have multiple ingress controllers active simultaneously
+(e.g. Traefik, Gloo, and NGINX)
+* You can even have multiple instances of the same controller
+(e.g. one for internal, another for external traffic)
+* The `kubernetes.io/ingress.class` annotation can be used to tell which one to use
+* It's OK if multiple ingress controllers configure the same resource
+(it just means that the service will be accessible through multiple paths)
 
 ------------------------------------------------------------
 ------------------------------------------------------------
