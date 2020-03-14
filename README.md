@@ -3324,6 +3324,19 @@ This is normal: we haven't provided any Ingress rule yet.
 * We should get the same `404 page not found` error
 (meaning that our DNS is "set up properly" so to speak!)
 
+```sh
+cheddar.127.0.0.1.nip.io
+```
+
+### Setting up host-based routing ingress rules
+* We are going to use `errm/cheese` images
+(there are `3 tags available`: wensleydale, cheddar, stilton)
+* These images contain a simple static HTTP server sending a picture of cheese
+* We will run 3 deployments(one for each cheese)
+* We will create 3 services(one for each deployment)
+* Then we will create 3 ingress rules(one for each service)
+* We will route `<name-of-cheese>.A.B.C.D.nip.io` to the corresponding deployment
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
