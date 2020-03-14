@@ -3287,6 +3287,43 @@ kubectl apply -f https:/k8smastery.com/ic-nginx-hn.yaml
 kubectl describe -n ingress-nginx deploy/nginx-ingress-controller
 ```
 
+### Deploying the NGINX Ingress controller
+* We need the YAML templates from the `kubernetes/ingress-nginx` project
+
+The two main sections in the YAML are:
+* NGINX Deployment(or DaemonSet) and all its required resources
+  * Namespace
+  * ConfigMaps(storing NGINX configs)
+  * ServicesAccount(authenticate to Kubernetes API)
+  * Role/ClusterRole/RoleBindings(authorization to API parts)
+  * LimitRange(limit cpu/memory of NGINX)
+* `Service to` expose NGINX on 80/443
+  * different for each Kubernetes distribution
+
+```sh
+kubectl apply -f https://k8smastery.com/ic-nginx-lb.yaml
+kubectl describe -n ingress-nginx deploy/nginx-ingress-controller
+kubectl get all -n ingress-nginx
+```
+
+### Checking that NGINX
+* If NGINX started correctly, we now have a web server listening on each node
+
+Exercise
+* Direct your browser to your Kubernetes IP on port 80
+
+We should get a `404 page not found` error.
+
+This is normal: we haven't provided any Ingress rule yet.
+
+### Setting up DNS
+
+* To make our lives easier, we will use `nip.io`
+* Check out `http://cheddar.A.B.C.D.nip.io`
+(replacing A.B.C.D with the IP address of your Kubernetes IP)
+* We should get the same `404 page not found` error
+(meaning that our DNS is "set up properly" so to speak!)
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
