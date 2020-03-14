@@ -3397,6 +3397,48 @@ http://silton.127.0.0.1.nip.io
 http://wensleydale.127.0.0.1.nip.io
 ```
 
+### Adding features to a Ingress resource
+* Reverse proxies have lots of features
+* Let's add a 301 redirect to a new Ingress resource using annotations
+* It will apply when any other path is used in URL that we didn't already add
+
+Exercise
+* Create a redirect
+```sh
+kubectl apply -f https://k8smastery.com/redirect.yaml
+```
+* Open http://<anything>.A.B.C.D.nip.io or localhost or A.B.C.D
+* It should immediately redirect to google.com
+
+```
+http://somethingelse.127.0.0.1.nip.io
+```
+
+
+### View Ingress resources
+
+* Let's inspect some ingress resources
+
+Exercise
+* List all Ingress resources in the `default` namespace
+```sh
+kubectl get ingress
+```
+* Get the details on the `cheddar` Ingress resource
+```sh
+kubectl describe ingress cheddar
+```
+* Get the details on the `my-google` Ingress resource
+```sh
+kubectl describe ingress my-google
+```
+* Output `stilton` in YAML
+```sh
+kubectl get ingress/stilton -o yaml
+```
+
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
