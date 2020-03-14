@@ -3491,6 +3491,11 @@ kubectl get all -n kube-system
 Exercise
 * Refresh `http://cheddar.A.B.C.D.nip.io`
 
+```
+http://cheddar.127.0.0.1.nip.io
+http://silton.127.0.0.1.nip.io
+http://wensleydale.127.0.0.1.nip.io
+```
 
 ------------------------------------------------------------
 ------------------------------------------------------------
