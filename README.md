@@ -3468,6 +3468,22 @@ kubectl delete -f https:/k8smastery.com/ic-nginx-hn.yaml
 kubectl delete -f https:/k8smastery.com/redirect.yaml
 ```
 
+### Running Traefik on our cluster
+* Now let's deploy the Traefik Ingress controller
+
+Exercise
+* Apply the YAML
+```sh
+# for Docker Desktop with LoadBalancer
+kubectl apply -f https://k8smastery.com/ic-traefik-lb.yaml
+# for minikube/MicroK8s hostNetwork
+kubectl apply -f https:/k8smastery.com/ic-traefik-hn.yaml
+```
+* Check the pod Status
+```sh
+kubectl describe -n kube-system ds/traefik-ingress-controller
+```
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
