@@ -3454,8 +3454,19 @@ kubectl get ingress/stilton -o yaml
 * This won't remove Services or Ingress resources
 * But it will make them unavailable from outside the cluster
 
+Exercise
+* Delete our NGINX controller and related resources:
+```sh
+# for Docker Desktop, create Service with LoadBalancer
+kubectl delete -f https://k8smastery.com/ic-nginx-lb.yaml
 
-
+# for minikube/MicroK8s, create Service with hostNetwork
+kubectl delete -f https:/k8smastery.com/ic-nginx-hn.yaml
+```
+* Also remove the redirect Ingress resource. It only worked in NGINX
+```sh
+kubectl delete -f https:/k8smastery.com/redirect.yaml
+```
 
 
 ------------------------------------------------------------
