@@ -3482,7 +3482,14 @@ kubectl apply -f https:/k8smastery.com/ic-traefik-hn.yaml
 * Check the pod Status
 ```sh
 kubectl describe -n kube-system ds/traefik-ingress-controller
+kubectl get all -n kube-system
 ```
+
+### Checking that Traefik runs correctly
+* If Traefik started correctly, we can refresh a cheese and it still works
+
+Exercise
+* Refresh `http://cheddar.A.B.C.D.nip.io`
 
 
 ------------------------------------------------------------
