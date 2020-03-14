@@ -3374,6 +3374,29 @@ spec:
 ```
 (In 1.14 ingress moved from the extensions API to networking)
 
+### Creating our first ingress resources
+
+Exercise
+* Download our YAML `curl -O https://k8smastery.com/ingress.yaml`
+* Edit the file `ingress.yaml` which has three Ingress resources
+* Replace the A.B.C.D with your Kubernetes IP (`127.0.0.1` for `localhost`)
+* Apply the file `kubectl apply -f ingress.yaml`
+* Open `http://cheddar.A.B.C.D.nip.io`
+(An Image of a piece of cheese should show up.)
+
+### Bring up the other Ingress resources
+Exercise
+* Open `http://silton.A.B.C.D.nip.io`
+* Open `http://wensleydale.A.B.C.D.nip.io`
+
+* Different cheeses should show up for each URL
+
+```
+http://cheddar.127.0.0.1.nip.io
+http://silton.127.0.0.1.nip.io
+http://wensleydale.127.0.0.1.nip.io
+```
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
