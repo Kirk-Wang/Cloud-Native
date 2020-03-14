@@ -3437,7 +3437,17 @@ kubectl describe ingress my-google
 kubectl get ingress/stilton -o yaml
 ```
 
-
+### Swapping NGINX for Traefik
+* Traefik is a proxy with built-in Kubernetes Ingress support
+* It has a web dashboard, built-in Let's Encrypt, full TCP support, and more
+* Most importantly: Traefik releases are named after cheeses
+* The `Traefik documentaion` tells us to pick between Deployment and DaemonSet
+* We are going to use a DaemonSet so that each node can accept connections
+* We provide a YAML file which is essentially the sum of:
+  * `Traefik's DaemonSet resources`(patched with `hostNetwork` and tolerations)
+  * `Traefik's RBAC rules` allowing it to watch necessary API objects
+* We will make a minor change to the `YAML provided by Traefik` to enable `hostNetwork` for MicroK8s/minikube
+* For Docker Desktop we'll add a `type: LoadBalancer` to the Service
 
 
 
