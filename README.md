@@ -3497,6 +3497,17 @@ http://silton.127.0.0.1.nip.io
 http://wensleydale.127.0.0.1.nip.io
 ```
 
+### Traefik web UI
+* Traefik provides a web dashboard on container port 8080
+* For those using the `LoadBalancer` method(Docker Desktop), it's enabled
+
+Exercise
+* if using Docker Desktop, go to `http://localhost:8080`
+
+* For those use `hostNetwork`, this could be a problem
+* The container won't start if anything is listening on `<host IP>:8080`
+* On MicroK8s, Kubernetes API runs on 8080 😂
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
