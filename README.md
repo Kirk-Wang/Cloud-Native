@@ -3551,6 +3551,11 @@ Exercise
 * Annotations are not validated in CLI
 * Some proxies provide a CRD(Custom Resource Definition) option
 
+### When not to use built-in Ingress resources
+* You need features beyond Ingress including:
+  * TCP support, traffic splitting, mTLS, egress, service mesh
+  * response transformation, routing to 2+ services
+
 
 
 ------------------------------------------------------------
