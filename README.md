@@ -3573,7 +3573,27 @@ Exercise
 * Eventually, some more advanced features might be added to "Ingress Resources"
 * We'll cover more after we learn about CRD's and Operators
 
+### Cleanup
+Let's cleanup before we start the next lecture!
 
+Exercise
+* remove our ingress controller:
+```sh
+# for Docker Desktop with LoadBalancer
+kubectl delete -f https://k8smastery.com/ic-traefik-lb.yaml
+# for minikube/MicroK8s with hostNetwork
+kubectl delete -f https:/k8smastery.com/ic-traefik-hn.yaml
+```
+* remove our ingress resources:
+```sh
+kubectl delete -f ingress.yaml
+kubectl delete -f https:/k8smastery.com/redirect.yaml
+```
+* remove our cheeses
+```sh
+kubectl delete svc/cheddar svc/stilton svc/wensleydale
+kubectl delete deploy/cheddar deploy/stilton deploy/wensleydale
+```
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
