@@ -3555,6 +3555,8 @@ Exercise
 * You need features beyond Ingress including:
   * TCP support, traffic splitting, mTLS, egress, service mesh
   * response transformation, routing to 2+ services
+* You have external load balancers(like AWS ELBs) which route to NodePorts
+* You don't need externally available HTTP services on the default ports
 
 
 
