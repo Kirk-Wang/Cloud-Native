@@ -3534,7 +3534,11 @@ Exercise
 * The traffic flows directly from the ingress load balancer to the backends
   * it doesn't need to go through the `ClusterIP`
   * in fact, we don't even need a `ClusterIP`(we can use a headless service)
-
+* The load balancer can be outside of Kubernetes
+(as long as it has access to the cluster subnet)
+* This allows the use of external(hardware, physical machines...) load balancers
+* Annotations can encode special features
+(rate-limiting, A/B testing, session stickiness, etc.)
 
 ------------------------------------------------------------
 ------------------------------------------------------------
