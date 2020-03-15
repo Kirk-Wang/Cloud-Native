@@ -3559,6 +3559,20 @@ Exercise
 * You don't need externally available HTTP services on the default ports
 
 
+### Using CRD's as alternatives to Ingress resources
+* Due to the limits of the built-in ingress, many projects are moving to CRD's
+* For example, Traefik 2.x has a IngressRoute CRD option
+* Ambassador, a controller for Envoy proxy, uses a Mapping CRD
+* These CRD proxy options do ingress plus more (sometimes called API Gateways):
+  * TCP Support(anything beyond HTTP/HTTPS)
+  * Traffic splitting, rate limiting, circuit breaking, etc
+  * Complex traffic routing, request and response transformation
+* Once we consider CRD's, many more proxy options are available:
+  * Envoy Proxy based (Gloo, Ambassador, Contour)
+  * Other Proxies(Tyk, Traefik, Kong, KrakenD)
+* Eventually, some more advanced features might be added to "Ingress Resources"
+* We'll cover more after we learn about CRD's and Operators
+
 
 ------------------------------------------------------------
 ------------------------------------------------------------
