@@ -3540,6 +3540,19 @@ Exercise
 * Annotations can encode special features
 (rate-limiting, A/B testing, session stickiness, etc.)
 
+### Ingress resources: the bad(cough Annotations cough)
+* Aforementioned "special features" are not standardized yet
+* Some controller will support them; some won't
+* Even relatively common features(stripping a path prefix) can differ:
+  * `traefik.ingress.kubernetes.io/rule-type: PathPrefixStrip`
+  * `Ingress.kubernetes.io/rewrite-target: /`
+* This should eventually stabilize
+(remember that ingresses are currently `apiVersion: networking.k8s.io/v1beta1`)
+* Annotations are not validated in CLI
+* Some proxies provide a CRD(Custom Resource Definition) option
+
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
