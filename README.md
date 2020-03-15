@@ -3344,13 +3344,13 @@ Exercise
 * Run all three deployments:
 ```sh
 kubectl create deployment cheddar --image=errm/cheese:cheddar
-kubectl create deployment silton --image=errm/cheese:stilton
+kubectl create deployment stilton --image=errm/cheese:stilton
 kubectl create deployment wensleydale --image=errm/cheese:wensleydale
 ```
 * Create a service for each of them:
 ```sh
 kubectl expose deployment cheddar --port=80
-kubectl expose deployment silton --port=80
+kubectl expose deployment stilton --port=80
 kubectl expose deployment wensleydale --port=80
 ```
 
@@ -3386,14 +3386,14 @@ Exercise
 
 ### Bring up the other Ingress resources
 Exercise
-* Open `http://silton.A.B.C.D.nip.io`
+* Open `http://stilton.A.B.C.D.nip.io`
 * Open `http://wensleydale.A.B.C.D.nip.io`
 
 * Different cheeses should show up for each URL
 
 ```
 http://cheddar.127.0.0.1.nip.io
-http://silton.127.0.0.1.nip.io
+http://stilton.127.0.0.1.nip.io
 http://wensleydale.127.0.0.1.nip.io
 ```
 
@@ -3493,7 +3493,7 @@ Exercise
 
 ```
 http://cheddar.127.0.0.1.nip.io
-http://silton.127.0.0.1.nip.io
+http://stilton.127.0.0.1.nip.io
 http://wensleydale.127.0.0.1.nip.io
 ```
 
