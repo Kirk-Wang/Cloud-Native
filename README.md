@@ -3530,6 +3530,12 @@ Exercise
 * It's OK if multiple ingress controllers configure the same resource
 (it just means that the service will be accessible through multiple paths)
 
+### Ingress resources: the good
+* The traffic flows directly from the ingress load balancer to the backends
+  * it doesn't need to go through the `ClusterIP`
+  * in fact, we don't even need a `ClusterIP`(we can use a headless service)
+
+
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
