@@ -3285,6 +3285,7 @@ kubectl apply -f https:/k8smastery.com/ic-nginx-hn.yaml
 * Check the pod Status
 ```sh
 kubectl describe -n ingress-nginx deploy/nginx-ingress-controller
+kubectl get all -n ingress-nginx
 ```
 
 ### Deploying the NGINX Ingress controller
@@ -3476,6 +3477,7 @@ Exercise
 ```sh
 # for Docker Desktop with LoadBalancer
 kubectl apply -f https://k8smastery.com/ic-traefik-lb.yaml
+# kubectl delete -f https://k8smastery.com/ic-traefik-lb.yaml
 # for minikube/MicroK8s hostNetwork
 kubectl apply -f https:/k8smastery.com/ic-traefik-hn.yaml
 ```
