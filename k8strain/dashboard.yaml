@@ -1,0 +1,40 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-dashboard
+spec:
+  routes:
+  - match: Host(`traefik.domain.com`)
+    kind: Rule
+    services:
+    - name: api@internal
+      kind: TraefikService
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-dashboard-tls
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`traefik.qikqiak.com`)
+    kind: Rule
+    services:
+    - name: api@internal
+      kind: TraefikService
+  tls:
+    certResolver: ali
+    domains:
+    - main: "*.qikqiak.com"
+  # tls:
+  #   secretName: who-tls
+# ---
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: Middleware
+# metadata:
+#   name: auth
+# spec:
+#   basicAuth:
+#     secret: secretName # Kubernetes secret named "secretName"
