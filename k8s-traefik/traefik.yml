@@ -65,7 +65,6 @@ spec:
             - --certificatesResolvers.le.acme.dnsChallenge.provider=cloudflare
             - --certificatesresolvers.le.acme.email=roy.w.w.wang@gmail.com
             - --certificatesresolvers.le.acme.storage=/etc/acme/acme.json
-            #- --certificatesresolvers.le.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
           env:
             - name: CF_API_EMAIL
               value: roy.w.w.wang@gmail.com
@@ -141,12 +140,3 @@ spec:
       targetPort: 5432
   externalIPs:
     - YOUR_IP
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: redirect-https
-spec:
-  redirectScheme:
-    scheme: https
-    permanent: true

@@ -56,8 +56,6 @@ spec:
       services:
         - name: whoami
           port: 80
-      middlewares: 
-        - name: redirect-https
   tls:
     certResolver: le
     domains:
