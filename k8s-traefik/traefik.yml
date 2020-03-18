@@ -22,23 +22,17 @@ spec:
         app: traefik
     spec:
       serviceAccountName: traefik-ingress-controller
+      tolerations:
+        - operator: "Exists"
+      nodeSelector:
+        kubernetes.io/hostname: k8s-master
+      volumes:
+        - name: acme
+          hostPath:
+            path: /data/k8s/traefik/acme
       containers:
         - name: traefik
           image: traefik:v2.1
-          args:
-            - --log.level=DEBUG
-            - --api
-            - --api.insecure
-            - --entrypoints.web.address=:80
-            - --entryPoints.websecure.Address=:443
-            - --certificatesResolvers.le.acme.dnsChallenge=true
-            - --certificatesResolvers.le.acme.dnsChallenge.provider=cloudflare
-            - --certificatesresolvers.le.acme.email=roy.w.w.wang@gmail.com
-            - --certificatesresolvers.le.acme.storage=acme.json
-            # Please note that this is the staging Let's Encrypt server.
-            # Once you get things working, you should remove that whole line altogether.
-            #- --certificatesresolvers.le.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
-            - --providers.kubernetescrd # set kubernetes custom resource defintion as the provider
           ports:
             - name: web
               containerPort: 80
@@ -46,6 +40,32 @@ spec:
               containerPort: 443
             - name: admin
               containerPort: 8080
+            - name: mongo
+              hostPort: 27017
+              containerPort: 27017
+            - name: postgres
+              hostPort: 5432
+              containerPort: 5432
+          args:
+            - --entryPoints.web.address=:80
+            - --entryPoints.web.forwardedHeaders.insecure
+            - --entryPoints.web.forwardedHeaders.trustedIPs=0.0.0.0/0
+            - --entryPoints.websecure.address=:443
+            - --entryPoints.mongo.address=:27017
+            - --entryPoints.postgres.address=:5432
+            - --api=true
+            - --api.dashboard=true
+            - --ping=true
+            - --providers.kubernetesingress
+            - --providers.kubernetescrd
+            - --serversTransport.insecureSkipVerify=true
+            - --log.level=INFO
+            - --accesslog
+            - --certificatesResolvers.le.acme.dnsChallenge=true
+            - --certificatesResolvers.le.acme.dnsChallenge.provider=cloudflare
+            - --certificatesresolvers.le.acme.email=roy.w.w.wang@gmail.com
+            - --certificatesresolvers.le.acme.storage=/etc/acme/acme.json
+            #- --certificatesresolvers.le.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
           env:
             - name: CF_API_EMAIL
               value: roy.w.w.wang@gmail.com
@@ -54,6 +74,41 @@ spec:
                 secretKeyRef:
                   name: cloudflare-credentials
                   key: globalApiKey
+          volumeMounts:
+            - name: acme
+              mountPath: /etc/acme
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "50Mi"
+            limits:
+              cpu: "200m"
+              memory: "100Mi"
+          securityContext:
+            allowPrivilegeEscalation: true
+            capabilities:
+              drop:
+              - ALL
+              add:
+              - NET_BIND_SERVICE
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 8080
+            failureThreshold: 1
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 8080
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
 ---
 apiVersion: v1
 kind: Service
@@ -76,5 +131,22 @@ spec:
       port: 443
       name: websecure
       targetPort: 443
+    - protocol: TCP
+      port: 27017
+      name: mongo
+      targetPort: 27017
+    - protocol: TCP
+      port: 5432
+      name: postgres
+      targetPort: 5432
   externalIPs:
     - YOUR_IP
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect-https
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true

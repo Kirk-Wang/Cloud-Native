@@ -1,5 +1,5 @@
 kind: Deployment
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 metadata:
   name: whoami
   namespace: default
@@ -56,6 +56,8 @@ spec:
       services:
         - name: whoami
           port: 80
+      middlewares: 
+        - name: redirect-https
   tls:
     certResolver: le
     domains:
