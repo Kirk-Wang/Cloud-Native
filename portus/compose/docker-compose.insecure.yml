@@ -25,7 +25,7 @@ services:
       # serve the static files
       - RAILS_SERVE_STATIC_FILES='true'
     ports:
-      - 3000:3000
+      - 7077:3000
     depends_on:
       - db
     links:
@@ -76,7 +76,7 @@ services:
     image: library/registry:2.6
     environment:
       # Authentication
-      REGISTRY_AUTH_TOKEN_REALM: http://${MACHINE_FQDN}:3000/v2/token
+      REGISTRY_AUTH_TOKEN_REALM: http://${MACHINE_FQDN}:7077/v2/token
       REGISTRY_AUTH_TOKEN_SERVICE: ${MACHINE_FQDN}:5000
       REGISTRY_AUTH_TOKEN_ISSUER: ${MACHINE_FQDN}
       REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE: /secrets/portus.crt
@@ -84,7 +84,7 @@ services:
       # Portus endpoint
       REGISTRY_NOTIFICATIONS_ENDPOINTS: >
         - name: portus
-          url: http://${MACHINE_FQDN}:3000/v2/webhooks/events
+          url: http://${MACHINE_FQDN}:7077/v2/webhooks/events
           timeout: 2000ms
           threshold: 5
           backoff: 1s

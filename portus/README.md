@@ -25,4 +25,20 @@ into the secrets directory.
 ```sh
 cat /etc/docker/daemon.json
 vi /etc/docker/daemon.json
+
+```
+
+```json
+{
+  "insecure-registries": ["10.10.28.156:5000"],
+  "allow-nondistributable-artifacts": ["10.10.28.156:5000"]
+}
+```
+
+```sh
+service docker restart
+
+docker login 10.10.28.156:5000
+docker tag hello-world:latest 10.10.28.156:5000/username/hello-world:latest
+docker push 10.10.28.156:5000/username/hello-world:latest
 ```
