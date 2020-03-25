@@ -25,7 +25,6 @@ into the secrets directory.
 ```sh
 cat /etc/docker/daemon.json
 vi /etc/docker/daemon.json
-
 ```
 
 ```json
