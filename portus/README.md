@@ -6,7 +6,7 @@
 
 [Deploy a registry server](https://docs.docker.com/registry/deploying/)
 
-## Certificates
+### Certificates
 
 This example is set up in a way so you can use self-signed certificates. Of
 course this is not something you would want to do in production, but this way we
@@ -19,3 +19,10 @@ openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout portus.key -
 
 After that, you can simply move the ``portus.key`` and the ``portus.crt`` files
 into the secrets directory.
+
+### Configure the Docker daemon
+
+```sh
+cat /etc/docker/daemon.json
+vi /etc/docker/daemon.json
+```
