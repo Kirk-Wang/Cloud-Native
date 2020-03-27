@@ -29,8 +29,12 @@ vi /etc/docker/daemon.json
 
 ```json
 {
-  "insecure-registries": ["10.10.28.156:5000"],
-  "allow-nondistributable-artifacts": ["10.10.28.156:5000"]
+  "registry-mirrors": [
+    "https://dockerhub.azk8s.cn",
+    "https://hub-mirror.c.163.com"
+  ],
+  "allow-nondistributable-artifacts": ["myregistrydomain.com:5000"],
+  "insecure-registries": ["myregistrydomain.com:5000"],
 }
 ```
 
@@ -40,4 +44,10 @@ service docker restart
 docker login 10.10.28.156:5000
 docker tag hello-world:latest 10.10.28.156:5000/username/hello-world:latest
 docker push 10.10.28.156:5000/username/hello-world:latest
+
+
+docker build -t portus.bifrontend.ruqimobility.com:5000/wangzuowei/gohttpserver:1.0 -f docker/Dockerfile .
+
+docker login portus.bifrontend.ruqimobility.com:5000
+docker push portus.bifrontend.ruqimobility.com:5000/wangzuowei/gohttpserver:1.0
 ```
