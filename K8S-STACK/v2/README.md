@@ -33,21 +33,16 @@ vi /etc/docker/daemon.json
     "https://dockerhub.azk8s.cn",
     "https://hub-mirror.c.163.com"
   ],
-  "allow-nondistributable-artifacts": ["myregistrydomain.com:5000"],
-  "insecure-registries": ["myregistrydomain.com:5000"],
+  "allow-nondistributable-artifacts": ["registry.bifrontend.domain.com"],
+  "insecure-registries": ["registry.bifrontend.domain.com"],
 }
 ```
 
 ```sh
-service docker restart
+docker login registry.bifrontend.domain.com
+docker tag hello-world:latest registry.bifrontend.domain.com/test/hello:v1
+docker push registry.bifrontend.domain.com/test/hello:v1
 
-docker login 10.10.28.156:5000
-docker tag hello-world:latest 10.10.28.156:5000/username/hello-world:latest
-docker push 10.10.28.156:5000/username/hello-world:latest
-
-
-docker build -t portus.bifrontend.ruqimobility.com:5000/wangzuowei/gohttpserver:1.0 -f docker/Dockerfile .
-
-docker login portus.bifrontend.ruqimobility.com:5000
-docker push portus.bifrontend.ruqimobility.com:5000/wangzuowei/gohttpserver:1.0
+docker tag hello-world:latest registry.bifrontend.domain.com:32604/test/hello:v1
+docker push registry.bifrontend.domain.com:32604/test/hello:v1
 ```

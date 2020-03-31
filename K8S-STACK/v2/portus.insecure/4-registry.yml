@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: registry
+  name: registry
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      k8s-app: registry
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: registry
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: k8s-master1
+      containers:
+      - name: registry
+        image: library/registry:2.6
+        volumeMounts:
+        - mountPath: /var/lib/registry
+          name: registry-volume
+        - mountPath: /secrets:ro
+          name: registry-secrets
+        - mountPath: /etc/docker/registry/config.yml:ro
+          name: registry-config
+        ports:
+          - name: http
+            containerPort: 5000
+          - name: debug
+            containerPort: 5001
+        env:
+          # Authentication
+          - name: REGISTRY_AUTH_TOKEN_REALM
+            value: "http://portus.bifrontend.domain.com/v2/token"
+          - name: REGISTRY_AUTH_TOKEN_SERVICE
+            value: "registry.bifrontend.domain.com"
+          - name: REGISTRY_AUTH_TOKEN_ISSUER
+            value: "portus.bifrontend.domain.com"
+          - name: REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE
+            value: "/secrets/portus.crt"
+
+          # Portus endpoint
+          - name: REGISTRY_NOTIFICATIONS_ENDPOINTS
+            value: >
+              - name: portus
+                url: http://portus.bifrontend.domain.com/v2/webhooks/events
+                timeout: 2000ms
+                threshold: 5
+                backoff: 1s
+      volumes:
+      - name: registry-volume
+        hostPath:
+          path: /var/lib/portus/registry
+      - name: registry-secrets
+        hostPath:
+          path: /data/f2e-k8s-stack/portus.insecure/secrets
+      - name: registry-config
+        hostPath:
+          path: /data/f2e-k8s-stack/portus.insecure/registry-config.yml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: registry
+  name: registry
+  namespace: kube-system
+spec:
+  ports:
+    - port: 5000
+      targetPort: 5000
+      nodePort: 32604
+  selector:
+    k8s-app: registry
+  type: NodePort

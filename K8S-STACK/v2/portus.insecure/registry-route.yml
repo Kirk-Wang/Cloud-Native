@@ -1,0 +1,17 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: registry-route
+  namespace: kube-system
+spec:
+  entryPoints:
+    - websecure
+  tls:
+    secretName: cloud-f2e-tls
+  routes:
+    - match: Host(`registry.bifrontend.domain.com`)
+      kind: Rule
+      services:
+        - name: registry
+          port: 5000
+

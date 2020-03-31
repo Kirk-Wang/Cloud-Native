@@ -1,0 +1,79 @@
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: portus
+  name: portus
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      k8s-app: portus
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: portus
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: k8s-master1
+      containers:
+      - name: portus
+        image: opensuse/portus:head
+        volumeMounts:
+        - mountPath: /certificates:ro
+          name: portus-volume
+        ports:
+        - containerPort: 3000
+        env:
+          - name: PORTUS_MACHINE_FQDN_VALUE
+            value: "portus.bifrontend.domain.com"
+
+          # DB. The password for the database should definitely not be here. You are
+          # probably better off with Docker Swarm secrets.
+          - name: PORTUS_DB_HOST
+            value: "portus-db"
+          - name: PORTUS_DB_DATABASE
+            value: "portus_production"
+          - name: PORTUS_DB_PASSWORD
+            value: "ruqif2e123"
+          - name: PORTUS_DB_POOL
+            value: "5"
+
+          # Secrets. It can possibly be handled better with Swarm's secrets.
+          - name: PORTUS_SECRET_KEY_BASE
+            value: "b494a25faa8d22e430e843e220e424e10ac84d2ce0e64231f5b636d21251eb6d267adb042ad5884cbff0f3891bcf911bdf8abb3ce719849ccda9a4889249e5c2"
+          - name: PORTUS_KEY_PATH
+            value: "/certificates/portus.key"
+          - name: PORTUS_PASSWORD
+            value: "ruqif2e123"
+          
+          # SSL
+          - name: PORTUS_CHECK_SSL_USAGE_ENABLED
+            value: "false"
+
+          # Since we have no nginx in insecure mode, portus have to
+          # serve the static files
+          - name: RAILS_SERVE_STATIC_FILES
+            value: "true"
+      volumes:
+      - name: portus-volume
+        hostPath:
+          path: /data/f2e-k8s-stack/portus.insecure/secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: portus
+  name: portus
+  namespace: kube-system
+spec:
+  ports:
+    - port: 80
+      targetPort: 3000
+  selector:
+    k8s-app: portus
+

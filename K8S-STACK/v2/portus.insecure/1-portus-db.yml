@@ -1,0 +1,53 @@
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: portus-db
+  name: portus-db
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      k8s-app: portus-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: portus-db
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: k8s-master1
+      containers:
+      - name: portus-db
+        image: library/mariadb:10.0.23
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: portus-db-volume
+        ports:
+        - containerPort: 3306
+        env:
+          - name: MYSQL_DATABASE
+            value: "portus_production"
+          - name: MYSQL_ROOT_PASSWORD
+            value: "ruqif2e123"
+      volumes:
+      - name: portus-db-volume
+        hostPath:
+          path: /var/lib/portus/mariadb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: portus-db
+  name: portus-db
+  namespace: kube-system
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    k8s-app: portus-db
+
