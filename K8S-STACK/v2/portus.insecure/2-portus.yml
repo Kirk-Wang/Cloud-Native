@@ -25,6 +25,8 @@ spec:
         volumeMounts:
         - mountPath: /certificates:ro
           name: portus-volume
+        - name: config
+          mountPath: /srv/Portus/config/config-local.yml
         ports:
         - containerPort: 3000
         env:
@@ -62,6 +64,9 @@ spec:
       - name: portus-volume
         hostPath:
           path: /data/f2e-k8s-stack/portus.insecure/secrets
+      - name: config
+        hostPath:
+          path: /data/f2e-k8s-stack/portus.insecure/config-local.yml
 ---
 apiVersion: v1
 kind: Service
@@ -76,4 +81,5 @@ spec:
       targetPort: 3000
   selector:
     k8s-app: portus
+
 

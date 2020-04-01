@@ -1,13 +1,11 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: registry-route
+  name: registry-route-web
   namespace: kube-system
 spec:
   entryPoints:
-    - websecure
-  tls:
-    secretName: registry-tls
+    - web
   routes:
     - match: Host(`registry.bifrontend.domain.com`)
       kind: Rule

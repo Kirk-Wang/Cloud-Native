@@ -1,0 +1,77 @@
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: drone-ci
+  name: drone-ci
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      k8s-app: drone-ci
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: drone-ci
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: k8s-master1
+      containers:
+      - name: drone-ci
+        image: drone/drone:1.7
+        volumeMounts:
+        - mountPath: /var/lib/drone/
+          name: drone-ci-volume
+        - mountPath: /var/run/docker.sock
+          name: docker-sock
+        ports:
+        - containerPort: 80
+        env:
+          - name: DRONE_GITLAB_SERVER
+            value: "http://gitlab.domain.local"
+          - name: DRONE_GITLAB_CLIENT_ID
+            value: "01b65495ceff5a1e991f14b5804bab7a3a1b956acb2f585674255502602a43e4"
+          - name: DRONE_GITLAB_CLIENT_SECRET
+            value: "a62cae180876d832f8ecb574162a6f705603552f25573a621ef6488d1aa34dff"
+          - name: DRONE_RPC_SECRET
+            value: "0d21b279596c8316b6fdffb5a903f95e"
+          - name: DRONE_SERVER_HOST
+            value: "drone.bifrontend.domain.com"
+          - name: DRONE_SERVER_PORT
+            value: ":80"
+          - name: DRONE_LOGS_TRACE
+            value: "true"
+          - name: DRONE_DATABASE_DRIVER
+            value: "postgres"
+          - name: DRONE_DATABASE_DATASOURCE
+            value: "postgres://postgres:ruqif2e123@postgres:5432/postgres?sslmode=disable"
+          - name: DRONE_KUBERNETES_ENABLED
+            value: "true"
+          - name: DRONE_KUBERNETES_NAMESPACE
+            value: default
+      volumes:
+      - name: drone-ci-volume
+        hostPath:
+          path: /var/lib/drone/data
+      - name: docker-sock
+        hostPath:
+          path: /var/run/docker.sock
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: drone-ci
+  name: drone-ci
+  namespace: default
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    k8s-app: drone-ci
+  
+  

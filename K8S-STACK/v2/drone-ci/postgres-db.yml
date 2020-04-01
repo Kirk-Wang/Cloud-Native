@@ -1,0 +1,55 @@
+
+---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      k8s-app: postgres
+    name: postgres
+    namespace: default
+  spec:
+    selector:
+      matchLabels:
+        k8s-app: postgres
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          k8s-app: postgres
+      spec:
+        nodeSelector:
+          kubernetes.io/hostname: k8s-master1
+        containers:
+        - name: postgres
+          image: postgres:12
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data/pgdata
+            name: postgres-volume
+          ports:
+          - containerPort: 5432
+          env:
+            - name: POSTGRES_PASSWORD
+              value: "ruqif2e123"
+            - name: PGDATA
+              value: "/var/lib/postgresql/data/pgdata"
+        volumes:
+        - name: postgres-volume
+          hostPath:
+            path: /var/lib/postgresql/data/pgdata
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: postgres
+  name: postgres
+  namespace: default
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    k8s-app: postgres
+  
+  

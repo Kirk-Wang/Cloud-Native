@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: drone-route
+  namespace: default
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`drone.bifrontend.domain.com`)
+      kind: Rule
+      services:
+        - name: drone-ci
+          port: 80
+

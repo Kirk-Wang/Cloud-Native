@@ -25,6 +25,8 @@ spec:
         volumeMounts:
         - mountPath: /certificates:ro
           name: portus-bg-volume
+        - name: config
+          mountPath: /srv/Portus/config/config-local.yml
         env:
           # Theoretically not needed, but cconfig's been buggy on this...
           - name: CCONFIG_PREFIX
@@ -57,4 +59,8 @@ spec:
       - name: portus-bg-volume
         hostPath:
           path: /data/f2e-k8s-stack/portus.insecure/secrets
+      - name: config
+        hostPath:
+          path: /data/f2e-k8s-stack/portus.insecure/config-local.yml
+
 
